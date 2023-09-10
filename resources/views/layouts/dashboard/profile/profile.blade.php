@@ -187,16 +187,19 @@
                                         </form>
                                     </div>
                                         @else
+                                        <div class="form-group">
+                                            <h6>Your Phone Number</h6>
+                                            <h6>{{ Auth::user()->phone_number }}</h6>
+                                            <div>
+                                                @error('password')   
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                             <form action="{{ route('password_changed') }}" method="post">
                                                 @csrf
-                                                <div class="form-group">
-                                                    <input type="password" name="password" class="form-control input-default " placeholder="Password">
-                                                    <div>
-                                                        @error('password')   
-                                                            <strong class="text-danger">{{ $message }}</strong>
-                                                        @enderror
-                                                    </div>
-                                                </div>
+                                              
                                                 <div class="form-group">
                                                     <input type="password" name="password_confirmation" class="form-control input-default " placeholder="Confirm Password">
                                                 </div>
