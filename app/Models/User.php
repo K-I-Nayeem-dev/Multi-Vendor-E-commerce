@@ -26,6 +26,7 @@ class User extends Authenticatable
         'cover_photo',
         'password_check_status',
         'phone_number',
+        'otp_send_status',
     ];
 
     /**

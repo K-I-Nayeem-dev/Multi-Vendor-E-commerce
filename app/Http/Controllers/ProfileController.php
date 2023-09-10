@@ -12,8 +12,36 @@ use App\Models\User;
 
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\Verification;
+
+use Illuminate\Support\Carbon;
+
 class ProfileController extends Controller
 {
+
+
+    //phone Status Check
+
+    public function profile()
+    {
+        if (Verification::where('user_id', auth()->user()->id)->exists()) {
+
+            if (Verification::where('user_id', auth()->user()->id)->first()->code) {
+                $verification_status = true;
+            }
+            else{
+                $verification_status = false;
+            }
+
+        }
+        else{
+            $verification_status = false;
+        }
+
+        return view('layouts.dashboard.profile.profile', compact('verification_status'));
+
+    }
+
 
     // Profile Photo Change
 
@@ -73,6 +101,10 @@ class ProfileController extends Controller
             );
             return back();
         }
+        else{
+            return back()->with('password_err', 'Pass do not match our records.');
+        }
+
     }
 
     // Password Check
@@ -103,6 +135,8 @@ class ProfileController extends Controller
 
     public function phone_number_add(Request $request)
     {
+
+        
         $request->validate([
             'phone_number' => 'required',
         ]);
@@ -113,7 +147,7 @@ class ProfileController extends Controller
             ]
         );
 
-        return back()->with('password_changed', 'Password Changed Successfully');
+        return back()->with('Phone_add', 'Phone Number Added Successfully');
         // if($request->password == $request->password_confirmation){
         //     User::find(auth()->id())->update(
         //         [
@@ -128,5 +162,69 @@ class ProfileController extends Controller
 
     }
 
+    public function verify_otp_send()
+    {
+        $random = rand(1000, 9999);
+        // $url = "http://66.45.237.70/api.php";
+        $number = auth()->user()->phone_number;
+        // $text = "Hello " . auth()->user()->name . ' This is Testing Message & Your OTP is ' . $random . ' Plz Enter OTP to Verify Your Account. !!!! Thank You For Registration ';
+        // $data = array(
+        //     'username' => "01834833973",
+        //     'password' => "TE47RSDM",
+        //     'number' => "$number",
+        //     'message' => "$text"
+        // );
+
+        // $ch = curl_init(); // Initialize cURL
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // $smsresult = curl_exec($ch);
+        // $p = explode("|", $smsresult);
+        // $sendstatus = $p[0];
+
+        Verification::insert([
+            'user_id' => auth()->user()->id,
+            'phone_number' => $number,
+            'code' => $random,
+            'created_at' => Carbon::now(),
+        ]);
+
+        User::find(auth()->id())->update(
+            [
+                'otp_send_status' => true,
+            ]
+        );
+
+        return back()->with('OTP_send', ' OTP Send!');
+    }
+
+
+    public function verify_otp_confirm(Request $request){
+
+
+        $request->validate([
+            'code'=> 'required',
+        ]);
+
+        if($request->code == Verification::where('user_id', auth()->user()->id)->first()->code){
+
+            Verification::where('user_id', auth()->user()->id)->update([
+                    'status'=>true,
+            ]);
+
+            User::find(auth()->id())->update(
+                [
+                    'otp_send_status' => false,
+                ]
+            );
+
+            return back()->with('OTP_success', 'Phone Number Verified');
+
+        }
+        else{
+            return back()->with('OTP_Fail', 'Worng OTP');
+        }
+    }
 
 }

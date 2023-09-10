@@ -1,5 +1,6 @@
 @extends('layouts.dashboard.dashboard')
 
+
 @section('content')
 
 
@@ -129,12 +130,10 @@
                                         <form action="{{ route('password_check') }}" method="POST">
                                             @csrf
                                             <div class="form-group">
+                                                @if (session('password_err'))
+                                                    <div class=" alert alert-danger mt-3">{{ session('password_err') }}</div>
+                                                @endif
                                                 <input type="password" name="current_password" class="form-control input-default " placeholder="Current Password">
-                                                <div>
-                                                    @error('current_password')   
-                                                        <strong class="text-danger">{{ $message }}</strong>
-                                                    @enderror
-                                                </div>
                                                 
                                                 <button type="submit" class="btn btn-info mt-3 btn-sm">Change Password</button>
                                                 @if (session('password_changed'))
@@ -165,7 +164,7 @@
                         </div>
                     </div>
 
-                    <div class="col-xl-6 col-lg-6">
+                    {{-- <div class="col-xl-6 col-lg-6">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Phone Number</h4>
@@ -188,18 +187,46 @@
                                     </div>
                                         @else
                                         <div class="form-group">
-                                            <h6>Your Phone Number</h6>
-                                            <h6>{{ Auth::user()->phone_number }}</h6>
-                                            <div>
-                                                @error('password')   
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                            @if(session('OTP_send'))
+                                                <div class="alert alert-success">{{ session('OTP_send') }}</div>
+                                            @endif
+                                                <h4 class="text-dark mb-3">{{ Auth::user()->phone_number }}</h4>
 
+                                                @if ($verification_status)
+                                                    <h6 class="text-success ">Verify</h6>
+                                                @else
+
+                                                    <h6 class="text-danger ">Unverify</h6>
+                                                    <a class="btn btn-primary btn-sm" href="{{ route('verify_otp_send') }}">Verify</a>
+
+                                                    @if (session('OTP_success'))
+                                                        <div class=" alert alert-success mt-3">{{ session('OTP_success') }}</div>
+                                                    @endif
+                                                    @if (session('OTP_Fail'))
+                                                        <div class=" alert alert-danger mt-3">{{ session('OTP_Fail') }}</div>
+                                                    @endif
+
+                                                    @if (!$verification_status)
+                                                        <form action="{{ route('verify_otp_confirm') }}" method="post">
+                                                            @csrf
+                                                            <div class="form-group">
+                                                                <input type="number" name="code" class="form-control input-default mt-3 " placeholder="Enter OTP">
+                                                            </div>
+                                                            <div>    
+                                                                @error('code')   
+                                                                <strong class="text-danger">{{ $message }}</strong>
+                                                                @enderror
+                                                            </div>
+
+                                                            <button type="submit" class="btn btn-info btn-sm">OTP Check</button>
+                                                        </form>
+                                                    @endif
+
+
+                                            @endif
+                                        </div>
                                             <form action="{{ route('password_changed') }}" method="post">
                                                 @csrf
-                                              
                                                 <div class="form-group">
                                                     <input type="password" name="password_confirmation" class="form-control input-default " placeholder="Confirm Password">
                                                 </div>
@@ -210,12 +237,85 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    
+                        @if(!Auth::user()->phone_number)
+                            <div class="col-xl-6 col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Add Phone Number</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <form action="{{ route('phone_number_add') }}" method="post">
+                                            @csrf
+                                            <input class="form-control mb-3" type="tel" name="phone_number" placeholder="Add a Phone Number">
+                                            <div>
+                                                @error('phone_number')   
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                @enderror
+                                            </div>
+                                            <button class="btn btn-info btn-sm" type="submit">Add Number</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="col-xl-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title">Phone Number : </h4>
+                                </div>
+                                <div class="card-body">
+
+                                    @if (session('Phone_add'))
+                                        <div class=" alert alert-success mt-3">{{ session('Phone_add') }}</div>
+                                    @endif
+
+                                    @if (session('OTP_send'))
+                                        <div class=" alert alert-success mt-3">{{ session('OTP_send') }}</div>
+                                    @endif
+
+                                    @if($verification_status)
+                                        <h5>{{ Auth::user()->phone_number }}  <span class="text-success" href="#">Verify</span></h5>
+                                    @else
+                                        <h5>{{ Auth::user()->phone_number }}  <span class="text-danger" href="#">Unverify</span></h5>
+                                    <a class="btn btn-primary btn-sm" href="{{ route('verify_otp_send') }}">Verify</a>
+                                    @endif
+
+
+
+                                    @if(Auth::user()->otp_send_status)
+
+                                        <form action="{{ route('verify_otp_confirm') }}" method="post">
+                                            @csrf
+
+                                            @if (session('OTP_success'))
+                                                <div class=" alert alert-success mt-3">{{ session('OTP_success') }}</div>
+                                            @endif
+
+                                            @if (session('OTP_Fail'))
+                                                <div class=" alert alert-danger mt-3">{{ session('OTP_Fail') }}</div>
+                                            @endif
+
+                                            <input class="form-control mb-3 mt-3" type="number" name="code" placeholder="Enter OTP">
+
+                                            <div>
+                                                @error('code')   
+                                                    <strong class="text-danger">{{ $message }}</strong>
+                                                @enderror
+                                            </div>
+
+                                            <button class="btn btn-info btn-sm" type="submit">Submit OTP</button>
+                                        </form>
+                                    @endif
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                 </div>
             </div>
         </div>
+
         <!--**********************************
             Content body end
         ***********************************-->
