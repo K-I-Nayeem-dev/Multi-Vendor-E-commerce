@@ -239,6 +239,8 @@
                         </div>
                     </div> --}}
 
+                    {{-- Phone Number ADD/Update/Verify  Start--}}
+
                         @if(!Auth::user()->phone_number)
                             <div class="col-xl-6 col-lg-6">
                                 <div class="card">
@@ -248,6 +250,9 @@
                                     <div class="card-body">
                                         <form action="{{ route('phone_number_add') }}" method="post">
                                             @csrf
+                                            @if (session('phone_number'))
+                                                <div class=" alert alert-success mt-3">{{ session('phone_number') }}</div>
+                                            @endif
                                             <input class="form-control mb-3" type="tel" name="phone_number" placeholder="Add a Phone Number">
                                             <div>
                                                 @error('phone_number')   
@@ -277,13 +282,17 @@
 
                                     @if($verification_status)
                                         <h5>{{ Auth::user()->phone_number }}  <span class="text-success" href="#">Verify</span></h5>
+                                        @if (!Auth::user()->phone_number_update)
+                                            <a class="btn btn-info btn-sm mt-3" href="{{ route('update_number_add') }}">Update Phone Number</a>
+                                            <div class="alert alert-danger alert-dismissible mt-3">Phone Number Update Only 1 Time</div>
+                                        @endif
                                     @else
                                         <h5>{{ Auth::user()->phone_number }}  <span class="text-danger" href="#">Unverify</span></h5>
-                                    <a class="btn btn-primary btn-sm" href="{{ route('verify_otp_send') }}">Verify</a>
+                                        @if (!Auth::user()->otp_send_status)
+                                            <a class="btn btn-primary btn-sm " href="{{ route('verify_otp_send') }}">Verify</a>
+                                        @endif
                                     @endif
-
-
-
+                                    
                                     @if(Auth::user()->otp_send_status)
 
                                         <form action="{{ route('verify_otp_confirm') }}" method="post">
@@ -312,6 +321,9 @@
                                 </div>
                             </div>
                         @endif
+
+                    {{-- Phone Number ADD/Update/Verify  End--}}
+
                 </div>
             </div>
         </div>
@@ -319,4 +331,5 @@
         <!--**********************************
             Content body end
         ***********************************-->
+
 @endsection

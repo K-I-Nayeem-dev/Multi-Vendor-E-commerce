@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Verification;
 
 use Illuminate\Support\Carbon;
+use PhpParser\Node\Stmt\Return_;
 
 class ProfileController extends Controller
 {
@@ -26,7 +27,7 @@ class ProfileController extends Controller
     {
         if (Verification::where('user_id', auth()->user()->id)->exists()) {
 
-            if (Verification::where('user_id', auth()->user()->id)->first()->code) {
+            if (Verification::where('user_id', auth()->user()->id)->first()->status) {
                 $verification_status = true;
             }
             else{
@@ -226,5 +227,22 @@ class ProfileController extends Controller
             return back()->with('OTP_Fail', 'Worng OTP');
         }
     }
+
+    public function update_number_add(){
+        
+        Verification::where('user_id', auth()->user()->id)->delete();
+
+        User::find(auth()->id())->update(
+            [
+                'otp_send_status' => false,
+                'phone_number'=> null,
+                'phone_number_update'=> true,
+            ]
+        );
+
+        return back()->with('phone_number', 'Update your Phone number');
+
+    }
+
 
 }

@@ -44,3 +44,8 @@ Route::post('/phone/number/add', [App\Http\Controllers\ProfileController::class,
 Route::get('/verify/otp/send', [App\Http\Controllers\ProfileController::class, 'verify_otp_send'])->name('verify_otp_send');
 Route::post('/verify/otp/confirm', [App\Http\Controllers\ProfileController::class, 'verify_otp_confirm'])->name('verify_otp_confirm');
 //phone_number Verify route
+
+
+//update phone_number
+Route::get('/update/phone/number', [App\Http\Controllers\ProfileController::class, 'update_number_add'])->name('update_number_add');
+//update phone_number 

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password_check_status',
         'phone_number',
         'otp_send_status',
+        'phone_number_update',
     ];
 
     /**
