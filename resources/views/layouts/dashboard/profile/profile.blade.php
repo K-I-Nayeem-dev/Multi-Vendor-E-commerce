@@ -135,7 +135,7 @@
                                                 @endif
                                                 <input type="password" name="current_password" class="form-control input-default " placeholder="Current Password">
                                                 
-                                                <button type="submit" class="btn btn-info mt-3 btn-sm">Change Password</button>
+                                                <button type="submit" class="btn btn-info mt-3 btn-sm">Check Password</button>
                                                 @if (session('password_changed'))
                                                     <div class=" alert alert-success mt-3">{{ session('password_changed') }}</div>
                                                 @endif
@@ -292,7 +292,7 @@
                                             <a class="btn btn-primary btn-sm " href="{{ route('verify_otp_send') }}">Verify</a>
                                         @endif
                                     @endif
-                                    
+
                                     @if(Auth::user()->otp_send_status)
 
                                         <form action="{{ route('verify_otp_confirm') }}" method="post">
