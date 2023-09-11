@@ -14,15 +14,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Auth::routes();
 
+//frontend Routes
+Route::get('/', [App\Http\Controllers\FrontendController::class, 'frontend_master'])->name('frontend_master');
+Route::get('/home', [App\Http\Controllers\FrontendController::class, 'frontend_home'])->name('frontend_home');
+Route::get('/about', [App\Http\Controllers\FrontendController::class, 'frontend_about'])->name('frontend_about');
+Route::get('/contact', [App\Http\Controllers\FrontendController::class, 'frontend_contact'])->name('frontend_contact');
+Route::get('/account/registration', [App\Http\Controllers\FrontendController::class, 'account_registration'])->name('account_registration');
+//frontend Routes
 
 //Dashboard Routes
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
+Route::get('/dashboard/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
 Route::get('/dashboard/profile', [App\Http\Controllers\ProfileController::class, 'profile'])->name('dashboard_profile');
 //Dashboard Routes
 
