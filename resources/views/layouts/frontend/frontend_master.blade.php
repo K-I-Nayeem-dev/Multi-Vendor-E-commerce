@@ -204,7 +204,7 @@
                                     </a>
                                 </li> --}}
                                 <li>
-                                    <a class="btn btn-primary btn-sm text-white" style="12px" href="{{ route('account_registration') }}">Login/Registration</a>
+                                    <a class="btn btn-primary btn-sm text-white" style="font-size: 12px;" href="{{ route('account_registration') }}">Login/Registration</a>
                                 </li>
                             </ul>
                         </div>
@@ -363,6 +363,6 @@
 
     <!-- custom - main-js -->
     <script src="{{ asset('frontend_assets') }}/js/main.js"></script>
-
+    {!! NoCaptcha::renderJs() !!}
 </body>
 </html>

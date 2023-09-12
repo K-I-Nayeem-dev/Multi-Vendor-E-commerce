@@ -26,4 +26,9 @@ class FrontendController extends Controller
     {
         return view('layouts.frontend.account_registration');
     }
+
+    public function account_login()
+    {
+        return view('layouts.frontend.account_login');
+    }
 }

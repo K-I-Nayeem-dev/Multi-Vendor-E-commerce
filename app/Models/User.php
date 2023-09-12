@@ -28,6 +28,7 @@ class User extends Authenticatable
         'phone_number',
         'otp_send_status',
         'phone_number_update',
+        'role',
     ];
 
     /**

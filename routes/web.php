@@ -25,6 +25,19 @@ Route::get('/contact', [App\Http\Controllers\FrontendController::class, 'fronten
 Route::get('/account/registration', [App\Http\Controllers\FrontendController::class, 'account_registration'])->name('account_registration');
 //frontend Routes
 
+//frontend account Registraion routes
+Route::post('/customer/registraion', [App\Http\Controllers\CustomerController::class, 'customer_registration'])->name('customer_registration');
+
+Route::post('/seller/registraion', [App\Http\Controllers\SellerController::class, 'seller_registration'])->name('seller_registration');
+
+//frontend account Registraion routes
+
+//frontend account signup route
+Route::get('/account/login', [App\Http\Controllers\FrontendController::class, 'account_login'])->name('account_login');
+//frontend account signup route
+
+
+
 //Dashboard Routes
 Route::get('/dashboard/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
 Route::get('/dashboard/profile', [App\Http\Controllers\ProfileController::class, 'profile'])->name('dashboard_profile');
