@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 
+use Illuminate\Support\Facades\Auth;
+
+use Intervention\Image\ImageManagerStatic as Image;
+
 class SellerController extends Controller
 {
     public function seller_registration(Request $request){
@@ -30,4 +34,26 @@ class SellerController extends Controller
         return back()->with('sellerRegSuccessful', 'Seller Registration Successfully Done' );
 
     }
+
+    public function accounts_update(Request $request)
+    {
+        // $request->validate([
+        //     'name'=>'required',
+        //     'email'=>'required',
+        //     'password'=>'required',
+        //     'phone_number'=>'required',
+        // ]);
+
+        User::find(auth()->id())->update(
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'phone_number' => $request->phone_number,
+            ]
+        );
+
+        return back()->with('profile_update', Auth::user()->role . ' Account Has been Updated');
+    }
+
 }

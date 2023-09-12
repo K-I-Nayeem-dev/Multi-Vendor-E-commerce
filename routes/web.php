@@ -26,9 +26,12 @@ Route::get('/account/registration', [App\Http\Controllers\FrontendController::cl
 //frontend Routes
 
 //frontend account Registraion routes
+
 Route::post('/customer/registraion', [App\Http\Controllers\CustomerController::class, 'customer_registration'])->name('customer_registration');
 
 Route::post('/seller/registraion', [App\Http\Controllers\SellerController::class, 'seller_registration'])->name('seller_registration');
+
+Route::get('/seller/dashboard', [App\Http\Controllers\FrontendController::class, 'seller_dashboard'])->name('seller_dashboard');
 
 //frontend account Registraion routes
 
@@ -43,9 +46,18 @@ Route::get('/dashboard/home', [App\Http\Controllers\HomeController::class, 'dash
 Route::get('/dashboard/profile', [App\Http\Controllers\ProfileController::class, 'profile'])->name('dashboard_profile');
 //Dashboard Routes
 
+//frontEnd Login Routes
+Route::post('/accounts/login', [App\Http\Controllers\FrontendController::class, 'accounts_login'])->name('accounts_login');
+//frontEnd Login Routes
+
+//frontEnd Profile Update Routes
+Route::post('/accounts/update', [App\Http\Controllers\SellerController::class, 'accounts_update'])->name('accounts_update');
+//frontEnd Profile Update Routes
 
 //Profile Photo and Cover Photo route
+
 Route::post('/profile/photo/upload', [App\Http\Controllers\ProfileController::class, 'profile_photo_upload'])->name('profile_photo_upload');
+
 Route::post('/cover/photo/upload', [App\Http\Controllers\ProfileController::class, 'cover_photo_upload'])->name('cover_photo_upload');
 
 //Profile Photo and Cover Photo route

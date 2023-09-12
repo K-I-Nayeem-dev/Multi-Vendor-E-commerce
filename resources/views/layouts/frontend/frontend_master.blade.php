@@ -94,7 +94,7 @@
                     <div class="row align-items-center">
                         <div class="col col-lg-3 col-md-3 col-sm-12">
                             <div class="brand_logo">
-                                <a class="brand_link" href="index.html">
+                                <a class="brand_link" href="{{ url('/') }}">
                                     <img src="{{ asset('frontend_assets') }}/images/logo/logo_1x.png" srcset="{{ asset('frontend_assets') }}/images/logo/logo_2x.png 2x" alt>
                                 </a>
                             </div>
@@ -156,7 +156,7 @@
                                     Browse categories
                                 </button>
                                 <div class="allcategories_collapse" id="allcategories_collapse">
-                                    <div class="card card-body">
+                                    <div class="card card-body d-none">
                                         <ul class="allcategories_list ul_li_block">
                                             <li><a href="shop_grid.html"><i class="icon icon-Starship"></i> New Arrival Products</a></li>
                                             <li><a href="shop_list.html"><i class="icon icon-WorldWide"></i> Most Popular Products</a></li>
@@ -186,6 +186,14 @@
                                         <li><a class="nav-link" href="{{ route('frontend_about') }}">About us</a></li>
                                         <li><a class="nav-link" href="#">Shop</a></li>
                                         <li><a class="nav-link" href="{{ route('frontend_contact') }}">Contact Us</a></li>
+                                        @auth
+                                            <li>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                    @csrf
+                                                    <button class="btn btn-danger btn-sm">Logout</button>
+                                                </form>
+                                            </li>
+                                        @endauth
                                     </ul>
                                 </div>
                             </nav>
@@ -194,18 +202,28 @@
 
                         <div class="col col-md-3">
                             <ul class="header_icons_group ul_li_right">
-                                 {{-- <li>
-                                    <a href="#">Jon Doe</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="account.html">
-                                        <svg role="img" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" stroke="#051d43" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="personIconTitle">Person</title> <path d="M4,20 C4,17 8,17 10,15 C11,14 8,14 8,9 C8,5.667 9.333,4 12,4 C14.667,4 16,5.667 16,9 C16,14 13,14 14,15 C16,17 20,17 20,20"/> </svg>
-                                    </a>
-                                </li> --}}
-                                <li>
-                                    <a class="btn btn-primary btn-sm text-white" style="font-size: 12px;" href="{{ route('account_registration') }}">Login/Registration</a>
-                                </li>
+                                @auth
+                                    <li>
+                                        <a href="{{ route('seller_dashboard') }}">{{ Auth::user()->name }}</a>
+                                    </li>
+                                    
+                                    <li>
+                                        @if(Auth::user()->profile_photo)
+                                            <img src="{{ asset('uploads/profile_photo') }}/{{ Auth::user()->profile_photo }}" class="img-fluid rounded-circle" alt="" width="50" height="50">
+                                        @else
+                                            <a href="#">
+                                                <svg role="img" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24" stroke="#051d43" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#2329D6"> <title id="personIconTitle">Person</title> <path d="M4,20 C4,17 8,17 10,15 C11,14 8,14 8,9 C8,5.667 9.333,4 12,4 C14.667,4 16,5.667 16,9 C16,14 13,14 14,15 C16,17 20,17 20,20"/> </svg>
+                                            </a>
+                                        @endif
+                                    </li>
+                                @endauth
+
+                                @guest
+                                    <li>
+                                        <a class="btn btn-primary btn-sm text-white" style="font-size: 12px;" href="{{ route('account_registration') }}">Login/Registration</a>
+                                    </li>
+                                @endguest
+
                             </ul>
                         </div>
                     </div>

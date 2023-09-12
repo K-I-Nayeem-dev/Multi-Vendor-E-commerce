@@ -99,31 +99,40 @@
                             </ul>
 
                             <div class="register_wrap tab-content">
+
+                                @if(session('login_err'))
+                                    <div class="alert alert-success text-center">{{ session('login_err') }}</div>
+                                @endif
+
                                 <div class="tab-pane show active" id="signin_tab" role="tabpanel">
-                                    <form >
+                                    <form action="{{ route('accounts_login') }}" method="POST">
+                                        @csrf
                                         <div class="form_item_wrap">
-                                            <h3 class="input_title">User Name*</h3>
+                                            <h3 class="input_title">Email<span class="text-danger">*</span></h3>
                                             <div class="form_item">
                                                 <label for="username_input"><i class="fas fa-user"></i></label>
-                                                <input id="username_input" type="text" name="username" placeholder="User Name">
+                                                <input id="username_input" type="email" name="email" placeholder="User E-mail">
                                             </div>
                                         </div>
 
                                         <div class="form_item_wrap">
-                                            <h3 class="input_title">Password*</h3>
+                                            <h3 class="input_title">Password<span class="text-danger">*</span></h3>
                                             <div class="form_item">
                                                 <label for="password_input"><i class="fas fa-lock"></i></label>
                                                 <input id="password_input" type="password" name="password" placeholder="Password">
                                             </div>
+
                                             <div class="checkbox_item">
-                                                <input id="remember_checkbox" type="checkbox">
-                                                <label for="remember_checkbox">Remember Me</label>
+                                                <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                                <label for="remember">Remember Me</label>
                                             </div>
+
                                         </div>
 
                                         <div class="form_item_wrap">
                                             <button type="submit" class="btn btn_primary">Sign In</button>
                                         </div>
+
                                     </form>
                                 </div>
 
