@@ -39,7 +39,6 @@ class FrontendController extends Controller
     public function accounts_login(Request $request){
         // echo $request->email . "<br>";
         // echo $request->password;
-
         if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
 
             if(Auth::user()->role == 'customer'){
@@ -55,8 +54,6 @@ class FrontendController extends Controller
         else{
             return back()->with('login_err', 'These credentials do not match our records. ');
         }
-
-
     }
 
     public function seller_dashboard(){

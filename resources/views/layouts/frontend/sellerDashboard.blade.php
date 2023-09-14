@@ -157,7 +157,7 @@
                                             
                                             {{-- Phone Number ADD/Update/Verify  Start--}}
 
-                                            @if(!Auth::user()->phone_number)
+                                            {{-- @if(!Auth::user()->phone_number)
                                             <div class="col-xl-6 col-lg-6">
                                                 <div class="card">
                                                     <div class="card-header">
@@ -236,7 +236,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endif
+                                        @endif --}}
 
                                     {{-- Phone Number ADD/Update/Verify  End--}}
                                         </div>

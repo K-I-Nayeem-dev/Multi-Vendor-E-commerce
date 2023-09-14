@@ -26,7 +26,7 @@
 										<a href=""><img src="{{ asset('dashboard_assets') }}/images/logo-full.png" alt=""></a>
 									</div>
                                     <h4 class="text-center mb-4 text-white">Sign up your account</h4>
-                                    <form action="" method="POST">
+                                    <form action="{{ route('register') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <label class="mb-1 text-white"><strong>Username</strong></label>

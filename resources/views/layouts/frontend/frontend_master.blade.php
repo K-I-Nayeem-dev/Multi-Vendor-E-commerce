@@ -182,7 +182,7 @@
                                         <i class="fal fa-times"></i>
                                     </button>
                                     <ul class="main_menu_list ul_li">
-                                        <li><a class="nav-link" href="{{ route('frontend_home') }}">Home</a></li>
+                                        <li><a class="nav-link" href="{{ route('frontend_master') }}">Home</a></li>
                                         <li><a class="nav-link" href="{{ route('frontend_about') }}">About us</a></li>
                                         <li><a class="nav-link" href="#">Shop</a></li>
                                         <li><a class="nav-link" href="{{ route('frontend_contact') }}">Contact Us</a></li>

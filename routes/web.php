@@ -19,7 +19,7 @@ Auth::routes();
 
 //frontend Routes
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'frontend_master'])->name('frontend_master');
-Route::get('/home', [App\Http\Controllers\FrontendController::class, 'frontend_home'])->name('frontend_home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
 Route::get('/about', [App\Http\Controllers\FrontendController::class, 'frontend_about'])->name('frontend_about');
 Route::get('/contact', [App\Http\Controllers\FrontendController::class, 'frontend_contact'])->name('frontend_contact');
 Route::get('/account/registration', [App\Http\Controllers\FrontendController::class, 'account_registration'])->name('account_registration');
