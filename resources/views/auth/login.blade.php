@@ -28,7 +28,6 @@
                                     <form action="{{ route('login') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                           
                                             <label class="mb-1 text-white"><strong>Email</strong></label>
                                             <div>
                                                 @error('email')   
