@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CategoryController;
+// use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,7 +48,7 @@ Route::get('/dashboard/profile', [App\Http\Controllers\ProfileController::class,
 //Dashboard Routes
 
 //frontEnd Login Routes
-Route::post('/accounts/login', [App\Http\Controllers\FrontendController::class, 'accounts_login'])->name('accounts_login');
+Route::post('/accounts', [App\Http\Controllers\FrontendController::class, 'accounts'])->name('accounts');
 //frontEnd Login Routes
 
 //frontEnd Profile Update Routes
@@ -78,3 +79,7 @@ Route::post('/verify/otp/confirm', [App\Http\Controllers\ProfileController::clas
 //update phone_number
 Route::get('/update/phone/number', [App\Http\Controllers\ProfileController::class, 'update_number_add'])->name('update_number_add');
 //update phone_number 
+
+//Category Routes
+Route::resource('category', CategoryController::class);
+//Category Routes

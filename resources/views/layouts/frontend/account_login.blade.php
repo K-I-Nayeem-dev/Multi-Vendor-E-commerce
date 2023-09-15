@@ -105,7 +105,7 @@
                                 @endif
 
                                 <div class="tab-pane show active" id="signin_tab" role="tabpanel">
-                                    <form action="{{ route('accounts_login') }}" method="POST">
+                                    <form action="{{ route('accounts') }}" method="POST">
                                         @csrf
                                         <div class="form_item_wrap">
                                             <h3 class="input_title">Email<span class="text-danger">*</span></h3>
@@ -122,9 +122,21 @@
                                                 <input id="password_input" type="password" name="password" placeholder="Password">
                                             </div>
 
-                                            <div class="checkbox_item">
-                                                <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                                <label for="remember">Remember Me</label>
+                                            <div class="checkbox_item d-flex justify-content-between">
+                                               <div>
+                                                    <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                                    <label for="remember">Remember Me</label>
+                                               </div>
+
+                                                <div class="checkbox_item">
+                                                    {{-- <a class="text-white" href="">Forgot Password?</a> --}}
+                                                    @if (Route::has('password.request'))
+                                                        <a class="text-danger " href="{{ route('password.request') }}">
+                                                            {{ __('Forgot Your Password?') }}
+                                                        </a>
+                                                    @endif
+                                                </div>
+
                                             </div>
 
                                         </div>

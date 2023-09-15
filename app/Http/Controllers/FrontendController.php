@@ -36,7 +36,7 @@ class FrontendController extends Controller
         return view('layouts.frontend.account_login');
     }
 
-    public function accounts_login(Request $request){
+    public function accounts(Request $request){
         // echo $request->email . "<br>";
         // echo $request->password;
         if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
