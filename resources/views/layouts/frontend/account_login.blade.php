@@ -123,10 +123,10 @@
                                             </div>
 
                                             <div class="checkbox_item d-flex justify-content-between">
-                                               <div>
+                                                <div>
                                                     <input id="remember" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
                                                     <label for="remember">Remember Me</label>
-                                               </div>
+                                                </div>
 
                                                 <div class="checkbox_item">
                                                     {{-- <a class="text-white" href="">Forgot Password?</a> --}}
@@ -153,7 +153,6 @@
                                         <span class="mt-3 text-dark" >Don't have an Account <a class="text-danger" href="{{ route('account_registration') }}">Sign Up</a></span>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

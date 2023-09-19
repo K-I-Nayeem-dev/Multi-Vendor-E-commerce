@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row d-flex justify-content-center">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
                 <table class="table">
                     <thead>
                     <tr>

@@ -260,6 +260,13 @@
                                     </div>
                                 </div>
 
+                                <div class="form_item_wrap">
+                                    <div class="form-item">
+                                        <h6 class="text-dark">Or SignUp With</h6>
+                                        <a href="{{ route('github_redirect') }}" class="btn btn-secondary btn-lg">GitHub</a>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>

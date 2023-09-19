@@ -149,17 +149,6 @@ class ProfileController extends Controller
         );
 
         return back()->with('Phone_add', 'Phone Number Added Successfully');
-        // if($request->password == $request->password_confirmation){
-        //     User::find(auth()->id())->update(
-        //         [
-        //             'password' => bcrypt($request->password),
-        //             'password_check_status' => false,
-
-        //         ]
-        //     );
-
-        //     return back()->with('password_changed', 'Password Changed Successfully');
-        // }
 
     }
 

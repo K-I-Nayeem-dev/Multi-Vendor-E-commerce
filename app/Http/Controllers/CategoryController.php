@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Carbon;
 
+use Intervention\Image\ImageManagerStatic as Image;
+
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -32,19 +34,22 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'category_name'=>'required',
-        ]);
+        // $request->validate([
+        //     'category_name'=>'required',
+        // ]);
 
-        Category::insert([
-            'category_name'=> $request->category_name,
-            'category_slug'=> $request->category_slug,
-            'category_description'=> $request->category_description,
-            'category_image'=> $request->category_image,
-            'created_at' => Carbon::now(),
-        ]);
+        // Category::insert([
+        //     'category_name'=> $request->category_name,
+        //     'category_slug'=> $request->category_slug,
+        //     'category_description'=> $request->category_description,
+        //     'category_image'=> $request->category_image,
+        //     'created_at' => Carbon::now(),
+        // ]);
 
-        return back()->with('category_add', 'Category Added Successfully');
+        // return back()->with('category_add', 'Category Added Successfully');
+
+        // return $request->file('category_image');
+        // return $request->file('category_image')->getClientOriginalExtension();
 
         
     }
