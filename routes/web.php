@@ -86,7 +86,7 @@ Route::resource('category', CategoryController::class);
 
 // Github Signin Routes
 
-Route::get('/github/redirect', [App\Http\Controllers\SocialiteController::class, 'github_redirect'])->name('github_redirect');
+Route::post('/github/redirect', [App\Http\Controllers\SocialiteController::class, 'github_redirect'])->name('github_redirect');
 Route::get('/github/callback', [App\Http\Controllers\SocialiteController::class, 'github_callback'])->name('github_callback');
 
 // Github Signin Routes

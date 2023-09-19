@@ -90,7 +90,7 @@
             </div>
             <div>
                 @if(session('github_login'))
-                    <div class="alert alert-success text center">{{ session('github_login') }}</div>
+                    <div class="alert alert-success text-center">{{ session('github_login') }}</div>
                 @endif
             </div>
             <div class="header_middle">

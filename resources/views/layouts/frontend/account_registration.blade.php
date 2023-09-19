@@ -263,7 +263,10 @@
                                 <div class="form_item_wrap">
                                     <div class="form-item">
                                         <h6 class="text-dark">Or SignUp With</h6>
-                                        <a href="{{ route('github_redirect') }}" class="btn btn-secondary btn-lg">GitHub</a>
+                                        <form action="{{ route('github_redirect') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-secondary">SignUp With GitHub</button>
+                                        </form>
                                     </div>
                                 </div>
 

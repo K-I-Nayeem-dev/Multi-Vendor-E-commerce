@@ -153,6 +153,16 @@
                                         <span class="mt-3 text-dark" >Don't have an Account <a class="text-danger" href="{{ route('account_registration') }}">Sign Up</a></span>
                                     </div>
                                 </div>
+
+                                <div class="form_item_wrap">
+                                    <div class="form_item">
+                                        <form action="{{ route('github_redirect') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-secondary">Login With GitHub</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,7 @@ class SocialiteController extends Controller
 
         $user = Socialite::driver('github')->user();
 
-        $user = User::updateOrCreate(['email' => $user->email,],
+        $user = User::firstOrCreate(['email' => $user->email,],
 
             ['name' => $user->name,
             'password' => 'password',
