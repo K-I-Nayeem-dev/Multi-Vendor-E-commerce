@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Category;
+
 use App\Models\User;
 
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +14,9 @@ class FrontendController extends Controller
 {
     public function frontend_master()
     {
-        return view('layouts.frontend.index');
+        return view('layouts.frontend.index',[
+            'category'=> Category::all(),
+        ]);
     }
     public function frontend_home()
     {

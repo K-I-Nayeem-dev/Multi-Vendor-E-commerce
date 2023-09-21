@@ -398,93 +398,22 @@
                                     <h3>Top categories</h3>
                                 </div>
                                 <div class="top_category_carousel2" data-slick='{"dots": false}'>
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                  <span class="item_image">
-                                                      <img src="{{ asset('frontend_assets') }}/images/categories/category_1.png" alt="image_not_found">
-                                                  </span>
-                                                <span class="item_title">Men's Watches</span>
-                                            </a>
+
+                                    @forelse ($category as $cate )
+                                        <div class="slider_item">
+                                            <div class="category_boxed">
+                                                <a href="#!">
+                                                        <span class="item_image">
+                                                            <img src="{{ asset("uploads/category_photos") }}/{{ $cate->Category_Image }}" alt="image_not_found">
+                                                        </span>
+                                                    <span class="item_title">{{ $cate->Category_Name }}</span>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                <span class="item_image">
-                                                    <img src="{{ asset('frontend_assets') }}/images/categories/category_2.png" alt="image_not_found">
-                                                </span>
-                                                <span class="item_title">iPad</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                <span class="item_image">
-                                                    <img src="{{ asset('frontend_assets') }}/images/categories/category_3.png" alt="image_not_found">
-                                                </span>
-                                                <span class="item_title">iPhone</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                <span class="item_image">
-                                                    <img src="{{ asset('frontend_assets') }}/images/categories/category_4.png" alt="image_not_found">
-                                                </span>
-                                                <span class="item_title">Headphone</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                <span class="item_image">
-                                                    <img src="{{ asset('frontend_assets') }}/images/categories/category_5.png" alt="image_not_found">
-                                                </span>
-                                                <span class="item_title">Mac Mini</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                <span class="item_image">
-                                                    <img src="{{ asset('frontend_assets') }}/images/categories/category_1.png" alt="image_not_found">
-                                                </span>
-                                                <span class="item_title">Men's Watches</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                <span class="item_image">
-                                                    <img src="{{ asset('frontend_assets') }}/images/categories/category_2.png" alt="image_not_found">
-                                                </span>
-                                                <span class="item_title">CCTV  Camera</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                
-                                    <div class="slider_item">
-                                        <div class="category_boxed">
-                                            <a href="#!">
-                                                <span class="item_image">
-                                                    <img src="{{ asset('frontend_assets') }}/images/categories/category_3.png" alt="image_not_found">
-                                                </span>
-                                                <span class="item_title">CCTV  Camera</span>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    @empty
+                                        
+                                    @endforelse
+
                                 </div>
                                 <div class="carousel_nav carousel-nav-top-right">
                                     <button type="button" class="tc_left_arrow"><i class="fal fa-long-arrow-alt-left"></i></button>

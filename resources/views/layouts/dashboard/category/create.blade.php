@@ -3,9 +3,6 @@
 @section('content')
     <div class="row d-flex justify-content-center mt-5">
         <div class="col-lg-8">
-            @if (session('category_add'))
-                <div class="alert alert-success text-center">{{ session('category_add') }}</div>
-            @endif
             <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">
