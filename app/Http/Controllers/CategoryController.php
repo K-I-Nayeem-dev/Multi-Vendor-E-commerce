@@ -92,20 +92,28 @@ class CategoryController extends Controller
             'category_name'=>'required',
         ]);
 
+        if($request->category_image){
+            $new_name = $request->category_name.time() . "." . $request->file('category_image')->getClientOriginalExtension();
+            $img =Image::make($request->file('category_image'))->resize(300, 300);
+            $img->save(base_path('public\uploads\category_photos/' . $new_name), 80);
+            Category::find($id)->update([
+                'category_name'=> $request->category_name,
+                'category_slug'=> Str::slug($request->category_slug),
+                'category_description'=> $request->category_description,
+                'category_image'=> $new_name,
+                'updated_at' => Carbon::now(),
+            ]);
+        }else{
+            Category::find($id)->update([
+                'category_name'=> $request->category_name,
+                'category_slug'=> Str::slug($request->category_slug),
+                'category_description'=> $request->category_description,
+                'updated_at' => Carbon::now(),
+            ]);
 
-        $new_name = $request->category_name.time() . "." . $request->file('category_image')->getClientOriginalExtension();
-        $img =Image::make($request->file('category_image'))->resize(300, 300);
-        $img->save(base_path('public\uploads\category_photos/' . $new_name), 80);
+        }
 
-        Category::find($id)->update([
-            'category_name'=> $request->category_name,
-            'category_slug'=> Str::slug($request->category_slug),
-            'category_description'=> $request->category_description,
-            'category_image'=> $new_name,
-            'updated_at' => Carbon::now(),
-        ]);
-
-        return redirect('category')->with('category_update', 'ID'. $id. ' Category Update Successfully');
+        return redirect('category')->with('category_update', 'ID '. $id. ' Category Update Successfully');
     }
 
     /**

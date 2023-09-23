@@ -45,12 +45,12 @@ class FrontendController extends Controller
         // echo $request->password;
         if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
 
-            if(Auth::user()->role == 'customer'){
-                return view('layouts.frontend.customerDashboard');
+            if(Auth::user()->role == 'seller'){
+                return redirect('/seller/dashboard');
             }
-            else if(Auth::user()->role == 'seller'){
-                return view('layouts.frontend.sellerDashboard');
-            }
+            // else if(Auth::user()->role == 'seller'){
+            //     return view('layouts.frontend.sellerDashboard');
+            // }
             else{
                 return view('layouts.dashboard.index');
             }

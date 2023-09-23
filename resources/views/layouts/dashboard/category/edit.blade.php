@@ -24,7 +24,7 @@
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Category Description</label>
-                    <textarea class="form-label rounded p-3"name="category_description" placeholder="Write Some Text For Description ('Optional')" cols="80" rows="10">{{ $user->Category_Description  }}</textarea>
+                    <textarea class="form-label rounded p-3" name="category_description" placeholder="Write Some Text For Description ('Optional')" cols="80" rows="10">{{ $user->Category_Description  }}</textarea>
                 </div>
 
                 <div class="mb-3">
