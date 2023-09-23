@@ -3,6 +3,9 @@
 @section('content')
     <div class="row d-flex justify-content-center mt-5">
         <div class="col-lg-8">
+            <div>
+                <h2 class="mb-2">Add Category</h2>
+            </div>
             <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-3">

@@ -14,6 +14,11 @@
                         <div class="alert alert-danger text-center">{{ session('cate_deleted') }}</div>
                     @endif
                 </div>
+                <div class="col-lg-8">
+                    @if (session('category_update'))
+                        <div class="alert alert-success text-center">{{ session('category_update') }}</div>
+                    @endif
+                </div>
             </div>
                 <table class="table">
                     <thead>
@@ -36,7 +41,7 @@
                             <td class="text-center"><img width="100" src="{{ asset('uploads/category_photos') }}/{{ $d->Category_Image }}" alt=""></td>
                             <td class="text-center">
                                 <div class="d-flex">
-                                    <button type="submit" href='#' class="btn btn-primary btn-sm mx-2">Edit</button>
+                                    <a href="{{ route('category.edit', $d->id) }}" type="submit" class="btn btn-primary btn-sm mx-2">Edit</a>
                                     <form action="{{ route('category.destroy', $d->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
