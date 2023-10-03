@@ -34,9 +34,9 @@
                         @forelse ($category as $key => $d )
                             <tr>
                                 <td class="text-center">{{ ++$key }}</td>
-                                <td class="text-center">{{ $d->Category_Name }}</td>
-                                <td class="text-center">{{ $d->Category_Slug }}</td>
-                                <td class="text-center"><a href="{{ route('category.show', $d->id) }}" class="btn btn-info">Details</a></td>
+                                <td>{{ $d->Category_Name }}</td>
+                                <td>{{ $d->Category_Slug }}</td>
+                                <td class="text-center"><a href="{{ route('category.show', $d->id) }}" class="btn btn-info btn-sm">Details</a></td>
                                 <td class="text-center">
                                     <div class="d-flex">
                                         <a href="{{ route('category.edit', $d->id) }}" type="submit" class="btn btn-primary btn-sm mx-2">Edit</a>

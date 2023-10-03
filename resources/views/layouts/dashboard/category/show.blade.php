@@ -40,29 +40,31 @@
                     </tr>
                 </tbody>
             </table> --}}
-            <div class="d-flex my-3">
-                <h4>Category ID</h4>
-                <h4 class="mx-2"> : {{ $user->id }} </h4>
-            </div>
-            <div class="d-flex my-3">
-                <h4>Category Name</h4>
-                <h4 class="mx-2"> : {{ $user->Category_Name }} </h4>
-            </div>
-            <div class="d-flex my-3">
-                <h4>Category Slug</h4>
-                <h4 class="mx-2"> : {{ $user->Category_Slug }} </h4>
-            </div>
-            <div class="d-flex my-3">
-                <h4>Category Description</h4>
-                <h4 class="mx-2"> : {{ $user->Category_Description }} </h4>
-            </div>
-            <div class="d-flex my-3 align-items-center">
-                <h4>Category Image <span class="mx-2">:</span> </h4>
-                <img width="150" class="rounded" src="{{ asset('uploads/category_photos') }}/{{ $user->Category_Image }}" alt="{{ $user->Category_Name }}">
+            
+            {{-- //Specific Category ID Details Start //  --}}
+
+            <div class="category d-flex">
+                <div class="my-3">
+                    <h4 class="py-2 text-success">Category ID</h4>
+                    <h4 class="py-2 text-success">Category Name</h4>
+                    <h4 class="py-2 text-success">Category Slug</h4>
+                    <h4 class="py-2 text-success">Category Description</h4>
+                    <h4 class="py-2 text-success" style="margin-top: 73px">Category Image</h4>
+                </div>
+                <div class="my-3">
+                    <h4 class="py-2 px-4" ><span class="px-3">:</span>{{ $user->id }} </h4>
+                    <h4 class="py-2 px-4" ><span class="px-3">:</span>{{ $user->Category_Name }} </h4>
+                    <h4 class="py-2 px-4" ><span class="px-3">:</span>{{ $user->Category_Slug }} </h4>
+                    <h4 class="py-2 px-4" ><span class="px-3">:</span>{{ $user->Category_Description }} </h4>
+                    <div class="py-2 px-4">
+                        <span class="px-3">:</span><img width="150" class="rounded" src="{{ asset('uploads/category_photos') }}/{{ $user->Category_Image }}" alt="{{ $user->Category_Name }}">
+                    </div>
+                </div>
             </div>
             <div>
-                <a class="mt-4 btn btn-info" href="{{ route('category.index') }}">Back to Categories</a>
+                <a class="mt-4 btn btn-primary btn-sm" href="{{ route('category.index') }}">Back to Categories</a>
             </div>
+            {{-- //Specific Category ID Details End //  --}}
         </div>
     </div>
 

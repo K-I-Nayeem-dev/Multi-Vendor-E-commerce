@@ -38,6 +38,7 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Edit Category</button>
+                <a class="btn btn-primary" href="{{ route('category.index') }}">Back to Categories</a>
             </form>
         </div>
     </div>
