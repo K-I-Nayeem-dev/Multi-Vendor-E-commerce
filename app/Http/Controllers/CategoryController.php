@@ -70,8 +70,9 @@ class CategoryController extends Controller
      * Display the specified resource.
      */
     public function show(string $id)
-    {
-        //
+    {  
+        $user = Category::find($id);
+        return view('layouts.dashboard.category.show',compact('user'));
     }
 
     /**

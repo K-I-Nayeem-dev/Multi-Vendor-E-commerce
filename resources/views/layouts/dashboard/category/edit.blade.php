@@ -27,6 +27,11 @@
                     <textarea class="form-label rounded p-3" name="category_description" placeholder="Write Some Text For Description ('Optional')" cols="80" rows="10">{{ $user->Category_Description  }}</textarea>
                 </div>
 
+                <div class="d-flex my-3 align-items-center">
+                    <h4>Category Image <span class="mx-2">:</span> </h4>
+                    <img width="150" class="rounded" src="{{ asset('uploads/category_photos') }}/{{ $user->Category_Image }}" alt="{{ $user->Category_Name }}">
+                </div>
+
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Category Image</label>
                     <input type="file" class="form-control" name="category_image" placeholder="Category Image" value="{{ $user->Category_Image }}">
