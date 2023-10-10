@@ -142,7 +142,7 @@
                                     <img src="{{ asset('frontend_assets') }}/images/leaf.png" alt="image_not_found">
                                 </div>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <form action="#">
+                                <form action="{{ route }}">
                                     <div class="form_item">
                                         <input id="contact-form-name" type="text" name="name" placeholder="Your Name">
                                     </div>
