@@ -23,6 +23,7 @@ Route::get('/', [App\Http\Controllers\FrontendController::class, 'frontend_maste
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
 Route::get('/about', [App\Http\Controllers\FrontendController::class, 'frontend_about'])->name('frontend_about');
 Route::get('/contact', [App\Http\Controllers\FrontendController::class, 'frontend_contact'])->name('frontend_contact');
+Route::post('/contact/message', [App\Http\Controllers\FrontendController::class, 'contact_message'])->name('contact_post');
 Route::get('/account/registration', [App\Http\Controllers\FrontendController::class, 'account_registration'])->name('account_registration');
 //frontend Routes
 

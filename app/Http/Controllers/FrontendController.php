@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Mail\ContactMessage;
 use App\Models\Category;
-
-use App\Models\User;
-
+use App\Models\Contact;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
@@ -66,6 +66,29 @@ class FrontendController extends Controller
 
     public function customer_dashboard(){
         return view('layouts.frontend.customerDashboard');
+    }
+
+    public function contact_message(Request $request){
+
+        $request->validate([
+            "name"=> 'required',
+            "email"=> 'required',
+            "subject"=> 'required',
+            "message"=> 'required',
+        ]);
+
+        Contact::insert([
+            'contact_name'=> $request->name,
+            'contact_email'=> $request->email,
+            'contact_subject'=> $request->subject,
+            'contact_message'=> $request->message,
+            'created_at' => Carbon::now(),
+        ]);
+
+        Mail::to($request->email)->send(new ContactMessage());
+
+        return back()->with('message_sent', 'Message Send Successfully');
+
     }
 
 

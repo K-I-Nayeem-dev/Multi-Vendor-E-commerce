@@ -142,27 +142,42 @@
                                     <img src="{{ asset('frontend_assets') }}/images/leaf.png" alt="image_not_found">
                                 </div>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                <form action="{{ route }}">
+                                @if (session('message_sent'))
+                                    <div class="alert alert-success text-center my-3">{{ session('message_sent') }}</div>
+                                @endif
+                                <form action="{{ route('contact_post') }}" method="POST">
+                                    @csrf
                                     <div class="form_item">
-                                        <input id="contact-form-name" type="text" name="name" placeholder="Your Name">
+                                        <input id="contact-form-name" type="text" name="name" placeholder="Your Name" value="{{ old('name') }}">
+                                        @error('name')
+                                            <div class="text-danger fw-bold my-3">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="row">
                                         <div class="col col-md-6 col-sm-6">
                                             <div class="form_item">
-                                            <input id="contact-form-email" type="email" name="email" placeholder="Your Email">
+                                            <input id="contact-form-email" type="email" name="email" placeholder="Your Email" value="{{ old('email') }}">
+                                            @error('email')
+                                                <div class="text-danger fw-bold my-3">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         </div>
                                         <div class="col col-md-6 col-sm-6">
                                             <div class="form_item">
-                                                <input type="text" name="subject" placeholder="Your Subject">
+                                                <input type="text" name="subject" placeholder="Your Subject" value="{{ old('subject') }}">
+                                                @error('subject')
+                                                    <div class="text-danger fw-bold my-3">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form_item">
-                                        <textarea id="contact-form-message" name="message" placeholder="Message"></textarea>
+                                        <textarea id="contact-form-message" name="message" placeholder="Message" value="{{ old('message') }}"></textarea>
+                                        @error('message')
+                                            <div class="text-danger fw-bold my-3">{{ $message }}</div>
+                                        @enderror
                                     </div>
-                                    <div id="form-msg"></div>
-                                    <button id="contact-form-submit" type="submit" class="btn btn_dark">Send Message</button>
+                                    <button type="submit" class="btn btn_dark">Send Message</button>
                                 </form>
                             </div>
                         </div>
