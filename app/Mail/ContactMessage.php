@@ -16,9 +16,10 @@ class ContactMessage extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public $info;
+    public function __construct($infos)
     {
-        //
+        $this->info = $infos;
     }
 
     /**
@@ -27,7 +28,7 @@ class ContactMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Message',
+            subject: 'Get Your 40% Discount Now 🎉✨🎉✨',
         );
     }
 
@@ -38,6 +39,12 @@ class ContactMessage extends Mailable
     {
         return new Content(
             view: 'layouts.frontend.mail.contact_email',
+            with:[
+                'name' => $this->info['name'],
+                'email' => $this->info['email'],
+                'messaage' => $this->info['message'],
+                'subject' => $this->info['subject']
+            ]
         );
     }
 
@@ -50,4 +57,7 @@ class ContactMessage extends Mailable
     {
         return [];
     }
+
+
+
 }

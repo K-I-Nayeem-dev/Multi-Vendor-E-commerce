@@ -123,19 +123,29 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   
 
 </head>
-
-<body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #e7e7e7;color: #000000">
-  <!--[if IE]><div class="ie-container"><![endif]-->
+<body>
+{{-- <body class="clean-body u_body" style="margin: 0;padding: 0;-webkit-text-size-adjust: 100%;background-color: #e7e7e7;color: #000000"> --}}
+  {{-- <!--[if IE]><div class="ie-container"><![endif]-->
   <!--[if mso]><div class="mso-container"><![endif]-->
   <table id="u_body" style="border-collapse: collapse;table-layout: fixed;border-spacing: 0;mso-table-lspace: 0pt;mso-table-rspace: 0pt;vertical-align: top;min-width: 320px;Margin: 0 auto;background-color: #e7e7e7;width:100%" cellpadding="0" cellspacing="0">
   <tbody>
   <tr style="vertical-align: top">
-    <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top">
+    <td style="word-break: break-word;border-collapse: collapse !important;vertical-align: top"> --}}
     <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color: #e7e7e7;"><![endif]-->
     
   
+<div class="container">
+  <div class="row  h-100 d-flex align-items-center justify-content-center">
+    <div class="col-lg-8">
+      <h1>Name : {{ $name }}</h1>
+      <h1>Email : {{ $email }}</h1>
+      <h1>Subject : {{ $subject }}</h1>
+      <h1>Message : {{ $messaage }}</h1>
+    </div>
+  </div>
+</div>
   
-<div class="u-row-container" style="padding: 0px;background-color: transparent">
+{{-- <div class="u-row-container" style="padding: 0px;background-color: transparent">
   <div class="u-row" style="margin: 0 auto;min-width: 320px;max-width: 600px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;background-color: transparent;">
     <div style="border-collapse: collapse;display: table;width: 100%;height: 100%;background-color: transparent;">
       <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: transparent;"><![endif]-->
@@ -743,7 +753,7 @@ table, td { color: #000000; } #u_body a { color: #0000ee; text-decoration: under
   </tbody>
   </table>
   <!--[if mso]></div><![endif]-->
-  <!--[if IE]></div><![endif]-->
+  <!--[if IE]></div><![endif]--> --}}
 </body>
 
 </html>

@@ -85,7 +85,7 @@ class FrontendController extends Controller
             'created_at' => Carbon::now(),
         ]);
 
-        Mail::to($request->email)->send(new ContactMessage());
+        Mail::to($request->email)->send(new ContactMessage($request->except('_token')));
 
         return back()->with('message_sent', 'Message Send Successfully');
 

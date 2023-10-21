@@ -91,3 +91,10 @@ Route::post('/github/redirect', [App\Http\Controllers\SocialiteController::class
 Route::get('/github/callback', [App\Http\Controllers\SocialiteController::class, 'github_callback'])->name('github_callback');
 
 // Github Signin Routes
+
+
+// Contact Us Email Routes
+Route::get('contact/emails', [App\Http\Controllers\ContactController::class, 'contact_us_emails'])->name('contact_us_emails');
+Route::get('emails', [App\Http\Controllers\ContactController::class, 'emails'])->name('emails');
+Route::post('contact/email/delete', [App\Http\Controllers\ContactController::class, 'contact_delete'])->name('contact_delete');
+// Contact Us Email Routes
