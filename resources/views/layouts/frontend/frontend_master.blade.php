@@ -382,9 +382,12 @@
     <!-- google map  -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk2HrmqE4sWSei0XdKGbOMOHN3Mm2Bf-M&ver=2.1.6"></script>
     <script src="{{ asset('frontend_assets') }}/js/gmaps.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- custom - main-js -->
     <script src="{{ asset('frontend_assets') }}/js/main.js"></script>
     {!! NoCaptcha::renderJs() !!}
+
+    @yield('sweet_alert')
+
 </body>
 </html>

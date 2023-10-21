@@ -87,7 +87,7 @@ class FrontendController extends Controller
 
         Mail::to($request->email)->send(new ContactMessage($request->except('_token')));
 
-        return back()->with('message_sent', 'Message Send Successfully');
+        return back()->with('message_sent', 'Email Send Successfully');
 
     }
 

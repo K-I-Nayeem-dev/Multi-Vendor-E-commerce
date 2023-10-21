@@ -919,5 +919,11 @@
 			}, 1000);
 		});
 	</script>
+	
+	{{-- cdn for Sweet Alert --}}
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	@yield('sweet_alert')
+
 </body>
 </html>

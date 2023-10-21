@@ -32,7 +32,7 @@ class ContactController extends Controller
 
     public function contact_delete($id){
         Contact::find($id)->delete();
-        return back();
+        return back()->with('delete_contact', "Successfully Delete Email");
     }
 
 }

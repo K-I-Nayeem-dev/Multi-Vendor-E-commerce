@@ -33,3 +33,17 @@
         </div>
     </div>
 @endsection
+
+@section('sweet_alert')
+
+    @if (session('delete_contact'))
+        <script>
+            Swal.fire(
+                'Email Deleted',
+                'Successfully',
+                'success'
+            )
+        </script>
+    @endif
+
+@endsection

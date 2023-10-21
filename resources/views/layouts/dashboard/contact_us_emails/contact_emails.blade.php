@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">
                     Email Form 
-                    {{ $contact->contact_name }}
+                    '{{ $contact->contact_name }}'
                 </div>
                 <div class="card-body">
                     <h4 class="mb-3">Email :  {{ $contact->contact_email }}</h4>

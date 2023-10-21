@@ -142,9 +142,6 @@
                                     <img src="{{ asset('frontend_assets') }}/images/leaf.png" alt="image_not_found">
                                 </div>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                @if (session('message_sent'))
-                                    <div class="alert alert-success text-center my-3">{{ session('message_sent') }}</div>
-                                @endif
                                 <form action="{{ route('contact_post') }}" method="POST">
                                     @csrf
                                     <div class="form_item">
@@ -186,4 +183,30 @@
             </section>
             <!-- contact_section - end
             ================================================== -->
+@endsection
+
+@section('sweet_alert')
+
+@if (session('message_sent'))
+<script>
+    const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+    })
+
+    Toast.fire({
+    icon: 'success',
+    title: "{{ session('message_sent') }}"
+    })
+
+</script>
+@endif
+
 @endsection
