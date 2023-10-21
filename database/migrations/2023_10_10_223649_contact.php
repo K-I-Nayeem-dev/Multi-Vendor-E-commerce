@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('contact_name')->nullable();
             $table->string('contact_email')->nullable();
             $table->string('contact_subject')->nullable();
-            $table->string('contact_message')->nullable();
+            $table->string('contact_message', 1000)->nullable();
             $table->timestamps();
         });
     }

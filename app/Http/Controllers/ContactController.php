@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -20,14 +21,17 @@ class ContactController extends Controller
 
     // Contacts Emails Show
 
-    public function emails(Contact $contact){
-        return view('layouts.dashboard.contact_us_emails.contact_emails', compact('contact'));
+    public function emails(Contact $contact, $id){
+        $con = $contact->find($id);
+        return view('layouts.dashboard.contact_us_emails.contact_emails', [
+            'contact'=> $con,
+        ]);
     }
 
      // Contacts Emails Show
 
-    public function contact_delete(Contact $contact){
-        Contact::findOrFail($contact->id)->delete();
+    public function contact_delete($id){
+        Contact::find($id)->delete();
         return back();
     }
 

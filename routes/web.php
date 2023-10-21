@@ -95,6 +95,6 @@ Route::get('/github/callback', [App\Http\Controllers\SocialiteController::class,
 
 // Contact Us Email Routes
 Route::get('contact/emails', [App\Http\Controllers\ContactController::class, 'contact_us_emails'])->name('contact_us_emails');
-Route::get('emails', [App\Http\Controllers\ContactController::class, 'emails'])->name('emails');
-Route::post('contact/email/delete', [App\Http\Controllers\ContactController::class, 'contact_delete'])->name('contact_delete');
+Route::get('emails/{id}', [App\Http\Controllers\ContactController::class, 'emails'])->name('emails');
+Route::post('contact/email/delete/{id}', [App\Http\Controllers\ContactController::class, 'contact_delete'])->name('contact_delete');
 // Contact Us Email Routes

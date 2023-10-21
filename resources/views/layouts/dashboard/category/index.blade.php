@@ -39,7 +39,7 @@
                                 <td class="text-center"><a href="{{ route('category.show', $d->id) }}" class="btn btn-info btn-sm">Details</a></td>
                                 <td class="text-center">
                                     <div class="d-flex">
-                                        <a href="{{ route('category.edit', $d->id) }}" type="submit" class="btn btn-primary btn-sm mx-2">Edit</a>
+                                        <a href="{{ route('category.edit', $d->id) }}" class="btn btn-primary btn-sm mx-2">Edit</a>
                                         <form action="{{ route('category.destroy', $d->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
