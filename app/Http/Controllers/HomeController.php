@@ -26,7 +26,7 @@ class HomeController extends Controller
 
     public function dashboard_home()
     {
-        if(Auth::user()->role == 'admin'){
+        if(Auth::user()->role == 'admin' || Auth::user()->role == 'moderator'){
             return view('layouts.dashboard.index');
         }
         // else if(Auth::user()->role == 'seller'){

@@ -10,20 +10,24 @@
                             <th>Contact Name</th>
                             <th>Contact Eamil</th>
                             <th>Details</th>
-                            <th>Remove</th>
+                            @if (Auth::user()->role == 'admin')
+                                <th>Remove</th>
+                            @endif
                         </tr>
                         @forelse ($contacts as $key => $contact)
                             <tr>
-                                <td>{{ ++$key }}</td>
+                                <td class="text-center">{{ ++$key }}</td>
                                 <td>{{ $contact->contact_name }}</td>
                                 <td>{{ $contact->contact_email }}</td>
-                                <td><a href="{{ route('emails', $contact->id) }}" class="btn btn-primary btn-sm">Email Details</a></td>
-                                <td>
-                                    <form action="{{ route('contact_delete', $contact->id) }}" method="post">
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                </td>
+                                <td class="text-center"><a href="{{ route('emails', $contact->id) }}" class="btn btn-primary btn-sm">Email Details</a></td>
+                                @if(Auth::user()->role == 'admin')
+                                    <td>
+                                        <form action="{{ route('contact_delete', $contact->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <div class="alert alert-danger">No Email Found</div>

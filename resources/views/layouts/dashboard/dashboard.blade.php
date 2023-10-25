@@ -735,7 +735,7 @@
                                     <img src="{{ asset('uploads/profile_photo') }}/{{ Auth::user()->profile_photo }}" width="20" alt=""/>
 									<div class="header-info">
 										<span class="text-black"><strong>{{Auth::user()->name}}</strong></span>
-										<p class="fs-12 mb-0">Super Admin</p>
+										<p class="fs-12 mb-0">{{ ucfirst(trans(auth()->user()->role)) }}</p>
 									</div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
@@ -794,14 +794,14 @@
 							<li><a href="{{ route('category.index') }}">View Category</a></li>
                         </ul>
                     </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Contact Us Emails</span>
 						</a>
 						<ul aria-expanded="false">
-                            <li><a href="{{ route('contact_us_emails') }}">Emails From Users</a></li>
-                        </ul>
-                    </li>
+							<li><a href="{{ route('contact_us_emails') }}">Emails From Users</a></li>
+						</ul>
+					</li>
                 </ul>
 				<div class="add-menu-sidebar">
 					<img src="{{ asset('dashboard_assets') }}/images/calendar.png" alt="" class="mr-3">

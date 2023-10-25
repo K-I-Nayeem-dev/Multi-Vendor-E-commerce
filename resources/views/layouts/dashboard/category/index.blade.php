@@ -27,7 +27,7 @@
                         <th scope="col">Category Name</th>
                         <th scope="col">Category Slug</th>
                         <th scope="col">Category Details</th>
-                        <th scope="col">Action</th>
+                        <th scope="col" class="text-center" >Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -40,13 +40,15 @@
                                 <td class="text-center">
                                     <div class="d-flex">
                                         <a href="{{ route('category.edit', $d->id) }}" class="btn btn-primary btn-sm mx-2">Edit</a>
-                                        <form action="{{ route('category.destroy', $d->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                        </form>
-                                    </div>
-                                </td>
+                                            @if (Auth::user()->role == 'admin')
+                                                <form action="{{ route('category.destroy', $d->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
                             </tr>
                         @empty
                             <tr>
