@@ -784,6 +784,11 @@
 							<li><a href="personal-record.html">Personal Record</a></li>
 						</ul>
                     </li>
+                    <li><a href="{{ route('users') }}" aria-expanded="false">
+							<i class="flaticon-381-layer-1"></i>
+							<span class="nav-text">Users</span>
+						</a>
+                    </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Category</span>

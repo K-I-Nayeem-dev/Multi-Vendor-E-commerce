@@ -27,6 +27,18 @@ Route::post('/contact/message', [App\Http\Controllers\FrontendController::class,
 Route::get('/account/registration', [App\Http\Controllers\FrontendController::class, 'account_registration'])->name('account_registration');
 //frontend Routes
 
+
+// Fetch Users
+
+Route::get('/users', [App\Http\Controllers\HomeController::class, 'users'])->name('users');
+Route::post('/add/users', [App\Http\Controllers\HomeController::class, 'add_users'])->name('add_users');
+Route::get('/user/details/{id}', [App\Http\Controllers\HomeController::class, 'user_details'])->name('user_details');
+Route::get('/edit/user/{id}', [App\Http\Controllers\HomeController::class, 'edit_user'])->name('edit_user');
+Route::post('/update/user/{id}', [App\Http\Controllers\HomeController::class, 'update_user'])->name('update_user');
+
+// Fetch Users
+
+
 //frontend account Registraion routes
 
 Route::post('/customer/registraion', [App\Http\Controllers\CustomerController::class, 'customer_registration'])->name('customer_registration');
