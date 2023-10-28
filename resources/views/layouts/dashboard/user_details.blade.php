@@ -5,38 +5,68 @@
     <div class="row d-flex justify-content-center">
         <div class="col-lg-8">
             <div class="card">
-                <div class="card-header">Users Details</div>
+                <div class="card-header text-light bg-dark">Users Details</div>
                 <div class="card-body">
 
-                    <h4 class="my-3">ID: {{ $user->id }}</h4>
+                    <table class="table table-bordered border-primary">
+                        <tr>
+                            <th>Field</th>
+                            <th>Value</th>
+                        </tr>
+                        <tr>
+                            <td><h4 class="my-3">ID</h4></td>
+                            <td>{{ $user->id }}</td>
+                        </tr>
+                        <tr>
+                            <td><h4 class="my-3">Name</h4></td>
+                            <td>{{ $user->name }}</td>
+                        </tr>
+                        <tr>
+                            <td><h4 class="my-3">Email</h4></td>
+                            <td>{{ $user->email }}</td>
+                        </tr>
+                        <tr>
+                            @if ($user->phone_number)
+                                <td><h4 class="my-3">Phone Number</h4></td>
+                                <td>{{ $user->phone_number }}</td>
+                            @else
+                                <td><h4 class="my-3">Phone Number</h4></td>
+                                <td><h4>NULL</h4></td>
+                            @endif
+                        </tr>
+                        <tr>
+                            @if($user->created_at)
+                                <td><h4 class="my-3">Created At</h4></td>
+                                <td>{{ date('d-m-Y H:i:s', strtotime($user->created_at)) }}</td>
+                                
+                            @else
+                                <td><h4 class="my-3">Created At</h4></td>
+                                <td><h4>NULL</h4></td>
+                            @endif
+                        </tr>
+                        <tr>
+                            @if($user->updated_at)
+                                <td><h4 class="my-3">Created At</h4></td>
+                                <td>{{ date('d-m-Y H:i:s', strtotime($user->updated_at)) }}</td>
+                                
+                            @else
+                                <td><h4 class="my-3">Updated At</h4></td>
+                                <td><h4>Not Updated Yet</h4></td>
+                            @endif
+                        </tr>
+                        <tr>
+                            <td><h4 class="my-3">Role</h4></td>
+                            <td>{{ $user->role }}</td>
+                        </tr>
+                    </table>
 
-                    <h4 class="my-3">Name: {{ $user->name }}</h4>
-
-                    <h4 class="my-3">Email: {{ $user->email }}</h4>
-
-                    @if ($user->phone_number)
-                        <h4 class="my-3">Phone Number: {{ $user->phone_number }}</h4>
+                    @if(Auth::user()->role == 'admin')
+                        <a class="btn btn-primary btn-sm my-3 " href="{{ route('edit_user', $user->id) }}">Edit</a>
+                        <a class="btn btn-danger btn-sm my-3 mx-2 " href="{{ route('user_remove', $user->id) }}">Remove</a>
+                        <a class="btn btn-primary btn-sm my-3" href="{{ route('users') }}">Back to Users</a>
                     @else
-                        <h4 class="my-3">Phone Number: "NULL"</h4>
+                        <a class="btn btn-primary btn-sm my-3" href="{{ route('users') }}">Back to Users</a>
                     @endif
-
-                    @if($user->created_at)
-                        <h4 class="my-3">Created At : {{ date('d-m-Y H:i:s', strtotime($user->created_at)) }}</h4>
-                    @else
-                        <h4 class="my-3">Created At : 'NULL'</h4>
-                    @endif
-
-
-                    @if($user->updated_at)
-                        <h4 class="my-3">Updated At: {{ date('d-m-Y H:i:s', strtotime($user->updated_at)) }}</h4>
-                    @else
-                        <h4 class="my-3">Updated At: "Not Updated Yet"</h4>
-                    @endif
-
-                    <h4>Role: {{ $user->role }}</h4>
-
-                    <a class="btn btn-primary btn-sm my-3 " href="{{ route('edit_user', $user->id) }}">Edit</a>
-                    <a class="btn btn-primary btn-sm my-3 mx-2" href="{{ route('users') }}">Back to Users</a>
 
                 </div>
             </div>

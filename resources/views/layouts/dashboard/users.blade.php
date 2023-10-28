@@ -4,6 +4,7 @@
     <div class="row">
         {{-- Adding Admin from dashboard --}}
         <div class="col-lg-4">
+            @if (Auth::user()->role == "admin")
             <div class="card" style="height: 300px">
                 <div class="card-header">
                     <h4 class="card-title">Adimn Invitation</h4>
@@ -29,9 +30,14 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
         {{-- Fetch All User from Data Base --}}
-        <div class="col-lg-8 p-0 m-0">
+        @if (Auth::user()->role == "admin")
+            <div class="col-lg-8 p-0 m-0">
+        @else
+            <div class="col-lg-12 p-0 m-0">
+        @endif
             {{-- <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -65,7 +71,13 @@
             </div> --}}
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Database Have Total {{ $users->count() }} users</h4>   
+                    <h4 class="card-title">Total {{ $users->count() }} users</h4>
+                    @if (Auth::user()->role == "admin")
+                        <span><a href="" class="btn btn-primary btn-sm ">Admin</a></span>  
+                        <span><a href="{{ route('filter_moderator') }}" class="btn btn-primary btn-sm ">Moderator</a></span>  
+                        <span><a href="" class="btn btn-primary btn-sm ">Seller</a></span>  
+                        <span><a href="" class="btn btn-primary btn-sm ">Customer</a></span>  
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="table-responsive table-bordered">
@@ -76,7 +88,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Role</th>
-                                    <th>Details</th>
+                                    <th class="text-center">Details</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -90,7 +102,7 @@
                                     <td>{{ $user->email }}</td>
                                     {{-- <td><span class="badge light badge-success">{{ $user->created_at }}</span></td> --}}
                                     <td><p>{{ $user->role }}</p></td>
-                                    <td>
+                                    <td class="text-center">
                                         <a class="btn btn-primary btn-sm" href="{{ route('user_details', $user->id) }}">Details</a>
                                         {{-- <form action="{{ route('user_details', $user->id) }}" method="post">
                                             @csrf
@@ -110,4 +122,25 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('sweet_alert')
+    @if (session('remove_user'))
+        <script>
+            Swal.fire(
+            'User Remove',
+            'Successfully!',
+            'success'
+            )
+        </script>
+    @endif
+    @if (session('add_user'))
+        <script>
+            Swal.fire(
+            'Admin Invitation Send',
+            'Successfully!',
+            'success'
+            )
+        </script>
+    @endif
 @endsection

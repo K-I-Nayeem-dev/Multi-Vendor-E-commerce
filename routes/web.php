@@ -35,9 +35,15 @@ Route::post('/add/users', [App\Http\Controllers\HomeController::class, 'add_user
 Route::get('/user/details/{id}', [App\Http\Controllers\HomeController::class, 'user_details'])->name('user_details');
 Route::get('/edit/user/{id}', [App\Http\Controllers\HomeController::class, 'edit_user'])->name('edit_user');
 Route::post('/update/user/{id}', [App\Http\Controllers\HomeController::class, 'update_user'])->name('update_user');
+Route::get('/user/remove/{id}', [App\Http\Controllers\HomeController::class, 'user_remove'])->name('user_remove');
 
 // Fetch Users
 
+// filter Users
+
+Route::get('/moderator', [App\Http\Controllers\HomeController::class, 'moderator'])->name('filter_moderator');
+
+// filter Users
 
 //frontend account Registraion routes
 

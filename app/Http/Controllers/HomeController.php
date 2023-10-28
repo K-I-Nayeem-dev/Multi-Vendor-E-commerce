@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\In;
 
 class HomeController extends Controller
 {
@@ -73,7 +72,7 @@ class HomeController extends Controller
             'created_at'=> Carbon::now()
         ]);
 
-        return back();
+        return back()->with('add_user', "Admin User Successfully");
 
     }
 
@@ -107,5 +106,20 @@ class HomeController extends Controller
 
         return redirect('/user/details/'.$id)->with('user_update', 'User Details Update Successfully');
     }
+
+
+    // Remove Users
+    public function user_remove($id){
+        User::find($id)->delete();
+        return redirect('/users')->with('remove_user', 'User Remove Successfully');
+    }
+
+
+    // //filter moderator from database
+    // public function moderator(){
+        
+    // }
+
+
 
 }
