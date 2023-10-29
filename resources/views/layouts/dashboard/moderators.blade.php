@@ -71,15 +71,18 @@
             </div> --}}
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Total {{ $users->count() }} users</h4>
+                    <h4 class="card-title">Total {{ $moderators->count() }} Moderators</h4>
                     @if (Auth::user()->role == "admin")
+                    <span><a href="{{ route('users') }}" class="btn btn-primary btn-sm ">All Users</a></span>  
                         <span><a href="{{ route('filter_admin') }}" class="btn btn-primary btn-sm ">Admin</a></span>  
-                        <span><a href="{{ route('filter_moderator') }}" class="btn btn-primary btn-sm ">Moderator</a></span>  
                         <span><a href="{{ route('filter_sellers') }}" class="btn btn-primary btn-sm ">Seller</a></span>  
                         <span><a href="{{ route('filter_customers') }}" class="btn btn-primary btn-sm ">Customer</a></span>  
                     @endif
                 </div>
+
                 <div class="card-body">
+
+                @if( $moderators->count()  > 0)
                     <div class="table-responsive table-bordered">
                         <table class="table table-responsive-md">
                             <thead>
@@ -92,33 +95,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($users as $key => $user)
+                                @foreach ($moderators as $key => $moderator)
                                 <tr style="font-size: 12px">
                                     {{-- @php
                                         print_r($loop)
                                     @endphp --}}
                                     <td class="text-center"><strong>{{ ++$key }}</strong></td>
-                                    <td><p>{{ $user->name }}</p></td>
-                                    <td>{{ $user->email }}</td>
+                                    <td><p>{{ $moderator->name }}</p></td>
+                                    <td>{{ $moderator->email }}</td>
                                     {{-- <td><span class="badge light badge-success">{{ $user->created_at }}</span></td> --}}
-                                    <td><p>{{ $user->role }}</p></td>
+                                    <td><p>{{ $moderator->role }}</p></td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-sm" href="{{ route('user_details', $user->id) }}">Details</a>
+                                        <a class="btn btn-primary btn-sm" href="{{ route('user_details', $moderator->id) }}">Details</a>
                                         {{-- <form action="{{ route('user_details', $user->id) }}" method="post">
                                             @csrf
                                             <button type="submit" class="btn btn-primary btn-sm">Details</button>
                                         </form> --}}
                                     </td>
                                 </tr>
-                                @empty
-                                <tr>
-                                    <h5>No Users Found</h5>
-                                </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
+                @else
+                    <h4>No Moderator Found</h4>
+                @endif
+                    
                 </div>
+
             </div>
         </div>
     </div>

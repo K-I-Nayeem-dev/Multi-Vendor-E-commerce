@@ -62,7 +62,7 @@ class HomeController extends Controller
         // return $request;
         $request->validate([
             'admin_name'=> 'required',
-            'admin_email'=> 'required'
+            'admin_email'=> 'required|unique:App\Models\User,email'
         ]);
 
         User::insert([
@@ -116,9 +116,28 @@ class HomeController extends Controller
 
 
     // //filter moderator from database
-    // public function moderator(){
-        
-    // }
+    public function moderator(){
+        $moderators = User::all()->where('role', '=', 'moderator');
+        return view('layouts.dashboard.moderators', compact('moderators'));
+    }
+
+    // //filter admins from database
+    public function filter_admin(){
+        $admins = User::all()->where('role', '=', 'admin');
+        return view('layouts.dashboard.admins', compact('admins'));
+    }
+
+    // //filter sellers from database
+    public function filter_sellers(){
+        $sellers = User::all()->where('role', '=', 'seller');
+        return view('layouts.dashboard.sellers', compact('sellers'));
+    }
+
+    // //filter sellers from database
+    public function filter_customers(){
+        $customers = User::all()->where('role', '=', 'customer');
+        return view('layouts.dashboard.customers', compact('customers'));
+    }
 
 
 

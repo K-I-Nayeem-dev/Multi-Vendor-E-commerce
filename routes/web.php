@@ -41,7 +41,10 @@ Route::get('/user/remove/{id}', [App\Http\Controllers\HomeController::class, 'us
 
 // filter Users
 
-Route::get('/moderator', [App\Http\Controllers\HomeController::class, 'moderator'])->name('filter_moderator');
+Route::get('/moderators', [App\Http\Controllers\HomeController::class, 'moderator'])->name('filter_moderator');
+Route::get('/admins', [App\Http\Controllers\HomeController::class, 'filter_admin'])->name('filter_admin');
+Route::get('/sellers', [App\Http\Controllers\HomeController::class, 'filter_sellers'])->name('filter_sellers');
+Route::get('/customers', [App\Http\Controllers\HomeController::class, 'filter_customers'])->name('filter_customers');
 
 // filter Users
 
