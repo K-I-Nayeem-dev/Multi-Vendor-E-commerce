@@ -72,12 +72,10 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Total {{ $moderators->count() }} Moderators</h4>
-                    @if (Auth::user()->role == "admin")
                     <span><a href="{{ route('users') }}" class="btn btn-primary btn-sm ">All Users</a></span>  
-                        <span><a href="{{ route('filter_admin') }}" class="btn btn-primary btn-sm ">Admin</a></span>  
-                        <span><a href="{{ route('filter_sellers') }}" class="btn btn-primary btn-sm ">Seller</a></span>  
-                        <span><a href="{{ route('filter_customers') }}" class="btn btn-primary btn-sm ">Customer</a></span>  
-                    @endif
+                    <span><a href="{{ route('filter_admin') }}" class="btn btn-primary btn-sm ">Admin</a></span>  
+                    <span><a href="{{ route('filter_sellers') }}" class="btn btn-primary btn-sm ">Seller</a></span>  
+                    <span><a href="{{ route('filter_customers') }}" class="btn btn-primary btn-sm ">Customer</a></span>  
                 </div>
 
                 <div class="card-body">

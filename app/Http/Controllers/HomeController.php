@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewAdminEmail;
 use Illuminate\Http\Request;
 
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -65,12 +67,16 @@ class HomeController extends Controller
             'admin_email'=> 'required|unique:App\Models\User,email'
         ]);
 
+        $password = Str::random(8);
+
         User::insert([
             'name'=> $request->admin_name,
             'email'=> $request->admin_email,
-            'password'=> Str::random(8),
+            'password'=> bcrypt($password),
             'created_at'=> Carbon::now()
         ]);
+
+        Mail::to($request->admin_email)->send(new NewAdminEmail(Auth::user()->name, $request->admin_email, $password));
 
         return back()->with('add_user', "Admin User Successfully");
 

@@ -46,7 +46,7 @@
                         </tr>
                         <tr>
                             @if($user->updated_at)
-                                <td><h4 class="my-3">Created At</h4></td>
+                                <td><h4 class="my-3">Updated At</h4></td>
                                 <td>{{ date('d-m-Y H:i:s', strtotime($user->updated_at)) }}</td>
                                 
                             @else

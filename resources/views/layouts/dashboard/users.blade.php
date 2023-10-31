@@ -72,12 +72,10 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Total {{ $users->count() }} users</h4>
-                    @if (Auth::user()->role == "admin")
-                        <span><a href="{{ route('filter_admin') }}" class="btn btn-primary btn-sm ">Admin</a></span>  
-                        <span><a href="{{ route('filter_moderator') }}" class="btn btn-primary btn-sm ">Moderator</a></span>  
-                        <span><a href="{{ route('filter_sellers') }}" class="btn btn-primary btn-sm ">Seller</a></span>  
-                        <span><a href="{{ route('filter_customers') }}" class="btn btn-primary btn-sm ">Customer</a></span>  
-                    @endif
+                    <span><a href="{{ route('filter_admin') }}" class="btn btn-primary btn-sm ">Admin</a></span>  
+                    <span><a href="{{ route('filter_moderator') }}" class="btn btn-primary btn-sm ">Moderator</a></span>  
+                    <span><a href="{{ route('filter_sellers') }}" class="btn btn-primary btn-sm ">Seller</a></span>  
+                    <span><a href="{{ route('filter_customers') }}" class="btn btn-primary btn-sm ">Customer</a></span>  
                 </div>
                 <div class="card-body">
                     <div class="table-responsive table-bordered">
@@ -98,7 +96,12 @@
                                         print_r($loop)
                                     @endphp --}}
                                     <td class="text-center"><strong>{{ ++$key }}</strong></td>
-                                    <td><p>{{ $user->name }}</p></td>
+
+                                    {{-- @if($user->name)
+                                        <td><p>{{ Auth::user()->name }} (You)</p></td>
+                                    @endif --}}
+
+                                    <td>{{ $user->name}} {{ Auth::user()->name == $user->name ? '(You)' : '' }}</td>
                                     <td>{{ $user->email }}</td>
                                     {{-- <td><span class="badge light badge-success">{{ $user->created_at }}</span></td> --}}
                                     <td><p>{{ $user->role }}</p></td>
