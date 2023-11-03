@@ -29,6 +29,8 @@ class User extends Authenticatable
         'otp_send_status',
         'phone_number_update',
         'role',
+        'github_users_id',
+        'google_users_id',
     ];
 
     /**

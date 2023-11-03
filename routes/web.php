@@ -19,12 +19,14 @@ use App\Http\Controllers\CategoryController;
 Auth::routes();
 
 //frontend Routes
+
 Route::get('/', [App\Http\Controllers\FrontendController::class, 'frontend_master'])->name('frontend_master');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
 Route::get('/about', [App\Http\Controllers\FrontendController::class, 'frontend_about'])->name('frontend_about');
 Route::get('/contact', [App\Http\Controllers\FrontendController::class, 'frontend_contact'])->name('frontend_contact');
 Route::post('/contact/message', [App\Http\Controllers\FrontendController::class, 'contact_message'])->name('contact_post');
 Route::get('/account/registration', [App\Http\Controllers\FrontendController::class, 'account_registration'])->name('account_registration');
+
 //frontend Routes
 
 
@@ -51,9 +53,7 @@ Route::get('/customers', [App\Http\Controllers\HomeController::class, 'filter_cu
 //frontend account Registraion routes
 
 Route::post('/customer/registraion', [App\Http\Controllers\CustomerController::class, 'customer_registration'])->name('customer_registration');
-
 Route::post('/seller/registraion', [App\Http\Controllers\SellerController::class, 'seller_registration'])->name('seller_registration');
-
 Route::get('/seller/dashboard', [App\Http\Controllers\FrontendController::class, 'seller_dashboard'])->name('seller_dashboard');
 
 //frontend account Registraion routes
@@ -112,6 +112,13 @@ Route::post('/github/redirect', [App\Http\Controllers\SocialiteController::class
 Route::get('/github/callback', [App\Http\Controllers\SocialiteController::class, 'github_callback'])->name('github_callback');
 
 // Github Signin Routes
+
+// Google Signin Routes
+
+Route::post('/google/redirect', [App\Http\Controllers\SocialiteController::class, 'google_redirect'])->name('google_redirect');
+Route::get('/google/callback', [App\Http\Controllers\SocialiteController::class, 'google_callback'])->name('google_callback');
+
+// Google Signin Routes
 
 
 // Contact Us Email Routes

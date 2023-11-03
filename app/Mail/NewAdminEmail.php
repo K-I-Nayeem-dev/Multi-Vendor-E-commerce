@@ -31,7 +31,7 @@ class NewAdminEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Admin Email',
+            subject: 'Admin Invitation Email',
         );
     }
 

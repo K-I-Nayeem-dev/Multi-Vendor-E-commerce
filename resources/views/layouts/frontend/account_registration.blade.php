@@ -261,11 +261,15 @@
                                 </div>
 
                                 <div class="form_item_wrap">
-                                    <div class="form-item">
-                                        <h6 class="text-dark">Or SignUp With</h6>
+                                    <h6 class="text-dark my-3">Or SignUp With</h6>
+                                    <div class="form-item d-flex ">
                                         <form action="{{ route('github_redirect') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-secondary">SignUp With GitHub</button>
+                                        </form>
+                                        <form action="{{ route('google_redirect') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-secondary mx-3">SignUp With Google</button>
                                         </form>
                                     </div>
                                 </div>

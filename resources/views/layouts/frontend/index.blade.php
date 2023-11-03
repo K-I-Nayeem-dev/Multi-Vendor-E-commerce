@@ -1,7 +1,6 @@
 @extends('layouts.frontend.frontend_master')
 
 @section('content')
-      
         <!-- main body - start
         ================================================== -->
         <main>
@@ -399,7 +398,7 @@
                                 </div>
                                 <div class="top_category_carousel2" data-slick='{"dots": false}'>
 
-                                    @forelse ($category as $cate )
+                                    @forelse ($category as $cate)
                                         <div class="slider_item">
                                             <div class="category_boxed">
                                                 <a href="#!">
