@@ -92,6 +92,9 @@
                 @if(session('github_login'))
                     <div class="alert alert-success text-center">{{ session('github_login') }}</div>
                 @endif
+                @if(session('google_login'))
+                    <div class="alert alert-success text-center">{{ session('google_login') }}</div>
+                @endif
             </div>
             <div class="header_middle">
                 <div class="container">

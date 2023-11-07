@@ -41,10 +41,10 @@ class CategoryController extends Controller
     {
         $request->validate([
             'category_name'=>'required',
+            'category_image'=>'required',
         ]);
 
 
-        if($request->category_image){
             $new_name = $request->category_name.time() . "." . $request->file('category_image')->getClientOriginalExtension();
             $img =Image::make($request->file('category_image'))->resize(300, 300);
             $img->save(base_path('public\uploads\category_photos/' . $new_name), 80);
@@ -56,16 +56,6 @@ class CategoryController extends Controller
                 'category_image'=> $new_name,
                 'created_at' => Carbon::now(),
             ]);
-        }
-        else{
-            Category::insert([
-                'category_name'=> $request->category_name,
-                'category_slug'=> Str::slug($request->category_slug),
-                'category_description'=> $request->category_description,
-                'category_image'=> NULL,
-                'created_at' => Carbon::now(),
-            ]);
-        }
 
         return redirect('category')->with('category_add', 'Category Added Successfully');
 

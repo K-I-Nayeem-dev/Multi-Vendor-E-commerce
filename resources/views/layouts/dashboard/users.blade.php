@@ -101,7 +101,7 @@
                                         <td><p>{{ Auth::user()->name }} (You)</p></td>
                                     @endif --}}
 
-                                    <td>{{ $user->name}} {{ Auth::user()->name == $user->name ? '(You)' : '' }}</td>
+                                    <td>{{ $user->name}} <span class="text-danger">{{ Auth::user()->name == $user->name ? '(You)' : '' }}</span></td>
                                     <td>{{ $user->email }}</td>
                                     {{-- <td><span class="badge light badge-success">{{ $user->created_at }}</span></td> --}}
                                     <td><p>{{ $user->role }}</p></td>

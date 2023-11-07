@@ -111,6 +111,7 @@ class HomeController extends Controller
         ]);
 
         return redirect('/user/details/'.$id)->with('user_update', 'User Details Update Successfully');
+        
     }
 
 

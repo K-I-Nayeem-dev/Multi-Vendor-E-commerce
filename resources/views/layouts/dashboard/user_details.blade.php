@@ -62,7 +62,9 @@
 
                     @if(Auth::user()->role == 'admin')
                         <a class="btn btn-primary btn-sm my-3 " href="{{ route('edit_user', $user->id) }}">Edit</a>
-                        <a class="btn btn-danger btn-sm my-3 mx-2 " href="{{ route('user_remove', $user->id) }}">Remove</a>
+                        @if (auth()->user()->name != $user->name)
+                            <a class="btn btn-danger btn-sm my-3 mx-2 " href="{{ route('user_remove', $user->id) }}">Remove</a>
+                        @endif
                         <a class="btn btn-primary btn-sm my-3" href="{{ route('users') }}">Back to Users</a>
                     @else
                         <a class="btn btn-primary btn-sm my-3" href="{{ route('users') }}">Back to Users</a>

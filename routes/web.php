@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductsController;
+
 // use Illuminate\Support\Facades\Auth;
 
 /*
@@ -104,6 +106,10 @@ Route::get('/update/phone/number', [App\Http\Controllers\ProfileController::clas
 
 //Category Routes
 Route::resource('category', CategoryController::class);
+//Category Routes
+
+//Category Routes
+Route::resource('products', ProductsController::class);
 //Category Routes
 
 // Github Signin Routes
