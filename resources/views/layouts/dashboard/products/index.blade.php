@@ -20,6 +20,11 @@
                     @endif
                 </div>
             </div>
+
+                {{-- Category Trash Button --}}
+                    <a href="{{ route('product_trash') }}" class="btn btn-danger btn-sm mx-2">Go To Trash</a>
+                {{-- Category Trash Button --}}
+                
                 <table class="table">
                     <thead>
                     <tr>		

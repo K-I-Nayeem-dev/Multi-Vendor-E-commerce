@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\ContactMessage;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\SubscribeEmails;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -95,6 +96,15 @@ class FrontendController extends Controller
 
         return back()->with('message_sent', 'Email Send Successfully');
 
+    }
+
+    // Email Subscriber insert
+    public function subscribe_email(Request $request){
+        SubscribeEmails::insert([
+            'emails'=> $request->email,
+            'created_at'=> Carbon::now()
+        ]);
+        return back();
     }
 
 

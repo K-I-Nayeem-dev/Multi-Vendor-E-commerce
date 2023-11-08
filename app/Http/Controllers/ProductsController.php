@@ -92,4 +92,53 @@ class ProductsController extends Controller
         Products::findOrFail($products)->delete();
         return back()->with('cate_deleted', "ID " . $products . " Category Deleted");
     }
+
+    
+    // Products Trash Route index
+    public function product_trash()
+    {
+        return view('layouts.dashboard.trash.product_trash_index', [
+            'products'=>Products::onlyTrashed()->get(),
+            'delete'=>Products::onlyTrashed()->pluck('deleted_at'),
+        ]);
+    }
+
+    // Products Trash Route Show
+    public function product_trash_details(string $id)
+    {
+        $user = Products::withTrashed()->find($id);
+        return view('layouts.dashboard.trash.product_trash_show', compact('user'));
+    }
+
+      // Category Trash Route restore
+    public function product_trash_restore(string $id)
+    {
+        Products::withTrashed()->find($id)->restore();
+        Products::withTrashed()->find($id)->update([
+            'deleted_at'=>null,
+        ]);
+        return redirect('trash/product');
+    }
+
+    // Category Trash Route Permanent Delete
+    public function product_trash_delete(string $id)
+    {
+        Products::withTrashed()->find($id)->forceDelete();
+        return redirect('trash/product');
+    }
+
+     // Category Trash Route Empty Trash
+    public function empty_product_trash()
+    {
+        Products::onlyTrashed()->forceDelete();
+        return redirect('products');
+    }
+
+     // Category Trash Route Empty Trash
+    public function restore_product_trash()
+    {
+        Products::onlyTrashed()->restore();
+        return redirect('products');
+    }
+
 }

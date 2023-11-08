@@ -177,21 +177,7 @@ class CategoryController extends Controller
     public function restore_category_pulck()
     {
         $user = Category::withTrashed()->pluck('deleted_at');
-        
-            foreach ($user as $key => $use) 
-            {
-                // if($key > 0)
-                // {
-                    echo "<pre>";
-                    echo $use;
-                    echo "</pre>";
-                // }
-                // else
-                // {
-                //     echo "no Data Found";
-                // }
-            }
-        
+        return $user;
     }
 
 }

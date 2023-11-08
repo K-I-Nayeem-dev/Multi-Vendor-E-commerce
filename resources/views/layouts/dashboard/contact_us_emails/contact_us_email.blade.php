@@ -4,6 +4,9 @@
     <div class="container">
         <div class="row d-flex justify-content-center">
             <div class="col-lg-12">
+                
+                <a href="{{ route('trash_emails') }}" class="btn btn-danger btn-sm mx-2 mb-4">Go To Trash</a>
+
                     <table class="table table-success table-striped">
                         <tr class="text-center">
                             <th>Contact ID</th>
@@ -24,7 +27,7 @@
                                     <td>
                                         <form action="{{ route('contact_delete', $contact->id) }}" method="post">
                                             @csrf
-                                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            <button type="submit" class="btn btn-danger btn-sm">Trash</button>
                                         </form>
                                     </td>
                                 @endif
@@ -38,7 +41,7 @@
     </div>
 @endsection
 
-@section('sweet_alert')
+{{-- @section('sweet_alert')
 
     @if (session('delete_contact'))
         <script>
@@ -50,4 +53,4 @@
         </script>
     @endif
 
-@endsection
+@endsection --}}

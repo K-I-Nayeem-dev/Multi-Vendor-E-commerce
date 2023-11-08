@@ -253,10 +253,11 @@
                             <p>Get E-mail updates about our latest products and special offers.</p>
                         </div>
                         <div class="col col-lg-6">
-                            <form action="#!">
+                            <form action="{{ route('subscribe_email') }}" method="POST">
+                                @csrf
                                 <div class="newsletter_form">
                                     <input type="email" name="email" placeholder="Enter your email address">
-                                    <button type="submit" class="btn btn_secondary">Submit</button>
+                                    <button type="submit" class="btn btn_secondary">Subscribe</button>
                                 </div>
                             </form>
                         </div>

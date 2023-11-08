@@ -20,37 +20,45 @@
                     @endif
                 </div>
             </div>
-                {{-- Category Trash Button --}}
-                    <a href="{{ route('category_trash') }}" class="btn btn-danger btn-sm mx-2">Go To Trash</a>
-                {{-- Category Trash Button --}}
 
+                {{-- Products Trash Button --}}
+                    <div class="d-flex">
+                        <a href="{{ route('products.index') }}" class="btn btn-danger btn-sm mx-2">Go To Products</a>
+                        <div class="d-flex">
+                            <a href="{{ route('restore_product_trash') }}" class="btn btn-primary btn-sm mx-2">Restore All</a>
+                            <a href="{{ route('empty_product_trash') }}" class="btn btn-danger btn-sm mx-2">Delete All</a>
+                        </div>
+                    </div>
+                {{-- Products Trash Button --}}
+                
                 <table class="table">
                     <thead>
-                    <tr>
+                    <tr>		
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Product Name</th>
                         <th scope="col">Category ID</th>
-                        <th scope="col">Category Name</th>
-                        <th scope="col">Category Slug</th>
-                        <th scope="col">Category Details</th>
+                        <th scope="col" class="text-center">Details</th>
                         <th scope="col" class="text-center" >Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @forelse ($category as $key => $d )
+                        @forelse ($products as $product)
                             <tr>
-                                <td class="text-center">{{ ++$key }}</td>
-                                <td>{{ $d->Category_Name }}</td>
-                                <td>{{ $d->Category_Slug }}</td>
-                                <td class="text-center"><a href="{{ route('category.show', $d->id) }}" class="btn btn-info btn-sm">Details</a></td>
+                                <td>{{ $product->id }}</td>
+                                <td >{{ $product->name }}</td>
+                                <td class="text-center">{{ $product->category_id }}</td>
+                                <td class="text-center"><a href="{{ route('product_trash_details', $product->id) }}" class="btn btn-info btn-sm">Details</a></td>
                                 <td class="text-center">
-                                    <div class="d-flex">
-                                        <a href="{{ route('category.edit', $d->id) }}" class="btn btn-primary btn-sm mx-2">Edit</a>
-                                            @if (Auth::user()->role == 'admin')
-                                                <form action="{{ route('category.destroy', $d->id) }}" method="POST">
+                                    <div class="d-flex justify-content-center">
+                                        <a href="{{ route('product_trash_restore', $product->id) }}" class="btn btn-primary btn-sm mx-2">Restore</a>
+                                        <a href="{{ route('product_trash_delete', $product->id) }}" class="btn btn-danger btn-sm mx-2">Delete</a>
+                                            {{-- @if (Auth::user()->role == 'admin')
+                                                <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">Trash</button>
                                                 </form>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </td>
                             </tr>

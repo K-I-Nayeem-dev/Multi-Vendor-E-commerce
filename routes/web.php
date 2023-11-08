@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\FrontendController;
 
 // use Illuminate\Support\Facades\Auth;
 
@@ -108,8 +110,7 @@ Route::get('/update/phone/number', [App\Http\Controllers\ProfileController::clas
 Route::resource('category', CategoryController::class);
 //Category Routes
 
-// Trash Routes
-
+// Category Trash Routes
 Route::get('trash/category/',[CategoryController::class, 'category_trash'])->name('category_trash');
 Route::get('trash/category/{id}',[CategoryController::class, 'category_trash_details'])->name('category_trash_details');
 Route::get('trash/category/restore/{id}',[CategoryController::class, 'category_trash_restore'])->name('category_trash_restore');
@@ -117,8 +118,20 @@ Route::get('trash/category/permanent/delete/{id}',[CategoryController::class, 'c
 Route::get('trash/empty-trash',[CategoryController::class, 'empty_category_trash'])->name('empty_category_trash');
 Route::get('trash/resotre-trash',[CategoryController::class, 'restore_category_trash'])->name('restore_category_trash');
 Route::get('trash/resotre-pluck',[CategoryController::class, 'restore_category_pulck'])->name('restore_category_pulck');
+//Category Trash Routes
 
-//Trash Routes
+// Products Trash Routes
+Route::get('trash/product',[ProductsController::class, 'product_trash'])->name('product_trash');
+Route::get('trash/product/{id}',[ProductsController::class, 'product_trash_details'])->name('product_trash_details');
+Route::get('trash/product/restore/{id}',[ProductsController::class, 'product_trash_restore'])->name('product_trash_restore');
+Route::get('trash/product/permanent/delete/{id}',[ProductsController::class, 'product_trash_delete'])->name('product_trash_delete');
+Route::get('trash-product/empty-trash',[ProductsController::class, 'empty_product_trash'])->name('empty_product_trash');
+Route::get('trash-product/resotre-trash',[ProductsController::class, 'restore_product_trash'])->name('restore_product_trash');
+// Route::get('trash-product/resotre-pluck',[ProfileController::class, 'restore_category_pulck'])->name('restore_product_pulck');
+//Products Trash Routes
+
+
+//Category Routes
 Route::resource('products', ProductsController::class);
 //Category Routes
 
@@ -142,3 +155,17 @@ Route::get('contact/emails', [App\Http\Controllers\ContactController::class, 'co
 Route::get('emails/{id}', [App\Http\Controllers\ContactController::class, 'emails'])->name('emails');
 Route::post('contact/email/delete/{id}', [App\Http\Controllers\ContactController::class, 'contact_delete'])->name('contact_delete');
 // Contact Us Email Routes
+
+// Contact Trash Routes
+Route::get('contact/emails/trash', [ContactController::class, 'trash_emails'])->name('trash_emails');
+Route::get('contact/emails/restore/{id}', [ContactController::class, 'restore_emails'])->name('restore_emails');
+Route::get('contact/emails/delete/{id}', [ContactController::class, 'delete_emails'])->name('delete_emails');
+Route::get('contact/emails/details/{id}', [ContactController::class, 'trash_email_details'])->name('trash_email_details');
+Route::get('contact/emails/restore-all', [ContactController::class, 'restoreAll_emails'])->name('restoreAll_emails');
+Route::get('contact/emails/delete-all', [ContactController::class, 'deleteAll_emails'])->name('deleteAll_emails');
+// Contact Trash Routes
+
+
+// Email Subscriber Routes
+Route::post('subscribe/emails', [App\Http\Controllers\FrontendController::class, 'subscribe_email'])->name('subscribe_email');
+// Email Subscriber Routes
