@@ -20,8 +20,25 @@
                     @endif
                 </div>
             </div>
-                <a href="{{ route('category_trash') }}" class="btn btn-danger btn-sm mx-2">Go To Trash</a>
-                <table class="table">
+                
+            
+                {{-- @if ($delete)
+                    <div class="d-flex"> --}}
+
+                        <a href="{{ route('category.index') }}" class="btn btn-danger btn-sm mx-2">Go To Categories</a>
+                        <div class="d-flex justify-content-end">
+                            <a href="{{ route('restore_category_trash') }}" class="btn btn-primary btn-sm mx-2">Restore All</a>
+                            <a href="{{ route('empty_category_trash') }}" class="btn btn-danger btn-sm mx-2">Empty Trash</a>
+                            <a href="{{ route('restore_category_pulck') }}" class="btn btn-danger btn-sm mx-2">Pluck</a>
+                        </div>
+
+                    {{-- </div>
+                @else
+                    <a href="{{ route('category.index') }}" class="btn btn-danger btn-sm mx-2">Go To Categories</a>
+                @endif
+                --}}
+                    
+                    <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">Category ID</th>
@@ -37,17 +54,18 @@
                                 <td class="text-center">{{ ++$key }}</td>
                                 <td>{{ $d->Category_Name }}</td>
                                 <td>{{ $d->Category_Slug }}</td>
-                                <td class="text-center"><a href="{{ route('category.show', $d->id) }}" class="btn btn-info btn-sm">Details</a></td>
+                                <td class="text-center"><a href="{{ route('category_trash_details', $d->id) }}" class="btn btn-info btn-sm">Details</a></td>
                                 <td class="text-center">
                                     <div class="d-flex">
-                                        <a href="{{ route('category.edit', $d->id) }}" class="btn btn-primary btn-sm mx-2">Edit</a>
-                                            @if (Auth::user()->role == 'admin')
+                                        <a href="{{ route('category_trash_delete', $d->id) }}" class="btn btn-danger btn-sm mx-2">Delete</a>
+                                        <a href="{{ route('category_trash_restore', $d->id) }}" class="btn btn-primary btn-sm mx-2">Restore</a>
+                                            {{-- @if (Auth::user()->role == 'admin')
                                                 <form action="{{ route('category.destroy', $d->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Trash</button>
+                                                    <button type="submit" class="btn btn-danger btn-sm">Restore</button>
                                                 </form>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                     </td>
                             </tr>

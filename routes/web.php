@@ -108,7 +108,17 @@ Route::get('/update/phone/number', [App\Http\Controllers\ProfileController::clas
 Route::resource('category', CategoryController::class);
 //Category Routes
 
-//Category Routes
+// Trash Routes
+
+Route::get('trash/category/',[CategoryController::class, 'category_trash'])->name('category_trash');
+Route::get('trash/category/{id}',[CategoryController::class, 'category_trash_details'])->name('category_trash_details');
+Route::get('trash/category/restore/{id}',[CategoryController::class, 'category_trash_restore'])->name('category_trash_restore');
+Route::get('trash/category/permanent/delete/{id}',[CategoryController::class, 'category_trash_delete'])->name('category_trash_delete');
+Route::get('trash/empty-trash',[CategoryController::class, 'empty_category_trash'])->name('empty_category_trash');
+Route::get('trash/resotre-trash',[CategoryController::class, 'restore_category_trash'])->name('restore_category_trash');
+Route::get('trash/resotre-pluck',[CategoryController::class, 'restore_category_pulck'])->name('restore_category_pulck');
+
+//Trash Routes
 Route::resource('products', ProductsController::class);
 //Category Routes
 

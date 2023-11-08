@@ -125,4 +125,73 @@ class CategoryController extends Controller
         Category::findOrFail($id)->delete();
         return back()->with('cate_deleted', "ID " . $id . " Category Deleted");
     }
+
+    // Category Trash Route index
+    public function category_trash()
+    {
+        return view('layouts.dashboard.trash.category_trash_index', [
+            'category'=>Category::onlyTrashed()->get(),
+            'delete'=>Category::onlyTrashed()->pluck('deleted_at'),
+        ]);
+    }
+    
+    // Category Trash Route show
+    public function category_trash_details(string $id)
+    {
+        $user = Category::withTrashed()->find($id);
+        return view('layouts.dashboard.trash.category_trash_show', compact('user'));
+    }
+
+    // Category Trash Route restore
+    public function category_trash_restore(string $id)
+    {
+        Category::withTrashed()->find($id)->restore();
+        Category::withTrashed()->find($id)->update([
+            'deleted_at'=>null,
+        ]);
+        return redirect('trash/category');
+    }
+
+    // Category Trash Route Permanent Delete
+    public function category_trash_delete(string $id)
+    {
+        Category::withTrashed()->find($id)->forceDelete();
+        return redirect('category');
+    }
+
+    // Category Trash Route Empty Trash
+    public function empty_category_trash()
+    {
+        Category::onlyTrashed()->forceDelete();
+        return redirect('category');
+    }
+
+    // Category Trash Route Empty Trash
+    public function restore_category_trash()
+    {
+        Category::onlyTrashed()->restore();
+        return redirect('category');
+    }
+
+    // Category Trash Route Empty Trash
+    public function restore_category_pulck()
+    {
+        $user = Category::withTrashed()->pluck('deleted_at');
+        
+            foreach ($user as $key => $use) 
+            {
+                // if($key > 0)
+                // {
+                    echo "<pre>";
+                    echo $use;
+                    echo "</pre>";
+                // }
+                // else
+                // {
+                //     echo "no Data Found";
+                // }
+            }
+        
+    }
+
 }
