@@ -202,7 +202,8 @@
                                 </div>
                                 <div class="product-area clearfix">
                                     @foreach ($products as $product)
-                                        <div class="grid">
+                                    <div class="grid">
+                                        <a href="{{ route('productView',[$product->productToCategory->Category_Slug,$product->name])}}">
                                         <div class="product-pic">
                                             <img  class="rounded" src="{{ asset('uploads/thumbnail_photos') }}/{{ $product->thumbnail }}" alt="{{ $product->thumbnail }}">
                                             @if ($product->discount_price)
@@ -251,10 +252,11 @@
                                                 <button class="add-to-cart">Add to cart</button>
                                             </div>
                                         </div>
-                                        </div>
+                                        </a>
+                                    </div>
+                                    </div>
                                     @endforeach
                                 </div>
-                            </div>
                             
                             <div class="top_category_wrap">
                                 <div class="sec-title-link">

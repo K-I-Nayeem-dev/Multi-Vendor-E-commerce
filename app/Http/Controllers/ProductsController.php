@@ -174,4 +174,28 @@ class ProductsController extends Controller
         return redirect('products');
     }
 
+        //Product page Routes
+
+        public function productView($Category_Slug , $product_name){
+
+            if(Category::where('Category_Slug', $Category_Slug)->exists())
+            {
+                if(Products::where('name', $product_name)->exists())
+                {
+                    $product = Products::where('name', $product_name)->first();
+                    return view('layouts.dashboard.products.productView', compact('product'),[
+                        'products'=>Products::all(),
+                    ]);
+                }else
+                {
+                    return 'Error With Product Page';
+                }
+            }else
+            {
+                return 'Error With Category Name';
+            }
+
+        }
+        
+        // return view('layouts.dashboard.products.product.page', compact('product'));
 }

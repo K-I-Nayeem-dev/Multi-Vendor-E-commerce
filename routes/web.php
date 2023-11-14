@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\FrontendController;
+use App\Models\Products;
 
 // use Illuminate\Support\Facades\Auth;
 
@@ -169,3 +170,8 @@ Route::get('contact/emails/delete-all', [ContactController::class, 'deleteAll_em
 // Email Subscriber Routes
 Route::post('subscribe/emails', [App\Http\Controllers\FrontendController::class, 'subscribe_email'])->name('subscribe_email');
 // Email Subscriber Routes
+
+
+// product Page Routes
+Route::get('product/{Category_Slug}/{name}', [ProductsController::class, 'productView'])->name('productView');
+// product Page Routes
