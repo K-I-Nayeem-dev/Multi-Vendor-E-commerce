@@ -59,6 +59,7 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Select Category</label>
                             <select class="form-control" name="category_id">
+                                <option value="">Select Categories</option>
                                 @foreach ($categories as $category)
                                     <option  value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach
@@ -91,7 +92,7 @@
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Short Description</label>
-                            <input type="text" class="form-label rounded p-3 form-control"name="short_description" placeholder="Short Description" value="{{ old('short_description') }}"></input>
+                            <textarea class="form-label rounded form-control py-3 px-3" id="" cols="30" rows="3" name="short_description" value="{{ old('short_description') }}" placeholder="Write Short Description"></textarea>
                             @error('short_description')
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror
@@ -99,7 +100,7 @@
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Long Description</label>
-                            <input type="text"  class="form-label rounded p-3 form-control"name="long_description" placeholder="Long Description" value="{{ old('long_description') }}"></input>
+                            <textarea class="form-label rounded form-control py-3 px-3" id="" cols="30" rows="4" name="long_description" value="{{ old('long_description') }}" placeholder="Write Long Description"></textarea>
                             @error('long_description')
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror
@@ -107,7 +108,7 @@
         
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Additional Information</label>
-                            <input type="text"  class="form-label rounded p-3 form-control"name="additional_information" placeholder="Additional Information" value="{{ old('additional_information') }}"></input>
+                            <textarea class="form-label rounded form-control py-3 px-3" id="" cols="30" rows="5" name="additional_information" value="{{ old('additional_information') }}" placeholder="Write Additional Information"></textarea>
                             @error('additional_information')
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror

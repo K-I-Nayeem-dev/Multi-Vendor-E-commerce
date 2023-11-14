@@ -93,10 +93,14 @@ class CategoryController extends Controller
             'category_name'=>'required',
         ]);
 
-        if($request->category_image){
+        if($request->hasFile('category_image')){
+
+            unlink(base_path('public/uploads/category_photos/' . Category::find($id)->Category_Image ));
+
             $new_name = $request->category_name.time() . "." . $request->file('category_image')->getClientOriginalExtension();
             $img =Image::make($request->file('category_image'))->resize(300, 300);
             $img->save(base_path('public\uploads\category_photos/' . $new_name), 80);
+
             Category::find($id)->update([
                 'category_name'=> $request->category_name,
                 'category_slug'=> Str::slug($request->category_slug),
@@ -104,7 +108,9 @@ class CategoryController extends Controller
                 'category_image'=> $new_name,
                 'updated_at' => Carbon::now(),
             ]);
+            
         }else{
+
             Category::find($id)->update([
                 'category_name'=> $request->category_name,
                 'category_slug'=> Str::slug($request->category_slug),
@@ -115,6 +121,7 @@ class CategoryController extends Controller
         }
 
         return redirect('category')->with('category_update', 'ID '. $id. ' Category Update Successfully');
+
     }
 
     /**
@@ -157,6 +164,7 @@ class CategoryController extends Controller
     {
         Category::withTrashed()->find($id)->forceDelete();
         return redirect('category');
+
     }
 
     // Category Trash Route Empty Trash

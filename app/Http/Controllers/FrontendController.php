@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\ContactMessage;
 use App\Models\Category;
 use App\Models\Contact;
+use App\Models\Products;
 use App\Models\SubscribeEmails;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -17,7 +18,8 @@ class FrontendController extends Controller
     {
         return view('layouts.frontend.index',
             [
-                'category'=>Category::all()
+                'category'=>Category::all(),
+                'products'=>Products::latest()->get(),
             ]
         );
     }

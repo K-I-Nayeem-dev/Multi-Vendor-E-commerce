@@ -34,6 +34,7 @@
                 <table class="table">
                     <thead>
                     <tr>		
+                        <th scope="col">SL</th>
                         <th scope="col">Product ID</th>
                         <th scope="col">Product Name</th>
                         <th scope="col">Category ID</th>
@@ -42,8 +43,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @forelse ($products as $product)
+                        @forelse ($products as $key => $product)
                             <tr>
+                                <td>{{ ++$key }}</td>
                                 <td>{{ $product->id }}</td>
                                 <td >{{ $product->name }}</td>
                                 <td class="text-center">{{ $product->category_id }}</td>

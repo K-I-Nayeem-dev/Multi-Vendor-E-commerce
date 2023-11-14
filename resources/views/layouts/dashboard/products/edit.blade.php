@@ -112,6 +112,11 @@
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="d-flex my-3 align-items-center">
+                            <label for="exampleInputEmail1" class="form-label mr-4">Product Image :</label>
+                            <img width="150" class="rounded" src="{{ asset('uploads/thumbnail_photos') }}/{{ $user->thumbnail }}" alt="{{ $user->thumbnail  }}">
+                        </div>
         
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Product Thumbnail</label>

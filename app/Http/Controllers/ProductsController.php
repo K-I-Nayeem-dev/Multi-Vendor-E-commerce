@@ -7,6 +7,8 @@ use App\Models\Products;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Cast\String_;
+use Intervention\Image\ImageManagerStatic as Image;
+
 
 class ProductsController extends Controller
 {
@@ -39,10 +41,21 @@ class ProductsController extends Controller
             '*' => 'required',
         ]);
 
-        Products::create($request->except('_token') + [
+        $product = Products::create($request->except('_token') + [
             'created_at'=> Carbon::now(),
-            'updated_at'=> null
         ]);
+
+        if($request->hasFile('thumbnail')){
+            $new_name = $product->name.time() . "." . $request->file('thumbnail')->getClientOriginalExtension();
+            $img =Image::make($request->file('thumbnail'))->resize(300, 300);
+            $img->save(base_path('public\uploads\thumbnail_photos/' . $new_name), 80);
+    
+            Products::find($product->id)->update([
+                'thumbnail'=> $new_name,
+                'updated_at'=> null
+            ]);
+            
+        }
 
         return redirect()->route('products.create');
 
@@ -71,17 +84,36 @@ class ProductsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $products)
+    public function update(Request $request, string $id)
     {
+        
         $request->validate([
             '*' => 'required',
         ]);
 
-        Products::find($products)->update($request->except('_token') + [
-            'updated_at'=> Carbon::now()
-        ]);
 
-        return redirect()->route('products.edit', $products);
+        if($request->hasFile('thumbnail')){
+
+            unlink(base_path('public/uploads/thumbnail_photos/' . Products::find($id)->thumbnail ));
+
+            $new_name = $request->name.time() . "." . $request->file('thumbnail')->getClientOriginalExtension();
+            $img =Image::make($request->file('thumbnail'))->resize(300, 300);
+            $img->save(base_path('public\uploads\thumbnail_photos/' . $new_name), 80);
+
+            Products::find($id)->update([
+                'thumbnail'=> $new_name,
+                'updated_at'=> Carbon::now()
+            ]);
+        }
+        else
+        {
+            Products::find($id)->update($request->except('_token') + [
+                'updated_at'=> Carbon::now()
+            ]);
+        }
+
+        return redirect()->route('products.edit', $id);
+
     }
 
     /**
@@ -90,6 +122,7 @@ class ProductsController extends Controller
     public function destroy(string $products)
     {
         Products::findOrFail($products)->delete();
+        // unlink(base_path('public/uploads/thumbnail_photos/'.Products::find($products)->thumbnail));
         return back()->with('cate_deleted', "ID " . $products . " Category Deleted");
     }
 

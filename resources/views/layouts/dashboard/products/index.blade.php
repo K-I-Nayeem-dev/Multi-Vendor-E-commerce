@@ -28,18 +28,22 @@
                 <table class="table">
                     <thead>
                     <tr>		
+                        <th scope="col">SL</th>
                         <th scope="col">Product ID</th>
                         <th scope="col">Product Name</th>
+                        <th scope="col">Category Name</th>
                         <th scope="col">Category ID</th>
                         <th scope="col" class="text-center">Details</th>
                         <th scope="col" class="text-center" >Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                        @forelse ($products as $product)
+                        @forelse ($products as $key => $product)
                             <tr>
+                                <td>{{ ++$key }}</td>
                                 <td>{{ $product->id }}</td>
                                 <td >{{ $product->name }}</td>
+                                <td >{{ $product->productToCategory->Category_Name }}</td>
                                 <td class="text-center">{{ $product->category_id }}</td>
                                 <td class="text-center"><a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm">Details</a></td>
                                 <td class="text-center">
@@ -59,6 +63,7 @@
                             <tr>
                                 <th>
                                     <p class="alert alert-info">No Data Found Yet</p>
+                                    <a href="{{ route('products.create') }}" class="btn btn-primary mt-3 btn-sm">Add Products</a>
                                 </th>
                             </tr>
                         @endforelse
