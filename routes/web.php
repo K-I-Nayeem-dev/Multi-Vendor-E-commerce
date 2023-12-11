@@ -2,9 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SellerController;
+use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\VariationController;
 use App\Models\Products;
 
 // use Illuminate\Support\Facades\Auth;
@@ -25,86 +32,86 @@ Auth::routes();
 
 //frontend Routes
 
-Route::get('/', [App\Http\Controllers\FrontendController::class, 'frontend_master'])->name('frontend_master');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
-Route::get('/about', [App\Http\Controllers\FrontendController::class, 'frontend_about'])->name('frontend_about');
-Route::get('/contact', [App\Http\Controllers\FrontendController::class, 'frontend_contact'])->name('frontend_contact');
-Route::post('/contact/message', [App\Http\Controllers\FrontendController::class, 'contact_message'])->name('contact_post');
-Route::get('/account/registration', [App\Http\Controllers\FrontendController::class, 'account_registration'])->name('account_registration');
+Route::get('/', [FrontendController::class, 'frontend_master'])->name('frontend_master');
+Route::get('/home', [HomeController::class, 'dashboard_home'])->name('dashboard_home');
+Route::get('/about', [FrontendController::class, 'frontend_about'])->name('frontend_about');
+Route::get('/contact', [FrontendController::class, 'frontend_contact'])->name('frontend_contact');
+Route::post('/contact/message', [FrontendController::class, 'contact_message'])->name('contact_post');
+Route::get('/account/registration', [FrontendController::class, 'account_registration'])->name('account_registration');
 
 //frontend Routes
 
 
 // Fetch Users
 
-Route::get('/users', [App\Http\Controllers\HomeController::class, 'users'])->name('users');
-Route::post('/add/users', [App\Http\Controllers\HomeController::class, 'add_users'])->name('add_users');
-Route::get('/user/details/{id}', [App\Http\Controllers\HomeController::class, 'user_details'])->name('user_details');
-Route::get('/edit/user/{id}', [App\Http\Controllers\HomeController::class, 'edit_user'])->name('edit_user');
-Route::post('/update/user/{id}', [App\Http\Controllers\HomeController::class, 'update_user'])->name('update_user');
-Route::get('/user/remove/{id}', [App\Http\Controllers\HomeController::class, 'user_remove'])->name('user_remove');
+Route::get('/users', [HomeController::class, 'users'])->name('users');
+Route::post('/add/users', [HomeController::class, 'add_users'])->name('add_users');
+Route::get('/user/details/{id}', [HomeController::class, 'user_details'])->name('user_details');
+Route::get('/edit/user/{id}', [HomeController::class, 'edit_user'])->name('edit_user');
+Route::post('/update/user/{id}', [HomeController::class, 'update_user'])->name('update_user');
+Route::get('/user/remove/{id}', [HomeController::class, 'user_remove'])->name('user_remove');
 
 // Fetch Users
 
 // filter Users
 
-Route::get('/moderators', [App\Http\Controllers\HomeController::class, 'moderator'])->name('filter_moderator');
-Route::get('/admins', [App\Http\Controllers\HomeController::class, 'filter_admin'])->name('filter_admin');
-Route::get('/sellers', [App\Http\Controllers\HomeController::class, 'filter_sellers'])->name('filter_sellers');
-Route::get('/customers', [App\Http\Controllers\HomeController::class, 'filter_customers'])->name('filter_customers');
+Route::get('/moderators', [HomeController::class, 'moderator'])->name('filter_moderator');
+Route::get('/admins', [HomeController::class, 'filter_admin'])->name('filter_admin');
+Route::get('/sellers', [HomeController::class, 'filter_sellers'])->name('filter_sellers');
+Route::get('/customers', [HomeController::class, 'filter_customers'])->name('filter_customers');
 
 // filter Users
 
 //frontend account Registraion routes
 
-Route::post('/customer/registraion', [App\Http\Controllers\CustomerController::class, 'customer_registration'])->name('customer_registration');
-Route::post('/seller/registraion', [App\Http\Controllers\SellerController::class, 'seller_registration'])->name('seller_registration');
-Route::get('/seller/dashboard', [App\Http\Controllers\FrontendController::class, 'seller_dashboard'])->name('seller_dashboard');
+Route::post('/customer/registraion', [CustomerController::class, 'customer_registration'])->name('customer_registration');
+Route::post('/seller/registraion', [SellerController::class, 'seller_registration'])->name('seller_registration');
+Route::get('/seller/dashboard', [FrontendController::class, 'seller_dashboard'])->name('seller_dashboard');
 
 //frontend account Registraion routes
 
 //frontend account signup route
-Route::get('/account/login', [App\Http\Controllers\FrontendController::class, 'account_login'])->name('account_login');
+Route::get('/account/login', [FrontendController::class, 'account_login'])->name('account_login');
 //frontend account signup route
 
 
 
 //Dashboard Routes
-Route::get('/dashboard/home', [App\Http\Controllers\HomeController::class, 'dashboard_home'])->name('dashboard_home');
-Route::get('/dashboard/profile', [App\Http\Controllers\ProfileController::class, 'profile'])->name('dashboard_profile');
+Route::get('/dashboard/home', [HomeController::class, 'dashboard_home'])->name('dashboard_home');
+Route::get('/dashboard/profile', [ProfileController::class, 'profile'])->name('dashboard_profile');
 //Dashboard Routes
 
 //frontEnd Login Routes
-Route::post('/accounts', [App\Http\Controllers\FrontendController::class, 'accounts'])->name('accounts');
+Route::post('/accounts', [FrontendController::class, 'accounts'])->name('accounts');
 //frontEnd Login Routes
 
 //frontEnd Profile Update Routes
-Route::post('/accounts/update', [App\Http\Controllers\SellerController::class, 'accounts_update'])->name('accounts_update');
+Route::post('/accounts/update', [SellerController::class, 'accounts_update'])->name('accounts_update');
 //frontEnd Profile Update Routes
 
 //Profile Photo and Cover Photo route
 
-Route::post('/profile/photo/upload', [App\Http\Controllers\ProfileController::class, 'profile_photo_upload'])->name('profile_photo_upload');
+Route::post('/profile/photo/upload', [ProfileController::class, 'profile_photo_upload'])->name('profile_photo_upload');
 
-Route::post('/cover/photo/upload', [App\Http\Controllers\ProfileController::class, 'cover_photo_upload'])->name('cover_photo_upload');
+Route::post('/cover/photo/upload', [ProfileController::class, 'cover_photo_upload'])->name('cover_photo_upload');
 
 //Profile Photo and Cover Photo route
 
 
 //Password change route
-Route::post('/password/check', [App\Http\Controllers\ProfileController::class, 'password_check'])->name('password_check');
-Route::post('/password/change', [App\Http\Controllers\ProfileController::class, 'password_changed'])->name('password_changed');
+Route::post('/password/check', [ProfileController::class, 'password_check'])->name('password_check');
+Route::post('/password/change', [ProfileController::class, 'password_changed'])->name('password_changed');
 //Password change route
 
 //phone_number Verify route
-Route::post('/phone/number/add', [App\Http\Controllers\ProfileController::class, 'phone_number_add'])->name('phone_number_add');
-Route::get('/verify/otp/send', [App\Http\Controllers\ProfileController::class, 'verify_otp_send'])->name('verify_otp_send');
-Route::post('/verify/otp/confirm', [App\Http\Controllers\ProfileController::class, 'verify_otp_confirm'])->name('verify_otp_confirm');
+Route::post('/phone/number/add', [ProfileController::class, 'phone_number_add'])->name('phone_number_add');
+Route::get('/verify/otp/send', [ProfileController::class, 'verify_otp_send'])->name('verify_otp_send');
+Route::post('/verify/otp/confirm', [ProfileController::class, 'verify_otp_confirm'])->name('verify_otp_confirm');
 //phone_number Verify route
 
 
 //update phone_number
-Route::get('/update/phone/number', [App\Http\Controllers\ProfileController::class, 'update_number_add'])->name('update_number_add');
+Route::get('/update/phone/number', [ProfileController::class, 'update_number_add'])->name('update_number_add');
 //update phone_number 
 
 //Category Routes
@@ -132,29 +139,29 @@ Route::get('trash-product/resotre-trash',[ProductsController::class, 'restore_pr
 //Products Trash Routes
 
 
-//Category Routes
+//Products Routes
 Route::resource('products', ProductsController::class);
-//Category Routes
+//Products Routes
 
 // Github Signin Routes
 
-Route::post('/github/redirect', [App\Http\Controllers\SocialiteController::class, 'github_redirect'])->name('github_redirect');
-Route::get('/github/callback', [App\Http\Controllers\SocialiteController::class, 'github_callback'])->name('github_callback');
+Route::post('/github/redirect', [SocialiteController::class, 'github_redirect'])->name('github_redirect');
+Route::get('/github/callback', [SocialiteController::class, 'github_callback'])->name('github_callback');
 
 // Github Signin Routes
 
 // Google Signin Routes
 
-Route::post('/google/redirect', [App\Http\Controllers\SocialiteController::class, 'google_redirect'])->name('google_redirect');
-Route::get('/google/callback', [App\Http\Controllers\SocialiteController::class, 'google_callback'])->name('google_callback');
+Route::post('/google/redirect', [SocialiteController::class, 'google_redirect'])->name('google_redirect');
+Route::get('/google/callback', [SocialiteController::class, 'google_callback'])->name('google_callback');
 
 // Google Signin Routes
 
 
 // Contact Us Email Routes
-Route::get('contact/emails', [App\Http\Controllers\ContactController::class, 'contact_us_emails'])->name('contact_us_emails');
-Route::get('emails/{id}', [App\Http\Controllers\ContactController::class, 'emails'])->name('emails');
-Route::post('contact/email/delete/{id}', [App\Http\Controllers\ContactController::class, 'contact_delete'])->name('contact_delete');
+Route::get('contact/emails', [ContactController::class, 'contact_us_emails'])->name('contact_us_emails');
+Route::get('emails/{id}', [ContactController::class, 'emails'])->name('emails');
+Route::post('contact/email/delete/{id}', [ContactController::class, 'contact_delete'])->name('contact_delete');
 // Contact Us Email Routes
 
 // Contact Trash Routes
@@ -168,10 +175,18 @@ Route::get('contact/emails/delete-all', [ContactController::class, 'deleteAll_em
 
 
 // Email Subscriber Routes
-Route::post('subscribe/emails', [App\Http\Controllers\FrontendController::class, 'subscribe_email'])->name('subscribe_email');
+Route::post('subscribe/emails', [FrontendController::class, 'subscribe_email'])->name('subscribe_email');
 // Email Subscriber Routes
 
 
 // product Page Routes
-Route::get('product/{Category_Slug}/{name}', [ProductsController::class, 'productView'])->name('productView');
+Route::get('product/{id}/{name}', [ProductsController::class, 'productDetails'])->name('productDetails');
 // product Page Routes
+
+// Variation Routes
+Route::resource('variation', VariationController::class);
+// Variation Routes
+
+// // Colors Routes
+// Route::resource('color', ColorController::class);
+// // Color Routes

@@ -91,7 +91,7 @@
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Short Description</label>
-                            <input type="text" class="form-label rounded p-3 form-control" name="short_description" placeholder="Short Description" value="{{ $user->short_description ? $user->short_description : old('short_description') }}"></input>
+                            <textarea rows="3" type="text" class="form-label rounded p-3 form-control" name="short_description" placeholder="Short Description" value="{{ $user->short_description ? $user->short_description : old('short_description') }}">{{ $user->short_description }}</textarea>
                             @error('short_description')
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror
@@ -99,7 +99,7 @@
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Long Description</label>
-                            <input type="text"  class="form-label rounded p-3 form-control" name="long_description" placeholder="Long Description" value="{{ $user->long_description ? $user->long_description : old('long_description') }}"></input>
+                            <textarea rows="3" type="text"  class="form-label rounded p-3 form-control" name="long_description" placeholder="Long Description" value="{{ $user->long_description ? $user->long_description : old('long_description') }}">{{ $user->long_description }}</textarea>
                             @error('long_description')
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror
@@ -107,7 +107,7 @@
         
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Additional Information</label>
-                            <input type="text"  class="form-label rounded p-3 form-control" name="additional_information" placeholder="Additional Information" value="{{ $user->additional_information ? $user->additional_information : old('additional_information') }}"></input>
+                            <textarea rows="4" type="text"  class="form-label rounded p-3 form-control" name="additional_information" placeholder="Additional Information" value="{{ $user->additional_information ? $user->additional_information : old('additional_information') }}">{{ $user->additional_information }}</textarea>
                             @error('additional_information')
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror

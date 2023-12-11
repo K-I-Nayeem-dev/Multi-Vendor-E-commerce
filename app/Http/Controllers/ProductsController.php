@@ -176,26 +176,34 @@ class ProductsController extends Controller
 
         //Product page Routes
 
-        public function productView($Category_Slug , $product_name){
+    public function productDetails($id){
 
-            if(Category::where('Category_Slug', $Category_Slug)->exists())
-            {
-                if(Products::where('name', $product_name)->exists())
-                {
-                    $product = Products::where('name', $product_name)->first();
-                    return view('layouts.dashboard.products.productView', compact('product'),[
-                        'products'=>Products::all(),
-                    ]);
-                }else
-                {
-                    return 'Error With Product Page';
-                }
-            }else
-            {
-                return 'Error With Category Name';
-            }
 
-        }
+        $products = Products::findOrFail($id);
+        $releted_product = Products::where('category_id', $products->category_id)->where('id', '!=', $id)->get();
+        return view('layouts.dashboard.products.productDetails', compact('products', 'releted_product'));
+
+        // return Category::where('Category_Slug', $Category_Slug)->exists();
+        // return  Products::where('name', $product_name)->first();
+
+        // if(Category::where('Category_Slug', $Category_Slug)->exists())
+        // {
+        //     if(Products::where('name', $product_name)->exists())
+        //     {
+        //         $product = Products::where('name', $product_name)->first();
+        //         return view('layouts.dashboard.products.productView', compact('product'),[
+        //             'products'=>Products::all(),
+        //         ]);
+        //     }else
+        //     {
+        //         return 'Error With Product Page';
+        //     }
+        // }else
+        // {
+        //     return 'Error With Category Name';
+        // }
+
+    }
         
         // return view('layouts.dashboard.products.product.page', compact('product'));
 }

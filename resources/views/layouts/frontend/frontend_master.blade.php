@@ -158,12 +158,12 @@
                     <div class="row align-items-center">
                         <div class="col col-md-3">
                             <div class="allcategories_dropdown">
-                                <button class="allcategories_btn" type="button" data-bs-toggle="collapse" data-bs-target="#allcategories_collapse" aria-expanded="false" aria-controls="allcategories_collapse">
+                                <button class="allcategories_btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#allcategories_collapse" aria-expanded="false" aria-controls="allcategories_collapse">
                                     <svg role="img" xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 24 24" aria-labelledby="statsIconTitle" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" color="#000"> <title id="statsIconTitle">Stats</title> <path d="M6 7L15 7M6 12L18 12M6 17L12 17"/> </svg>
                                     Browse categories
                                 </button>
-                                <div class="allcategories_collapse" id="allcategories_collapse">
-                                    <div class="card card-body d-none">
+                                <div class="allcategories_collapse collapse" id="allcategories_collapse">
+                                    <div class="card card-body">
                                         <ul class="allcategories_list ul_li_block">
                                             <li><a href="shop_grid.html"><i class="icon icon-Starship"></i> New Arrival Products</a></li>
                                             <li><a href="shop_list.html"><i class="icon icon-WorldWide"></i> Most Popular Products</a></li>

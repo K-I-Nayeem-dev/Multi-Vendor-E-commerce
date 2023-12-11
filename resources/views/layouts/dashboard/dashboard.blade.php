@@ -12,6 +12,7 @@
 	<link href="{{ asset('dashboard_assets') }}/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
     <link href="{{ asset('dashboard_assets') }}/css/style.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+	@livewireStyles
 </head>
 <body>
 
@@ -808,6 +809,15 @@
 							<li><a href="{{ route('category.index') }}">View Category</a></li>
                         </ul>
                     </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-381-layer-1"></i>
+							<span class="nav-text">Variation</span>
+						</a>
+                        <ul aria-expanded="false">
+							<li><a href="{{ route('variation.create') }}">Add Variations</a></li>
+							<li><a href="{{ route('variation.index') }}">View Variations</a></li>
+                        </ul>
+                    </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Contact Us Emails</span>
@@ -938,6 +948,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	@yield('sweet_alert')
-
+	@livewireScripts
 </body>
 </html>

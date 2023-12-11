@@ -71,6 +71,7 @@
                             </tr>
                         </table>
                         <div class="d-flex">
+                            <a href="{{ route('products.edit', $user->id) }}" class="btn btn-warning btn-sm mr-2">Edit</a>
                             <a href="{{ route('products.index') }}" class="btn btn-warning btn-sm">Back to Products</a>
                         </div>
                     </div>
@@ -78,12 +79,4 @@
             </div>
         </div>
     </div>
-    
-	
-
-
-
-
-	
-
 @endsection

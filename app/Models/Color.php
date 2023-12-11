@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Verification extends Model
+class Color extends Model
 {
     use HasFactory;
-    
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($value){
+        return date("d-M-y", strtotime($value));
+    }
 }

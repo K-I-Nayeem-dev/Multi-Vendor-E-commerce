@@ -198,94 +198,89 @@
                             <div class="best-selling-products">
                                 <div class="sec-title-link">
                                     <h3>Best selling</h3>
-                                    <div class="view-all"><a href="#">View all<i class="fal fa-long-arrow-right"></i></a></div>
-                                </div>
-                                <div class="product-area clearfix">
-                                    @foreach ($products as $product)
-                                    <div class="grid">
-                                        <a href="{{ route('productView',[$product->productToCategory->Category_Slug,$product->name])}}">
-                                        <div class="product-pic">
-                                            <img  class="rounded" src="{{ asset('uploads/thumbnail_photos') }}/{{ $product->thumbnail }}" alt="{{ $product->thumbnail }}">
-                                            @if ($product->discount_price)
-                                                <span class="theme-badge-2">{{ 100-($product->discount_price/$product->regular_price)*100 }}% off</span>
-                                            @endif
+                                        <div class="view-all"><a href="#">View all<i class="fal fa-long-arrow-right"></i></a></div>
+                                        <div class="product-area clearfix">
+                                            @foreach ($products as $product)
+                                                <div class="grid">
+                                                    <a href="{{ route('productDetails', [$product->id, Str::slug($product->name)])}}">
+                                                    <div class="product-pic">
+                                                        <img  class="rounded" src="{{ asset('uploads/thumbnail_photos') }}/{{ $product->thumbnail }}" alt="{{ $product->thumbnail }}">
+                                                        @if ($product->discount_price)
+                                                            <span class="theme-badge-2">{{ 100-($product->discount_price/$product->regular_price)*100 }}% off</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="details">
+                                                        <h4><a href="#">{{ $product->name }}</a></h4>
+                                                        <p><a href="#">{{ Str::limit($product->short_description, 50) }}</a></p>
+                                                        <div class="rating">
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star"></i>
+                                                            <i class="fas fa-star-half-alt"></i>
+                                                        </div>
+                                                        <span class="price">
+            
+                                                            @if ($product->discount_price)
+                                                                <ins>
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <bdi>
+                                                                            <span class="woocommerce-Price-currencySymbol">&#2547; {{ $product->purchase_price }}</span>
+                                                                        </bdi>
+                                                                    </span>
+                                                                </ins>
+            
+                                                                <del aria-hidden="true">
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <bdi>
+                                                                            <span class="woocommerce-Price-currencySymbol">&#2547; {{ $product->discount_price }}</span>
+                                                                        </bdi>
+                                                                    </span>
+                                                                </del>
+                                                            @else
+                                                                <ins>
+                                                                    <span class="woocommerce-Price-amount amount">
+                                                                        <bdi>
+                                                                            <span class="woocommerce-Price-currencySymbol">&#2547; {{ $product->regular_price }}</span>
+                                                                        </bdi>
+                                                                    </span>
+                                                                </ins>
+                                                            @endif
+                                                        </span>
+                                                        <div class="add-cart-area">
+                                                            <button class="add-to-cart">Add to cart</button>
+                                                        </div>
+                                                    </div>
+                                                    </a>
+                                                </div>
+                                            @endforeach
                                         </div>
-                                        <div class="details">
-                                            <h4><a href="#">{{ $product->name }}</a></h4>
-                                            <p><a href="#">{{ Str::limit($product->short_description, 50) }}</a></p>
-                                            <div class="rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
+                                        <div class="top_category_wrap">
+                                            <div class="sec-title-link">
+                                                <h3>Top categories</h3>
                                             </div>
-                                            <span class="price">
-
-                                                @if ($product->discount_price)
-                                                    <ins>
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <bdi>
-                                                                <span class="woocommerce-Price-currencySymbol">&#2547; {{ $product->purchase_price }}</span>
-                                                            </bdi>
-                                                        </span>
-                                                    </ins>
-
-                                                    <del aria-hidden="true">
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <bdi>
-                                                                <span class="woocommerce-Price-currencySymbol">&#2547; {{ $product->discount_price }}</span>
-                                                            </bdi>
-                                                        </span>
-                                                    </del>
-                                                @else
-                                                    <ins>
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <bdi>
-                                                                <span class="woocommerce-Price-currencySymbol">&#2547; {{ $product->regular_price }}</span>
-                                                            </bdi>
-                                                        </span>
-                                                    </ins>
-                                                @endif
-                                            </span>
-                                            <div class="add-cart-area">
-                                                <button class="add-to-cart">Add to cart</button>
+                                            <div class="top_category_carousel2" data-slick='{"dots": false}'>
+                                                @foreach ($category as $cate)
+                                                    <div class="slider_item">
+                                                        <div class="category_boxed">
+                                                            <a href="#!">
+                                                                    <span class="item_image">
+                                                                        <img src="{{ asset("uploads/category_photos") }}/{{ $cate->Category_Image }}" alt="image_not_found">
+                                                                    </span>
+                                                                <span class="item_title">{{ $cate->Category_Name }}</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="carousel_nav carousel-nav-top-right">
+                                                <button type="button" class="tc_left_arrow"><i class="fal fa-long-arrow-alt-left"></i></button>
+                                                <button type="button" class="tc_right_arrow"><i class="fal fa-long-arrow-alt-right"></i></button>
                                             </div>
                                         </div>
-                                        </a>
-                                    </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            
-                            <div class="top_category_wrap">
-                                <div class="sec-title-link">
-                                    <h3>Top categories</h3>
-                                </div>
-                                <div class="top_category_carousel2" data-slick='{"dots": false}'>
-
-                                    @forelse ($category as $cate)
-                                        <div class="slider_item">
-                                            <div class="category_boxed">
-                                                <a href="#!">
-                                                        <span class="item_image">
-                                                            <img src="{{ asset("uploads/category_photos") }}/{{ $cate->Category_Image }}" alt="image_not_found">
-                                                        </span>
-                                                    <span class="item_title">{{ $cate->Category_Name }}</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        
-                                    @endforelse
-
-                                </div>
-                                <div class="carousel_nav carousel-nav-top-right">
-                                    <button type="button" class="tc_left_arrow"><i class="fal fa-long-arrow-alt-left"></i></button>
-                                    <button type="button" class="tc_right_arrow"><i class="fal fa-long-arrow-alt-right"></i></button>
                                 </div>
                             </div>
-                        </div>
+                        </div>                   
                         <div class="col-lg-3 order-lg-9">
                             <div class="product-sidebar">
                                 <div class="widget latest_product_carousel">

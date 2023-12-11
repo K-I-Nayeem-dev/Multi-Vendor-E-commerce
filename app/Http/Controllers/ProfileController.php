@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Verification;
 
 use Illuminate\Support\Carbon;
-use PhpParser\Node\Stmt\Return_;
 
 class ProfileController extends Controller
 {
@@ -33,6 +32,8 @@ class ProfileController extends Controller
             else{
                 $verification_status = false;
             }
+
+            // return Verification::where('user_id', auth()->user()->id)->first()->status;
 
         }
         else{

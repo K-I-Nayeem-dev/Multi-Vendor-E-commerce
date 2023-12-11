@@ -165,8 +165,8 @@
 
                     <div class="col-lg-6">
                         <div class="product_details_content">
-                            <h2 class="item_title">{{ $product->name }}</h2>
-                            <p>{{ $product->short_description }}</p>
+                            <h2 class="item_title">{{ $products->name }}</h2>
+                            <p>{{ $products->short_description }}</p>
                             <div class="item_review">
                                 <ul class="rating_star ul_li">
                                     <li><i class="fas fa-star"></i></li>
@@ -179,11 +179,11 @@
                             </div>
 
                             <div class="item_price">
-                                @if ($product->discount_price)
-                                    <span>{{ $product->discount_price }}</span>
-                                    <del>{{ $product->regular_price }}</del>
+                                @if ($products->discount_price)
+                                    <span>{{ $products->discount_price }}</span>
+                                    <del>{{ $products->regular_price }}</del>
                                 @else
-                                    <span>&#2547; {{ $product->regular_price }}</span>
+                                    <span>&#2547; {{ $products->regular_price }}</span>
                                 @endif
                             </div>
                             <hr>
@@ -263,11 +263,11 @@
 
                     <div class="tab-content">
                         <div class="tab-pane fade show active" id="description_tab" role="tabpanel">
-                            <p>{{ $product->long_description }}</p>
+                            <p>{{ $products->long_description }}</p>
                         </div>
 
                         <div class="tab-pane fade" id="additional_information_tab" role="tabpanel">
-                            <p>{{ $product->additional_information }}</p>
+                            <p>{{ $products->additional_information }}</p>
 
                             <div class="additional_info_list">
                                 <h4 class="info_title">Additional Info</h4>
@@ -398,15 +398,12 @@
                         <div class="best-selling-products related-product-area">
                             <div class="sec-title-link">
                                 <h3>Related products</h3>
-                                <div class="view-all"><a href="#">View all<i
-                                            class="fal fa-long-arrow-right"></i></a></div>
+                                <div class="view-all"><a href="#">View all<i class="fal fa-long-arrow-right"></i></a></div>
                             </div>
                             <div class="product-area clearfix">
-                                @foreach ($products->slice(0,4) as $product)
-                                    @if($product->productToCategory->id == $product->category_id)
+                                @forelse ($releted_product as $product)
                                     <div class="grid">
-                                        <a
-                                            href="{{ route('productView', [$product->productToCategory->Category_Slug, $product->name]) }}">
+                                        <a href="{{ route('productDetails', [$product->id, Str::slug($product->name)]) }}">
                                             <div class="product-pic">
                                                 <img class="rounded"
                                                     src="{{ asset('uploads/thumbnail_photos') }}/{{ $product->thumbnail }}"
@@ -429,7 +426,6 @@
                                                     <i class="fas fa-star-half-alt"></i>
                                                 </div>
                                                 <span class="price">
-
                                                     @if ($product->discount_price)
                                                         <ins>
                                                             <span class="woocommerce-Price-amount amount">
@@ -439,7 +435,6 @@
                                                                 </bdi>
                                                             </span>
                                                         </ins>
-
                                                         <del aria-hidden="true">
                                                             <span class="woocommerce-Price-amount amount">
                                                                 <bdi>
@@ -465,8 +460,9 @@
                                             </div>
                                         </a>
                                     </div>
-                                    @endif
-                                @endforeach
+                                @empty
+                                    <h4>No Related Product Found</h4>
+                                @endforelse
                             </div>
                         </div>
                     </div>
