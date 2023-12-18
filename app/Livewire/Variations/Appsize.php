@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Variations;
 
-use App\Models\Color;
 use App\Models\Variation;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -11,7 +10,7 @@ class Appsize extends Component
 {
 
     // Adding Sizes to Database
-    public $size;
+    public $size, $v_id  ;
     public function sizeInsert(){
         Variation::insert([
             'size' => $this->size,
@@ -25,6 +24,22 @@ class Appsize extends Component
     // Delete Data from Database
     public function deleteSize($id){
         Variation::find($id)->delete();
+    }
+
+    // Edit Data from Database
+    public function editSize($id){
+        $this->v_id = $id;
+        $size = Variation::find($id);
+        $this->size = $size->size;
+    }
+    
+    //Update Data form Database
+    public function updateSize($id){
+        Variation::find($id)->update([
+            'size'=> $this->size,
+            'updated_at'=> now(),
+        ]);
+        $this->reset();
     }
 
     public function render()

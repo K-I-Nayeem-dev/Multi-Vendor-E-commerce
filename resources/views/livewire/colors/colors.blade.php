@@ -44,7 +44,41 @@
                             <td class="text-center"><p style="width: 60px; height: 60px; background-color: {{ $color->color }};" class="rounded"></p></td>
                             <td>{{ $color->created_at }}</td>
                             <td>
-                                <button type="submit" wire:confirm="Are you sure you want to delete this?"  wire:click="deleteColor({{ $color->id  }})" class="btn btn-danger btn-sm">Delete</button>
+
+                                <button type="submit" wire:click="editColor({{ $color->id }})"
+                                    class="btn btn-primary btn-sm" data-toggle="modal"
+                                    data-target="#editColor">Edit</button>
+
+                                    <button type="submit" wire:click="deleteColor({{ $color->id }})" class="btn btn-danger btn-sm">Delete</button>
+
+                                    <!-- Modal -->
+                                    <div wire:ignore.self class="modal fade" id="editColor" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Update {{ $c_id }} Details</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form  wire:submit="updateColor({{ $c_id }})">
+                                                    <div class="mb-3">
+                                                        <label>Choose Color</label>
+                                                        <input class="form-control"  type="color" placeholder="Added Variations" wire:model="color">
+                                                        @error('color')
+                                                            <p class="alert alert-danger mt-2">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary btn-sm" >Update Color</button>
+                                                        </div>
+                                                    </form>
+                                        </div>
+                                    </div>
+                                    </div>
                             </td>
                         </tr>
                     @empty

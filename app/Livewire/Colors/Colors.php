@@ -11,7 +11,7 @@ class Colors extends Component
 {
 
     // Adding Colors to Database
-    public $color;
+    public $color , $c_id;
     public function colorInsert(){
         Color::insert([
             'color' => $this->color,
@@ -25,6 +25,19 @@ class Colors extends Component
     // Delete Data from Database
     public function deleteColor($id){
         Color::find($id)->delete();
+    }
+
+    // Delete Data from Database
+    public function editColor($id){
+        $this->c_id = $id;
+        $color = Color::find($id);
+        $this->color = $color->color;
+    }
+    // Delete Data from Database
+    public function updateColor($id){
+        Color::find($id)->update([
+            'color' => $this->color,
+        ]);
     }
 
     public function render()
