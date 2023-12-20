@@ -5,9 +5,12 @@ namespace App\Livewire\Variations;
 use App\Models\Variation;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Appsize extends Component
 {
+
+    use WithPagination;
 
     // Adding Sizes to Database
     public $size, $v_id  ;

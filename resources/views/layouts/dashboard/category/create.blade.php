@@ -28,10 +28,13 @@
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Category Image</label>
-                    <input type="file" class="form-control" name="category_image" placeholder="Image">
+                    <input type="file" class="form-control" name="category_image" placeholder="Image" onchange="document.getElementById('web').src = window.URL.createObjectURL(this.files[0])">
                     @error('category_image')
                         <div class="text-danger fw-bold my-3">{{ $message }}</div>
                     @enderror
+                </div>
+                <div class="my-3">
+                    <img width="500" height="300" src="" alt="Category_photo" id="web">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Add Category</button>

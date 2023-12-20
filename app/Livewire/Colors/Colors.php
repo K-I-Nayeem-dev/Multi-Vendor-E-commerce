@@ -11,7 +11,7 @@ class Colors extends Component
 {
 
     // Adding Colors to Database
-    public $color , $c_id;
+    public $color , $c_id, $colorName;
     public function colorInsert(){
         Color::insert([
             'color' => $this->color,
@@ -20,6 +20,11 @@ class Colors extends Component
         ]);
         $this->reset();
         return back()->with('addColors', 'Add Size Successfully');
+    }
+
+    public function updated(){
+        $color_name = new ColorInterpreter();
+        $this->colorName = $color_name->name($this->color)['name'];
     }
 
     // Delete Data from Database

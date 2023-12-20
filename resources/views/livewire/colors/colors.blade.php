@@ -1,17 +1,35 @@
 <div class="row">
-    <div class="col-lg-2">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-header">Add Colors</div>
             <div class="card-body">
-                <form  wire:submit="colorInsert" method="POST">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label>Choose Color</label>
-                        <input class="form-control"  type="color" placeholder="Added Variations" wire:model="color">
-                        @error('color')
-                            <p class="alert alert-danger mt-2">{{ $message }}</p>
-                        @enderror
+                <form  wire:submit="colorInsert">
+                    
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label>Choose Color</label>
+                                <input class="form-control"  type="color" placeholder="Added Variations" wire:model.live="color">
+                                @error('color')
+                                    <p class="alert alert-danger mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label>Color Code</label>
+                                <input class="form-control"  type="text" placeholder="" wire:model="color">
+                                @error('color')
+                                    <p class="alert alert-danger mt-2">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="mb-3">
+                                <label>Color Name</label>
+                                <input class="form-control"  type="text" placeholder="" wire:model="colorName">
+                            </div>
+                        </div>
                     </div>
                         <button  button type="submit" class="btn btn-primary btn-sm">
                             <div wire:loading  class="spinner-border text-danger" role="status">
@@ -23,7 +41,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-10">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-header"><h4>Color Lists</h4></div>
             <div class="card-body">
@@ -70,6 +88,10 @@
                                                         @error('color')
                                                             <p class="alert alert-danger mt-2">{{ $message }}</p>
                                                         @enderror
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label>Color Code</label>
+                                                        <input class="form-control"  type="text" placeholder="" wire:model="color">
                                                     </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>

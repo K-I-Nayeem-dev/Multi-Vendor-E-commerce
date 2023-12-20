@@ -34,8 +34,13 @@
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Category Image</label>
-                    <input type="file" class="form-control" name="category_image" placeholder="Category Image" value="{{ $user->Category_Image }}">
+                    <input type="file" class="form-control" name="category_image" placeholder="Category Image" value="{{ $user->Category_Image }}"  onchange="document.getElementById('web').src = window.URL.createObjectURL(this.files[0])">
                 </div>
+
+                <div class="my-3">
+                    <img width="500" height="300" src="" alt="Category_photo" id="web">
+                </div>
+
 
                 <button type="submit" class="btn btn-primary">Edit Category</button>
                 <a class="btn btn-primary" href="{{ route('category.index') }}">Back to Categories</a>
