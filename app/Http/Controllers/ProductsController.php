@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Products;
+use App\Models\Variation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Cast\String_;
 use Intervention\Image\ImageManagerStatic as Image;
-
+use ourcodeworld\NameThatColor\ColorInterpreter;
 
 class ProductsController extends Controller
 {
@@ -75,9 +76,12 @@ class ProductsController extends Controller
      */
     public function edit(string $products)
     {
+
         return view('layouts.dashboard.products.edit',[
             'user'=> Products::find($products),
             'categories'=> Category::get(['id', 'category_name']),
+            'sizes' => Variation::all(),
+            'colors' => Color::all()
         ]);
     }
 
@@ -90,6 +94,9 @@ class ProductsController extends Controller
         $request->validate([
             '*' => 'required',
         ]);
+
+        $size = implode(',' , $request->variation);
+        $color = implode(',' , $request->colors);
 
 
         if($request->hasFile('thumbnail')){
@@ -108,6 +115,8 @@ class ProductsController extends Controller
         else
         {
             Products::find($id)->update($request->except('_token') + [
+                'variation' => $size,
+                'colors' => $color,
                 'updated_at'=> Carbon::now()
             ]);
         }
@@ -178,10 +187,14 @@ class ProductsController extends Controller
 
     public function productDetails($id){
 
-
         $products = Products::findOrFail($id);
         $releted_product = Products::where('category_id', $products->category_id)->where('id', '!=', $id)->get();
-        return view('layouts.dashboard.products.productDetails', compact('products', 'releted_product'));
+        $sizes = explode(',', $products->variation);
+        $replece_size = str_replace(['"', '[', ']'], '', $sizes);
+        $colors = explode(',', $products->colors);
+        $replece_color = str_replace(['"', '[', ']'], '', $colors);
+        $color_name = new ColorInterpreter();
+        return view('layouts.dashboard.products.productDetails', compact('products', 'releted_product', 'replece_size', 'replece_color', 'color_name'));
 
         // return Category::where('Category_Slug', $Category_Slug)->exists();
         // return  Products::where('name', $product_name)->first();

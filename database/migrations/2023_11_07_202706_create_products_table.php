@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('long_description');
             $table->longText('additional_information');
             $table->string('thumbnail')->nullable();
+            $table->string('variation')->nullable();
             $table->timestamps();
         });
     }

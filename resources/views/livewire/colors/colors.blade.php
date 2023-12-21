@@ -18,16 +18,16 @@
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label>Color Code</label>
-                                <input class="form-control"  type="text" placeholder="" wire:model="color">
-                                @error('color')
-                                    <p class="alert alert-danger mt-2">{{ $message }}</p>
-                                @enderror
+                                <input class="form-control"  type="text" placeholder="" wire:model.live="color">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label>Color Name</label>
-                                <input class="form-control"  type="text" placeholder="" wire:model="colorName">
+                                <input class="form-control"  type="text" placeholder="" wire:model.live="colorName">
+                                @error('colorName')
+                                    <p class="alert alert-danger mt-2">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                                                 <form  wire:submit="updateColor({{ $c_id }})">
                                                     <div class="mb-3">
                                                         <label>Choose Color</label>
-                                                        <input class="form-control"  type="color" placeholder="Added Variations" wire:model="color">
+                                                        <input class="form-control"  type="color" placeholder="Added Variations" wire:model.live="color">
                                                         @error('color')
                                                             <p class="alert alert-danger mt-2">{{ $message }}</p>
                                                         @enderror
@@ -92,6 +92,10 @@
                                                     <div class="mb-3">
                                                         <label>Color Code</label>
                                                         <input class="form-control"  type="text" placeholder="" wire:model="color">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label>Color Name</label>
+                                                        <input class="form-control"  type="text" placeholder="" wire:model="colorName" value="{{ $color->color_name }}">
                                                     </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>

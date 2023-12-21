@@ -116,12 +116,15 @@
         
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Product Thumbnail</label>
-                            <input type="file" class="form-control" name="thumbnail" placeholder="Image">
+                            <input type="file" class="form-control" name="thumbnail" placeholder="Image"  onchange="document.getElementById('web').src = window.URL.createObjectURL(this.files[0])">
                             @error('thumbnail')
                                 <div class="text-danger fw-bold my-3">{{ $message }}</div>
                             @enderror
                         </div>
-        
+
+                        <div class="my-3">
+                            <img width="400" height="300" src="" alt="Product_Thumbnail" id="web">
+                        </div>
                         <button type="submit" class="btn btn-warning btn-sm">Add Products</button>
                     </form>
                 </div>

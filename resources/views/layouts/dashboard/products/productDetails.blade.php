@@ -194,12 +194,11 @@
                                         <div class="col col-md-6">
                                             <div class="select_option clearfix">
                                                 <h4 class="input_title">Size *</h4>
-                                                <select>
-                                                    <option data-display="- Please select -">Choose A Option</option>
-                                                    <option value="1">Some option</option>
-                                                    <option value="2">Another option</option>
-                                                    <option value="3" disabled>A disabled option</option>
-                                                    <option value="4">Potato</option>
+                                                <select >
+                                                    <option data-display="- Please select Size -">Choose A Option</option>
+                                                    @foreach ($replece_size as $size)
+                                                        <option value="{{ $size }}">{{ $size }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -207,11 +206,12 @@
                                             <div class="select_option clearfix">
                                                 <h4 class="input_title">Color *</h4>
                                                 <select>
-                                                    <option data-display="- Please select -">Choose A Option</option>
-                                                    <option value="1">Some option</option>
-                                                    <option value="2">Another option</option>
-                                                    <option value="3" disabled>A disabled option</option>
-                                                    <option value="4">Potato</option>
+                                                    <option data-display="- Please select Color -">Choose A Option</option>
+                                                    @forelse ($replece_color as $color)
+                                                        <option value="{{ $color }}">{{ $color_name->name($color)['name']  }}</option>
+                                                    @empty
+                                                        <option>No Color Found</option>
+                                                    @endforelse
                                                 </select>
                                             </div>
                                         </div>

@@ -117,6 +117,27 @@
                             <label for="exampleInputEmail1" class="form-label mr-4">Product Image :</label>
                             <img width="150" class="rounded" src="{{ asset('uploads/thumbnail_photos') }}/{{ $user->thumbnail }}" alt="{{ $user->thumbnail  }}">
                         </div>
+
+                        {{-- <select class="form-control" name="variation[]" multiple>
+                            @foreach ($sizes as $size)
+                                <option value="{{ $size->size }}">{{ $size->size }}</option>
+                            @endforeach
+                        </select> --}}
+
+                        <div class="my-3">
+                            @foreach ($sizes as $size)
+                                <input class="mx-2" type="checkbox" name="variation[]" id="{{ $size->size }}" value="{{ $size->size }}">
+                                <label for="{{ $size->size }}">{{ $size->size }}</label>
+                            @endforeach
+                        </div>
+
+                        <div class="my-3 d-flex">
+                            @foreach ($colors as $color)
+                                    <div style="width: 30px; height: 30px; background-color: {{ $color->color }};" class="rounded"></div>
+                                    <input class="mx-2" type="checkbox" name="colors[]" id="{{ $color->color }}" value="{{ $color->color }}">
+                                    {{-- <label for="{{ $color->color }}">{{ $color->color_name }}</label> --}}
+                            @endforeach
+                        </div>
         
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Product Thumbnail</label>

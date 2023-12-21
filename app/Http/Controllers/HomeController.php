@@ -64,7 +64,7 @@ class HomeController extends Controller
         // return $request;
         $request->validate([
             'admin_name'=> 'required',
-            'admin_email'=> 'required|unique:App\Models\User,email'
+            'admin_email'=> 'required|unique:users,email'
         ]);
 
         $password = Str::random(8);

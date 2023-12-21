@@ -5,22 +5,34 @@ namespace App\Livewire\Colors;
 use Livewire\Component;
 use App\Models\Color;
 use Carbon\Carbon;
+use Livewire\Attributes\Validate;
 use ourcodeworld\NameThatColor\ColorInterpreter;
 
 class Colors extends Component
 {
 
     // Adding Colors to Database
-    public $color , $c_id, $colorName;
+    #[Validate()]
+    public $color, $colorName, $c_id;
+
+    public function rules(){
+        return[
+            'color' => 'required|unique:colors,color',
+            'colorName' => 'required|unique:colors,color_name',
+        ];
+    }
+
     public function colorInsert(){
         Color::insert([
             'color' => $this->color,
             'user_id' => auth()->id(),
+            'color_name' => $this->colorName,
             'created_at' => Carbon::now(),
         ]);
         $this->reset();
         return back()->with('addColors', 'Add Size Successfully');
     }
+
 
     public function updated(){
         $color_name = new ColorInterpreter();
