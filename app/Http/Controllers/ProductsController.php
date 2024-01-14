@@ -19,7 +19,7 @@ class ProductsController extends Controller
     public function index()
     {
         return view('layouts.dashboard.products.index', [
-            'products'=> Products::all()
+            'products'=> Products::where('user_id', auth()->id())->get(),
         ]);
     }
 
@@ -43,6 +43,7 @@ class ProductsController extends Controller
         ]);
 
         $product = Products::create($request->except('_token') + [
+            'user_id'=> auth()->id(),
             'created_at'=> Carbon::now(),
         ]);
 

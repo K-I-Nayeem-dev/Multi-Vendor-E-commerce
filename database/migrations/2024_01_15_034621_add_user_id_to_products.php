@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('variations', function (Blueprint $table) {
-            $table->id();
-            $table->integer('user_id');
-            $table->integer('category_id');
-            $table->string('size');
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->string('user_id');
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('variations');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
     }
 };

@@ -40,12 +40,17 @@
                     <tbody>
                         @forelse ($products as $key => $product)
                             <tr>
-                                <td>{{ ++$key }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $product->id }}</td>
                                 <td >{{ $product->name }}</td>
                                 <td >{{ $product->productToCategory->Category_Name }}</td>
                                 <td class="text-center">{{ $product->category_id }}</td>
-                                <td class="text-center"><a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm">Details</a></td>
+                                <td class="text-center">
+                                    <div class="d-flex">
+                                        <a href="{{ route('products.show', $product->id) }}" class="btn btn-info btn-sm mr-2">Details</a>
+                                        <a href="{{ route('inventory.show', $product->id) }}" class="btn btn-success btn-sm">Inventory</a>
+                                    </div>
+                                </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
                                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-primary btn-sm mx-2">Edit</a>
@@ -56,8 +61,8 @@
                                                     <button type="submit" class="btn btn-danger btn-sm">Trash</button>
                                                 </form>
                                             @endif
-                                        </div>
-                                    </td>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr>

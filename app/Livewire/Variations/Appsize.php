@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Variations;
 
+use App\Models\Category;
 use App\Models\Variation;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -13,11 +14,12 @@ class Appsize extends Component
     use WithPagination;
 
     // Adding Sizes to Database
-    public $size, $v_id  ;
+    public $size, $v_id , $category ;
     public function sizeInsert(){
         Variation::insert([
             'size' => $this->size,
             'user_id' => auth()->id(),
+            'category_id' => $this->category,
             'created_at' => Carbon::now(),
         ]);
         $this->reset();
@@ -47,7 +49,8 @@ class Appsize extends Component
 
     public function render()
     {
+        $categories = Category::all();
         $sizes = Variation::where('user_id', auth()->id())->latest()->get();
-        return view('livewire.variations.appsize', compact('sizes'));
+        return view('livewire.variations.appsize', compact('sizes', 'categories'));
     }
 }

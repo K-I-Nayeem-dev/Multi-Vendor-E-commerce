@@ -19,12 +19,21 @@
                                 <p class="alert alert-danger mt-2">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div class="mb-3">
+                            <label>Select Category</label>
+                            <select class="form-control" wire:model='category'>
+                                <option>Select Category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->Category_Name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
                         <button button type="submit" class="btn btn-primary btn-sm">
                             <div wire:loading class="spinner-border text-danger" role="status">
                                 <span class="visually-hidden"></span>
                             </div>
-                            <span wire:loading.remove>Add Size</span>
+                            <span wire:loading.remove>Add Variation</span>
                         </button>
 
 

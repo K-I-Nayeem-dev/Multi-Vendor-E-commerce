@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\VariationController;
+use App\Http\Controllers\InvetoryController;
 use App\Models\Products;
 
 // use Illuminate\Support\Facades\Auth;
@@ -187,6 +188,12 @@ Route::get('product/{id}/{name}', [ProductsController::class, 'productDetails'])
 Route::resource('variation', VariationController::class);
 // Variation Routes
 
-// // Colors Routes
-// Route::resource('color', ColorController::class);
-// // Color Routes
+// Colors Routes
+Route::resource('color', ColorController::class);
+// Color Routes
+
+
+// Inventories Routes
+Route::resource('inventory', InvetoryController::class);
+// Inventories Routes
+
