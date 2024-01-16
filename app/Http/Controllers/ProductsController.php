@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 use ourcodeworld\NameThatColor\ColorInterpreter;
+use Illuminate\Support\Facades\DB;
 
 class ProductsController extends Controller
 {
@@ -196,8 +197,40 @@ class ProductsController extends Controller
         $colors = explode(',', $products->colors);
         $replece_color = str_replace(['"', '[', ']'], '', $colors);
         $color_name = new ColorInterpreter();
-        $inventory = Inventory::Where('product_id', $products->id)->get();
-        return view('layouts.dashboard.products.productDetails', compact('products', 'releted_product', 'replece_size', 'replece_color', 'color_name', 'inventory'));
+
+        $inventory_variation = Inventory::Where('product_id', $products->id)
+                                ->Select('size_variation')
+                                ->orderByraw('CHAR_LENGTH(size_variation) ASC')
+                                ->distinct()
+                                ->get();
+                                
+        // foreach($inventory_variation as $variation){
+        //     echo "<pre>";
+        //     $size = $variation->size_variation;
+        //     echo "</pre>";
+        // }
+
+
+        // ForLoop Color For Selected Size/Variation
+        for ($i=0; $i < count($inventory_variation) ; $i++) { 
+                echo "<pre>";
+                $size = $inventory_variation[$i]->size_variation;
+                echo "</pre>";
+        }
+
+        echo $size;
+        // return $inventory_variation[0]->size_variation;
+
+        die();
+        $inventory_color = Inventory::Where('product_id', $products->id)
+                                // ->Where('size_variation',)
+                                ->Select('color')
+                                ->orderBy('color', 'ASC')
+                                ->distinct()
+                                ->get();
+
+        return $inventory_color;
+        return view('layouts.dashboard.products.productDetails', compact('products', 'releted_product', 'replece_size', 'replece_color', 'color_name', 'inventory_variation', 'inventory_color'));
 
         // return Category::where('Category_Slug', $Category_Slug)->exists();
         // return  Products::where('name', $product_name)->first();

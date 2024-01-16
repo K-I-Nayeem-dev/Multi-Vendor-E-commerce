@@ -196,7 +196,7 @@
                                                 <h4 class="input_title">Size *</h4>
                                                 <select >
                                                     <option data-display="- Please select Size -">Choose A Option</option>
-                                                    @foreach ($inventory as $inven)
+                                                    @foreach ($inventory_variation as $inven)
                                                         <option value="{{ $inven->size_variation }}">{{ $inven->size_variation }}</option>
                                                     @endforeach
                                                 </select>
@@ -207,7 +207,7 @@
                                                 <h4 class="input_title">Color *</h4>
                                                 <select>
                                                     <option data-display="- Please select Color -">Choose A Option</option>
-                                                    @forelse ($inventory as $inven)
+                                                    @forelse ($inventory_color as $inven)
                                                         <option value="{{ $inven->color }}">{{ $color_name->name($inven->color)['name']  }}</option>
                                                     @empty
                                                         <option>No Color Found</option>
