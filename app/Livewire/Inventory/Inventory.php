@@ -31,12 +31,11 @@ class Inventory extends Component
     // define Methods
     public function render()
     {
-        $colors = Color::where('user_id', auth()->id())
-                        ->get();
+        $colors = Color::where('user_id', auth()->id())->get();
         $color_name = new ColorInterpreter();
         $inventory = ModelsInventory::where('product_id', $this->product->id)
                                     ->where('user_id', auth()->id())
-                                    ->get();
+                                    ->paginate(6);
         return view('livewire.inventory.inventory', compact('inventory','colors', 'color_name'));
     }
     
@@ -59,10 +58,6 @@ class Inventory extends Component
             'price' => $this->price,
             'created_at' => Carbon::now(),
         ]);
-        
-        $this->reset();
-
-        return back();
     }
 
     public function delete($id){

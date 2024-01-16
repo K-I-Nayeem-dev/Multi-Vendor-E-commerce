@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Color;
+use App\Models\Inventory;
 use App\Models\Products;
 use App\Models\Variation;
 use Carbon\Carbon;
@@ -195,7 +196,8 @@ class ProductsController extends Controller
         $colors = explode(',', $products->colors);
         $replece_color = str_replace(['"', '[', ']'], '', $colors);
         $color_name = new ColorInterpreter();
-        return view('layouts.dashboard.products.productDetails', compact('products', 'releted_product', 'replece_size', 'replece_color', 'color_name'));
+        $inventory = Inventory::Where('product_id', $products->id)->get();
+        return view('layouts.dashboard.products.productDetails', compact('products', 'releted_product', 'replece_size', 'replece_color', 'color_name', 'inventory'));
 
         // return Category::where('Category_Slug', $Category_Slug)->exists();
         // return  Products::where('name', $product_name)->first();

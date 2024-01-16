@@ -55,6 +55,7 @@ class CategoryController extends Controller
                 'category_slug'=> Str::slug($request->category_slug),
                 'category_description'=> $request->category_description,
                 'category_image'=> $new_name,
+                'user_id' => auth()->id(),
                 'created_at' => Carbon::now(),
             ]);
 

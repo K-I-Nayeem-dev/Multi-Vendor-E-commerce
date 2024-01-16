@@ -392,6 +392,6 @@
     {!! NoCaptcha::renderJs() !!}
 
     @yield('sweet_alert')
-
+    @stack('js')
 </body>
 </html>

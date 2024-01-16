@@ -32,12 +32,13 @@
                                 </td>
                                 {{-- <td>{{ date('d-m-y', strtotime($inven->created_at)) }}</td> --}}
                             </tr>
-                        @empty
+                            @empty
                             <tr>
                                 <td colspan="7">No Data Found</td>
                             </tr>
-                        @endforelse
-                    </table>
+                            @endforelse
+                        </table>
+                        {{ $inventory->links('pagination::bootstrap-5') }}
                 </div>
             </div>
         </div>

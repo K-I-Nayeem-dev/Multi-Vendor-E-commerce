@@ -13,7 +13,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\VariationController;
 use App\Http\Controllers\InvetoryController;
-use App\Models\Products;
+use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Support\Facades\Auth;
 
@@ -29,7 +29,7 @@ use App\Models\Products;
 */
 
 
-Auth::routes();
+Auth::routes(['register'=>false]);
 
 //frontend Routes
 

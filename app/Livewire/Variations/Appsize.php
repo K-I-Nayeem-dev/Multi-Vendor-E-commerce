@@ -49,7 +49,7 @@ class Appsize extends Component
 
     public function render()
     {
-        $categories = Category::all();
+        $categories = Category::where('user_id', auth()->id())->get();
         $sizes = Variation::where('user_id', auth()->id())->latest()->get();
         return view('livewire.variations.appsize', compact('sizes', 'categories'));
     }

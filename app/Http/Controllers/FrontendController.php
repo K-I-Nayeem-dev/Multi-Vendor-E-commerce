@@ -18,7 +18,9 @@ class FrontendController extends Controller
     {
         return view('layouts.frontend.index',
             [
-                'category'=>Category::all(),
+                'category'=>Category::Select('Category_Name', 'Category_Image')
+                                    ->distinct()
+                                    ->get(),
                 'products'=>Products::latest()->get(),
             ]
         );

@@ -180,7 +180,7 @@
 
                             <div class="item_price">
                                 @if ($products->discount_price)
-                                    <span>{{ $products->discount_price }}</span>
+                                    <span id="prize">${{ $products->discount_price }}</span>
                                     <del>{{ $products->regular_price }}</del>
                                 @else
                                     <span>&#2547; {{ $products->regular_price }}</span>
@@ -196,8 +196,8 @@
                                                 <h4 class="input_title">Size *</h4>
                                                 <select >
                                                     <option data-display="- Please select Size -">Choose A Option</option>
-                                                    @foreach ($replece_size as $size)
-                                                        <option value="{{ $size }}">{{ $size }}</option>
+                                                    @foreach ($inventory as $inven)
+                                                        <option value="{{ $inven->size_variation }}">{{ $inven->size_variation }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -207,8 +207,8 @@
                                                 <h4 class="input_title">Color *</h4>
                                                 <select>
                                                     <option data-display="- Please select Color -">Choose A Option</option>
-                                                    @forelse ($replece_color as $color)
-                                                        <option value="{{ $color }}">{{ $color_name->name($color)['name']  }}</option>
+                                                    @forelse ($inventory as $inven)
+                                                        <option value="{{ $inven->color }}">{{ $color_name->name($inven->color)['name']  }}</option>
                                                     @empty
                                                         <option>No Color Found</option>
                                                     @endforelse
@@ -220,15 +220,15 @@
 
                             <div class="quantity_wrap">
                                 <div class="quantity_input">
-                                    <button type="button" class="input_number_decrement">
+                                    <button id="decrement" type="button">
                                         <i class="fal fa-minus"></i>
                                     </button>
-                                    <input class="input_number" type="text" value="1">
-                                    <button type="button" class="input_number_increment">
+                                    <input id="quantity"  type="text" >
+                                    <button id="increment" type="button">
                                         <i class="fal fa-plus"></i>
                                     </button>
                                 </div>
-                                <div id="total_price" class="total_price">Total: $620,99</div>
+                                <div id="total_price" class="total_price">Total: ${{ $products->discount_price }}</div>
                             </div>
 
                             <ul class="default_btns_group ul_li">
@@ -474,7 +474,7 @@
                 ================================================== -->
     @endsection
 
-    <script>
-        let total_price = document.querySelector('div #total_price');
-        console.log(total_price)
-    </script>
+    @push('js')
+        <script src="/Js/Products/productPrize.js"></script>
+    @endpush
+
