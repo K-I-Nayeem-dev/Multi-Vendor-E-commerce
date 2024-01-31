@@ -16,8 +16,8 @@ class Inventory extends Component
     // define properties
     public $id, $quantity, $size, $color, $product, $variation, $price;
 
-    public function mount($id){
-        $this->product = Products::find($id);
+    public function mount(){
+        $this->product = Products::find($this->id);
         $this->variation = Variation::where('category_id', $this->product->category_id)
                                     ->where('user_id', auth()->id())
                                     ->get();

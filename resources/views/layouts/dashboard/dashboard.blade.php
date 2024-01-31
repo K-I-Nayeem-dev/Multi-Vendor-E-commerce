@@ -12,6 +12,7 @@
 	<link href="{{ asset('dashboard_assets') }}/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
     <link href="{{ asset('dashboard_assets') }}/css/style.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+	@stack('drag_css')
 	@livewireStyles
 </head>
 <body>
@@ -947,6 +948,7 @@
 	{{-- cdn for Sweet Alert --}}
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+	@stack('dashboard_js')
 	@yield('sweet_alert')
 	@livewireScripts
 </body>

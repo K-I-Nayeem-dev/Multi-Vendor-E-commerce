@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ColorController;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Auth::routes(['register'=>false]);
+Auth::routes();
 
 //frontend Routes
 
@@ -196,4 +197,12 @@ Route::resource('color', ColorController::class);
 // Inventories Routes
 Route::resource('inventory', InvetoryController::class);
 // Inventories Routes
+
+//CartRoute
+Route::post('cart', [CartController::class, 'cart'])->name('cart');
+//CartRoute
+
+//CartRoute
+Route::get('cartview', [CartController::class, 'cartview'])->name('cartview');
+//CartRoute
 

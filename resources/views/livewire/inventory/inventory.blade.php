@@ -23,7 +23,8 @@
                                 <td>{{ $loop->iteration }}</td>
                                 {{-- <td>{{ $inven->category_id }}</td>
                                 <td>{{ $inven->product_id }}</td> --}}
-                                <td>{{ $color_name->name($inven->color)['name']  }}</td>
+                                {{-- <td>{{ $color_name->name($inven->color_name->color)['name']  }}</td> --}}
+                                <td>{{ $inven->color_full->color_name }}</td>
                                 <td>{{ $inven->size_variation }}</td>
                                 <td>{{ $inven->quantity }}</td>
                                 <td>{{ $inven->price }}</td>
@@ -52,7 +53,7 @@
                         {{-- Inventory Product update Item --}}
                         <label>Product Name</label>
                         <input type="text" class="form-control" style="color: black" disabled
-                            value="{{ $product->name }}">
+                            value="{{ $product->id }}">
 
                         {{-- Add Size --}}
 
@@ -61,7 +62,7 @@
                             <select style="color: black" wire:model='size' class="form-control mt-2">
                                 <option data-display='- Please Choose an Option -'>Select Variation</option>
                                 @foreach ($variation as $varia)
-                                    <option value="{{ $varia->size }}">{{ $varia->size }}</option>
+                                    <option value="{{ $varia->id }}">{{ $varia->size }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -74,7 +75,7 @@
                                 <option>Select Color</option>
                                 @foreach ($colors as $color)
                                     <option class=" text-white" style="background-color: {{ $color->color }}"
-                                        value="{{ $color->color }}" selected>{{ $color->color_name }}</option>
+                                        value="{{ $color->id }}" selected>{{ $color->color_name }}</option>
                                 @endforeach
                             </select>
                         </div>

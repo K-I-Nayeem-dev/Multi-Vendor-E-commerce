@@ -143,10 +143,12 @@
                                     <li>
                                         <span class="cart_icon">
                                             <i class="icon icon-ShoppingCart"></i>
-                                            <small class="cart_counter">3</small>
+                                            @auth
+                                                <small class="cart_counter">{{ App\Models\Cart::Where('user_id', auth()->id())->count() }}</small>
+                                            @endauth
                                         </span>
                                     </li>
-                               </ul>
+                            </ul>
                             </button>
                         </div>
                     </div>
