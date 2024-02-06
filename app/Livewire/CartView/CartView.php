@@ -9,9 +9,12 @@ use ourcodeworld\NameThatColor\ColorInterpreter;
 class CartView extends Component
 {
 
-    public $total_price;
-    public $delivery_charge = 10;
-    public $select = null;
+    public $total_price = 0;
+    public $delivery_charge = 0;
+
+    public function updatedDelivery_charge(){
+        dd('hello');
+    }
 
     // Decrement Quantity * Price
     public function decrement(int $id){
@@ -48,6 +51,11 @@ class CartView extends Component
     public function itemRemove($id)
     {
         Cart::find($id)->delete();
+    }
+
+    // Order Add
+    public function order(){
+
     }
 
 

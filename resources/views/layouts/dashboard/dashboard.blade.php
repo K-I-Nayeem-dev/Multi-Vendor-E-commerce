@@ -791,6 +791,14 @@
 							<span class="nav-text">Users</span>
 						</a>
                     </li>
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-381-layer-1"></i>
+							<span class="nav-text">Carts</span>
+						</a>
+						<ul aria-expanded="false">
+							<li><a href="{{ route('cart_product') }}">Edit Carts Product</a></li>
+						</ul>
+					</li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Product</span>
@@ -816,7 +824,6 @@
 						</a>
                         <ul aria-expanded="false">
 							<li><a href="{{ route('variation.create') }}">Add Variations</a></li>
-							<li><a href="{{ route('variation.index') }}">View Variations</a></li>
                         </ul>
                     </li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

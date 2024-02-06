@@ -1,61 +1,11 @@
 <main>
 
-    <!-- sidebar cart - start
-    ================================================== -->
-    <div class="sidebar-menu-wrapper">
-        <div class="cart_sidebar">
-            <button type="button" class="close_btn"><i class="fal fa-times"></i></button>
-            <ul class="cart_items_list ul_li_block mb_30 clearfix">
-                @foreach (App\Models\Cart::Where('user_id', auth()->id())->get() as $cart)
-                    <li>
-                        <div class="item_image">
-                            <img src="{{ asset('uploads/thumbnail_photos') }}/{{ $cart->rel_to_product->thumbnail }}"
-                                alt="{{ $cart->rel_to_product->thumbnail }}">
-                        </div>
-                        <div class="item_content">
-                            <h4 class="item_title">{{ $cart->rel_to_product->name }}</h4>
-                            <span class="item_price">{{ $cart->rel_to_product->discount_price }}</span>
-                        </div>
-                        <button type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button>
-                    </li>
-                @endforeach
-            </ul>
-
-            <ul class="total_price ul_li_block mb_30 clearfix">
-                <li>
-                    <span>Subtotal:</span>
-                    <span>$90</span>
-                </li>
-                <li>
-                    <span>Vat 5%:</span>
-                    <span>$4.5</span>
-                </li>
-                <li>
-                    <span>Discount 20%:</span>
-                    <span>- $18.9</span>
-                </li>
-                <li>
-                    <span>Total:</span>
-                    <span>$75.6</span>
-                </li>
-            </ul>
-
-            <ul class="btns_group ul_li_block clearfix">
-                <li><a class="btn btn_primary" href="{{ route('cartview') }}">View Cart</a></li>
-                <li><a class="btn btn_secondary" href="checkout.html">Checkout</a></li>
-            </ul>
-        </div>
-        <div class="cart_overlay"></div>
-    </div>
-    <!-- sidebar cart - end
-    ================================================== -->
-
     <!-- breadcrumb_section - start
     ================================================== -->
     <div class="breadcrumb_section">
         <div class="container">
             <ul class="breadcrumb_nav ul_li">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="{{ url('/') }}">Home</a></li>
                 <li>Cart</li>
             </ul>
         </div>
@@ -93,17 +43,26 @@
                                         </h3>
                                     </div>
                                 </td>
-                                <td class="text-center"><span class="price_text text-white py-2 px-4 rounded" style="background-color: {{ $cart->rel_to_color->color }};">{{ $color_name->name($cart->rel_to_color->color)['name'] }}</span></td>
-                                <td class="text-center"><span class="price_text">{{ $cart->size_variation }}</span></td>
-                                <td class="text-center"><span class="price_text">{{ $cart->rel_to_product->discount_price }}</span></td>
+                                @if ($cart->color != 'null')
+                                    <td class="text-center"><span class="price_text text-white py-2 px-4 rounded" style="background-color: {{ $cart->rel_to_color->color }};">{{ $color_name->name($cart->rel_to_color->color)['name'] }}</span>
+                                    </td>
+                                @else
+                                    <td class="text-center">
+                                        No Color Found
+                                    </td>
+                                @endif
+                                <td class="text-center"><span class="price_text">{{ $cart->size }}</span></td>
+                                <td class="text-center"><span
+                                        class="price_text">{{ $cart->rel_to_product->discount_price }}</span></td>
                                 <td class="text-center">
                                     <button class="p-2 rounded bg-dark text-white" wire:loading.attr="disabled"
                                         wire:click='decrement({{ $cart->id }})'>
                                         <i class="fal fa-minus"></i>
                                     </button>
-                                    <input style="width: 40px; text-align: center;" type="text" value="{{ $cart->quantity }}" />
-                                    <button class="p-2 rounded bg-dark text-white d-inline-block" wire:loading.attr="disabled"
-                                        wire:click='increment({{ $cart->id }})'>
+                                    <input style="width: 40px; text-align: center;" type="text"
+                                        value="{{ $cart->quantity }}" />
+                                    <button class="p-2 rounded bg-dark text-white d-inline-block"
+                                        wire:loading.attr="disabled" wire:click='increment({{ $cart->id }})'>
                                         <i class="fal fa-plus"></i>
                                     </button>
                                 </td>
@@ -143,7 +102,7 @@
                     <div class="col col-lg-6">
                         <ul class="btns_group ul_li_right">
                             {{-- <li><a class="btn border_black" href="#!">Update Cart</a></li> --}}
-                            <li><a class="btn btn_dark" href="#!">Prceed To Checkout</a></li>
+                            <li><a class="btn btn_dark" href="{{ route('check_out') }}">Proceed To Checkout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -156,14 +115,13 @@
                                     class="far fa-arrow-up"></i></span></h3>
                         <form>
                             <div class="select_option clearfix">
-                                <select class="mb-4" wire:model.live="select">
-                                    <option value="">Select Your Option</option>
+                                <select class="mb-4" wire:model.live="delivery_charge">
+                                    <option value="0">Select Your Option</option>
                                     <option value="80">Inside City</option>
                                     <option value="140">Outside City</option>
                                 </select>
                             </div>
                             <br>
-                            <button type="submit" class="btn btn_primary rounded-pill">Update Total</button>
                         </form>
                     </div>
                 </div>
@@ -178,11 +136,11 @@
                             </li>
                             <li>
                                 <span>Delivery Charge</span>
-                                <span>${{ $select }}</span>
+                                <span>${{ $delivery_charge }}</span>
                             </li>
                             <li>
                                 <span>Order Total</span>
-                                <span class="total_price">${{ $select + $total_price }}</span>
+                                <span>${{ $delivery_charge + $total_price }}</span>
                             </li>
                         </ul>
                     </div>

@@ -32,14 +32,13 @@
 
     <!-- select option - css include -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend_assets') }}/css/nice-select.css">
-
-    <!-- woocommercen - css include -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_assets') }}/css/woocommerce.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('frontend_assets') }}/css/woocommerce-2.css">
 
     <!-- custom - css include -->
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend_assets') }}/css/style.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
 </head>
+
 
 <body>
 
@@ -57,7 +56,6 @@
         <!-- preloader - start -->
         <div id="preloader"></div>
         <!-- preloader - end -->
-
 
         <!-- header_section - start
         ================================================== -->
@@ -171,7 +169,7 @@
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col col-md-3">
-                            <div class="allcategories_dropdown">
+                            <div>
                                 <button class="allcategories_btn collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#allcategories_collapse" aria-expanded="false"
                                     aria-controls="allcategories_collapse">
@@ -284,45 +282,8 @@
         </header>
 
         <!-- header_section - end
-        
-            ================================================== -->
-        {{-- WishList menu Wrapper or Cart Overlay Part --}}
-        @livewire('wishlist.wishlist')
 
-        {{-- Sidebar menu Wrapper or Cart Overlay Part --}}
-        @livewire('sidebar-menu.sidebar-menu')
-
-
-        @yield('content')
-
-
-        <!-- newsletter_section - start
-            ================================================== -->
-        <section class="newsletter_section">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col col-lg-6">
-                        <h2 class="newsletter_title text-white">Sign Up for Newsletter </h2>
-                        <p>Get E-mail updates about our latest products and special offers.</p>
-                    </div>
-                    <div class="col col-lg-6">
-                        <form action="{{ route('subscribe_email') }}" method="POST">
-                            @csrf
-                            <div class="newsletter_form">
-                                <input type="email" name="email" placeholder="Enter your email address">
-                                <button type="submit" class="btn btn_secondary">Subscribe</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- newsletter_section - end
-            ================================================== -->
-
-        </main>
-        <!-- main body - end
-        ================================================== -->
+        @livewire('checkout.checkout')
 
         <!-- footer_section - start
         ================================================== -->
@@ -399,7 +360,8 @@
                                 <ul class="store_btns_group ul_li">
                                     <li><a href="#!"><img
                                                 src="{{ asset('frontend_assets') }}/images/app_store.png"
-                                                alt="app_store"></a></li>
+                                                alt="app_store"></a>
+                                    </li>
                                     <li><a href="#!"><img
                                                 src="{{ asset('frontend_assets') }}/images/play_store.png"
                                                 alt="play_store"></a></li>
@@ -447,13 +409,10 @@
     <!-- google map  -->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDk2HrmqE4sWSei0XdKGbOMOHN3Mm2Bf-M&ver=2.1.6"></script>
     <script src="{{ asset('frontend_assets') }}/js/gmaps.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- custom - main-js -->
     <script src="{{ asset('frontend_assets') }}/js/main.js"></script>
-    {!! NoCaptcha::renderJs() !!}
 
-    @yield('sweet_alert')
-    @stack('js')
 </body>
 
 </html>

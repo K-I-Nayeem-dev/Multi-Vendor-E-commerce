@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ContactController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\VariationController;
 use App\Http\Controllers\InvetoryController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Auth;
 
 // use Illuminate\Support\Facades\Auth;
@@ -203,6 +205,23 @@ Route::post('cart', [CartController::class, 'cart'])->name('cart');
 //CartRoute
 
 //CartRoute
+Route::get('add_to_cart/{id}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
+Route::get('cart_products', [CartController::class, 'cart_products'])->name('cart_product');
+//CartRoute
+
+//CartRoute
+Route::get('add_to_wishlist/{id}', [CartController::class, 'add_to_wishlist'])->name('add_to_wishlist');
+//CartRoute
+
+//CartRoute
 Route::get('cartview', [CartController::class, 'cartview'])->name('cartview');
 //CartRoute
+
+// WishList Route 
+Route::resource('wishlist', WishlistController::class);
+// WishList Route 
+
+// Checkout Route
+Route::get('check-out', [CheckoutController::class, 'check_out'])->name('check_out');
+// Checkout Route
 

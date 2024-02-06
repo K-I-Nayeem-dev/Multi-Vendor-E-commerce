@@ -2,54 +2,6 @@
             ================================================== -->
 <main>
 
-    <!-- sidebar cart - start
-                        ================================================== -->
-    <div class="sidebar-menu-wrapper">
-        <div class="cart_sidebar">
-            <button type="button" class="close_btn"><i class="fal fa-times"></i></button>
-            <ul class="cart_items_list ul_li_block mb_30 clearfix">
-                @foreach (App\Models\Cart::Where('user_id', auth()->id())->get() as $cart)
-                    <li>
-                        <div class="item_image">
-                            <img src="{{ asset('uploads/thumbnail_photos') }}/{{ $cart->rel_to_product->thumbnail }}" alt="{{ $cart->rel_to_product->thumbnail }}">
-                        </div>
-                        <div class="item_content">
-                            <h4 class="item_title">{{ $cart->rel_to_product->name }}</h4>
-                            <span class="item_price">{{ $cart->rel_to_product->discount_price }}</span>
-                        </div>
-                        <button type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button>
-                    </li>
-                @endforeach
-            </ul>
-
-            <ul class="total_price ul_li_block mb_30 clearfix">
-                <li>
-                    <span>Subtotal:</span>
-                    <span>$90</span>
-                </li>
-                <li>
-                    <span>Vat 5%:</span>
-                    <span>$4.5</span>
-                </li>
-                <li>
-                    <span>Discount 20%:</span>
-                    <span>- $18.9</span>
-                </li>
-                <li>
-                    <span>Total:</span>
-                    <span>$75.6</span>
-                </li>
-            </ul>
-            <ul class="btns_group ul_li_block clearfix">
-                <li><a class="btn btn_primary" href="{{ route('cartview') }}">View Cart</a></li>
-                <li><a class="btn btn_secondary" href="checkout.html">Checkout</a></li>
-            </ul>
-        </div>
-        <div class="cart_overlay"></div>
-    </div>
-    <!-- sidebar cart - end
-                        ================================================== -->
-
     <!-- breadcrumb_section - start
                         ================================================== -->
     <div class="breadcrumb_section">
@@ -68,6 +20,11 @@
                         ================================================== -->
     <section class="product_details section_space pb-0">
         <div class="container">
+
+            @if (session('wishlist'))
+                <div class="alert alert-success">{{ session('wishlist') }}</div>
+            @endif
+
             <div class="row">
                 <div class="col col-lg-6">
                     <div class="product_details_image">
@@ -100,7 +57,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <form action="{{ route('cart') }}" method="POST">
+                    <form method="POST">
                         @csrf
                         <div class="product_details_content">
                             <h2 class="item_title">{{ $products->name }}</h2>
@@ -177,7 +134,8 @@
                                 </div>
                             </div>
                             @auth
-                                <button type="submit" class="btn btn_primary addtocart_btn">Add to Cart</button>
+                                <button type="submit" formaction="{{ route('cart') }}" class="btn btn_primary addtocart_btn">Add to Cart</button>
+                                <button type="submit" formaction="{{ route('wishlist.store') }}" class="btn btn-primary addtocart_btn">Add To WishList</button>
                             @endauth
                     </form>
                     @guest

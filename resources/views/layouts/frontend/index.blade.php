@@ -5,61 +5,6 @@
             ================================================== -->
     <main>
 
-        <!-- sidebar cart - start
-                ================================================== -->
-        <div class="sidebar-menu-wrapper">
-            <div class="cart_sidebar">
-                <button type="button" class="close_btn"><i class="fal fa-times"></i></button>
-                <ul class="cart_items_list ul_li_block mb_30 clearfix">
-                    @foreach (App\Models\Cart::Where('user_id', auth()->id())->get() as $cart)
-                        <li>
-                            <div class="item_image">
-                                <img src="{{ asset('uploads/thumbnail_photos') }}/{{ $cart->rel_to_product->thumbnail }}"
-                                    alt="{{ $cart->rel_to_product->thumbnail }}">
-                            </div>
-                            <div class="item_content">
-                                <h4 class="item_title">Product Name : {{ $cart->rel_to_product->name }}</h4>
-                                <span class="item_price">Price{{ $cart->rel_to_product->discount_price }}</span>
-                            </div>
-                            <div class="item_content">
-                                <h4 class="item_title">Quantity : {{ $cart->quantity }}</h4>
-                                <span class="item_price">Size : {{ $cart->size_variation }}</span>
-                            </div>
-                            <button type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button>
-                        </li>
-                    @endforeach
-                </ul>
-
-                <ul class="total_price ul_li_block mb_30 clearfix">
-                    <li>
-                        <span>Subtotal:</span>
-                        <span>$90</span>
-                    </li>
-                    <li>
-                        <span>Vat 5%:</span>
-                        <span>$4.5</span>
-                    </li>
-                    <li>
-                        <span>Discount 20%:</span>
-                        <span>- $18.9</span>
-                    </li>
-                    <li>
-                        <span>Total:</span>
-                        <span>$75.6</span>
-                    </li>
-                </ul>
-
-                <ul class="btns_group ul_li_block clearfix">
-                    <li><a class="btn btn_primary" href="{{ route('cartview') }}">View Cart</a></li>
-                    <li><a class="btn btn_secondary" href="checkout.html">Checkout</a></li>
-                </ul>
-            </div>
-
-            <div class="cart_overlay"></div>
-        </div>
-        <!-- sidebar cart - end
-                ================================================== -->
-
         <!-- slider_section - start
                 ================================================== -->
         <section class="slider_section">
@@ -257,8 +202,9 @@
                                                             </ins>
                                                         @endif
                                                     </span>
-                                                    <div class="add-cart-area">
-                                                        <button class="add-to-cart">Add to cart</button>
+                                                    <div class="add-cart-area text-center">
+                                                        <a class="btn btn-danger btn-sm mb-2" href="{{ route('add_to_cart',$product->id) }}">Add to cart</a>
+                                                        <a class="btn btn-warning btn-sm" href="{{ route('add_to_wishlist', $product->id) }}">Add To Wishlist</a>
                                                     </div>
                                                 </div>
                                             </a>
