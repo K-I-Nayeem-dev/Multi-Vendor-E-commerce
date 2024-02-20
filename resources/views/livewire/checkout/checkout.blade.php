@@ -63,13 +63,15 @@
                                                     value="{{ auth()->user()->phone_number }}" />
                                             </p>
                                             <div class="clear"></div>
-                                            <p class="form-row form-row form-row-first address-field update_totals_on_change validate-required" id="billing_country_field">
+                                            <p class="form-row form-row form-row-first address-field update_totals_on_change validate-required"
+                                                id="billing_country_field">
                                                 <label for="billing_country" class="">Division<abbr
                                                         class="required" title="required">*</abbr></label>
                                                 <select wire:model='division'>
                                                     <option value="">Select a country&hellip;</option>
                                                     @foreach ($divisions as $division)
-                                                        <option  value="{{ $division->id }}">{{ $division->bn_name }}</option>
+                                                        <option value="{{ $division->id }}">{{ $division->bn_name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </p>
@@ -77,10 +79,11 @@
                                                 id="billing_country_field">
                                                 <label for="billing_country" class="">Districts<abbr
                                                         class="required" title="required">*</abbr></label>
-                                                <select >
+                                                <select>
                                                     <option value="">Select a City&hellip;</option>
                                                     @foreach ($districts as $district)
-                                                        <option value="{{ $district->id }}">{{ $district->bn_name }}</option>
+                                                        <option value="{{ $district->id }}">{{ $district->bn_name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </p>
@@ -106,7 +109,7 @@
                                         <tr class="cart-subtotal">
                                             <th>Subtotal</th>
                                             <td><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">&#2547;</span>{{ $total_price }}</span>
+                                                        {{-- class="woocommerce-Price-currencySymbol">&#2547;</span>{{ $total_price }}</span> --}}
                                             </td>
                                         </tr>
                                         <tr class="cart-subtotal">
@@ -131,9 +134,9 @@
                                             </td>
                                         </tr>
                                     </table>
-                                    <div id="payment" class="woocommerce-checkout-payment py-3 mt-5">
+                                    <div id="payment" class="woocommerce-checkout-payment py-1 mt-1">
                                         <ul class="wc_payment_methods payment_methods methods">
-                                            <li class="wc_payment_method payment_method_cheque mb-2">
+                                            <li class="wc_payment_method payment_method_cheque mb-1">
                                                 <input id="payment_method_cheque" type="radio" class="input-radio"
                                                     name="payment_method" value="Cash On Delivery" checked='checked'
                                                     data-order_button_text="" />
@@ -174,26 +177,26 @@
 
         <!-- newsletter_section - start
             ================================================== -->
-            <section class="newsletter_section">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col col-lg-6">
-                            <h2 class="newsletter_title text-white">Sign Up for Newsletter </h2>
-                            <p>Get E-mail updates about our latest products and special offers.</p>
-                        </div>
-                        <div class="col col-lg-6">
-                            <form action="{{ route('subscribe_email') }}" method="POST">
-                                @csrf
-                                <div class="newsletter_form">
-                                    <input type="email" name="email" placeholder="Enter your email address">
-                                    <button type="submit" class="btn btn_secondary">Subscribe</button>
-                                </div>
-                            </form>
-                        </div>
+        <section class="newsletter_section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col col-lg-6">
+                        <h2 class="newsletter_title text-white">Sign Up for Newsletter </h2>
+                        <p>Get E-mail updates about our latest products and special offers.</p>
+                    </div>
+                    <div class="col col-lg-6">
+                        <form action="{{ route('subscribe_email') }}" method="POST">
+                            @csrf
+                            <div class="newsletter_form">
+                                <input type="email" name="email" placeholder="Enter your email address">
+                                <button type="submit" class="btn btn_secondary">Subscribe</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </section>
-            <!-- newsletter_section - end
+            </div>
+        </section>
+        <!-- newsletter_section - end
                 ================================================== -->
 
     </main>

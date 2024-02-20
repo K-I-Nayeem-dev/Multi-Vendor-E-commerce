@@ -15,6 +15,14 @@
 
     <!-- cart_section - start
     ================================================== -->
+    /**
+     * Cart view component
+     * 
+     * Displays the cart contents, coupon form, shipping calculator, 
+     * and cart totals. Allows modifying cart quantities.
+     * 
+     * Uses Livewire for reactivity.
+     */
     <section class="cart_section section_space">
         <div class="container">
 
@@ -44,7 +52,8 @@
                                     </div>
                                 </td>
                                 @if ($cart->color != 'null')
-                                    <td class="text-center"><span class="price_text text-white py-2 px-4 rounded" style="background-color: {{ $cart->rel_to_color->color }};">{{ $color_name->name($cart->rel_to_color->color)['name'] }}</span>
+                                    <td class="text-center"><span class="price_text text-white py-2 px-4 rounded"
+                                            style="background-color: {{ $cart->rel_to_color->color }};">{{ $color_name->name($cart->rel_to_color->color)['name'] }}</span>
                                     </td>
                                 @else
                                     <td class="text-center">
@@ -87,16 +96,29 @@
             <div class="cart_btns_wrap">
                 <div class="row">
                     <div class="col col-lg-6">
-                        <form action="#">
-                            <div class="coupon_form form_item mb-0">
-                                <input type="text" name="coupon" placeholder="Coupon Code...">
-                                <button type="submit" class="btn btn_dark">Apply Coupon</button>
-                                <div class="info_icon">
-                                    <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Your Info Here"></i>
+                        @if (session()->has('coupon'))
+                            <span class="text-success mt-2 fs-6">{{ session()->get('coupon')['message'] }}</span><button wire:click='coupon_remove' class="text-danger fs-6 btn-sm">Remove</button>
+                            <p class="text-danger mt-2">{{ $coupon_error = '' }}</p>
+                        @else
+                            <form wire:submit="coupons">
+                                <div class="coupon_form form_item mb-0">
+
+                                    <input type="text" wire:model="coupon" placeholder="Coupon Code...">
+                                    <button type="submit" class="btn btn_dark">Apply Coupon</button>
+                                    <div class="info_icon">
+                                        <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                            title="Your Info Here"></i>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                                @error('coupon')
+                                    <p class="text-danger mt-2">{{ $message }}</p>
+                                    <p class="text-danger mt-2">{{ $coupon_error = '' }}</p>
+                                @enderror
+                                @if ($coupon_error == 'Invalid Coupon Code')
+                                    <p class="text-danger mt-2">{{ $coupon_error }}</p>
+                                @endif
+                            </form>
+                        @endif
                     </div>
 
                     <div class="col col-lg-6">
@@ -117,8 +139,8 @@
                             <div class="select_option clearfix">
                                 <select class="mb-4" wire:model.live="delivery_charge">
                                     <option value="0">Select Your Option</option>
-                                    <option value="80">Inside City</option>
-                                    <option value="140">Outside City</option>
+                                    <option  value="80">Inside City</option>
+                                    <option  value="140">Outside City</option>
                                 </select>
                             </div>
                             <br>
@@ -126,7 +148,7 @@
                     </div>
                 </div>
 
-                <div class="col col-lg-6">
+                <div class="col-lg-6">
                     <div class="cart_total_table">
                         <h3 class="wrap_title">Cart Totals</h3>
                         <ul class="ul_li_block">
@@ -134,13 +156,19 @@
                                 <span>Cart Subtotal</span>
                                 <span>${{ $total_price }}</span>
                             </li>
+                            @if (session()->has('coupon'))
+                                <li>
+                                    <span>Coupon : {{ session()->get('coupon')['name'] }} </span> 
+                                    <span>-${{ session()->get('coupon')['discount']}}</span>
+                                </li>
+                            @endif
                             <li>
                                 <span>Delivery Charge</span>
                                 <span>${{ $delivery_charge }}</span>
                             </li>
                             <li>
                                 <span>Order Total</span>
-                                <span>${{ $delivery_charge + $total_price }}</span>
+                                <span>${{ !session()->has('coupon') ? $delivery_charge + $total_price : $delivery_charge + $total_price - session()->get('coupon')['discount']}}</span>
                             </li>
                         </ul>
                     </div>

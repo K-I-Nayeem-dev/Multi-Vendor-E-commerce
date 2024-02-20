@@ -7,6 +7,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
@@ -32,7 +33,9 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
+
 Auth::routes();
+
 
 //frontend Routes
 
@@ -103,6 +106,7 @@ Route::post('/cover/photo/upload', [ProfileController::class, 'cover_photo_uploa
 
 
 //Password change route
+
 Route::post('/password/check', [ProfileController::class, 'password_check'])->name('password_check');
 Route::post('/password/change', [ProfileController::class, 'password_changed'])->name('password_changed');
 //Password change route
@@ -119,32 +123,32 @@ Route::get('/update/phone/number', [ProfileController::class, 'update_number_add
 //update phone_number 
 
 //Category Routes
-Route::resource('category', CategoryController::class);
+Route::resource('/category', CategoryController::class);
 //Category Routes
 
 // Category Trash Routes
-Route::get('trash/category/',[CategoryController::class, 'category_trash'])->name('category_trash');
-Route::get('trash/category/{id}',[CategoryController::class, 'category_trash_details'])->name('category_trash_details');
-Route::get('trash/category/restore/{id}',[CategoryController::class, 'category_trash_restore'])->name('category_trash_restore');
-Route::get('trash/category/permanent/delete/{id}',[CategoryController::class, 'category_trash_delete'])->name('category_trash_delete');
-Route::get('trash/empty-trash',[CategoryController::class, 'empty_category_trash'])->name('empty_category_trash');
-Route::get('trash/resotre-trash',[CategoryController::class, 'restore_category_trash'])->name('restore_category_trash');
-Route::get('trash/resotre-pluck',[CategoryController::class, 'restore_category_pulck'])->name('restore_category_pulck');
+Route::get('/trash/category/',[CategoryController::class, 'category_trash'])->name('category_trash');
+Route::get('/trash/category/{id}',[CategoryController::class, 'category_trash_details'])->name('category_trash_details');
+Route::get('/trash/category/restore/{id}',[CategoryController::class, 'category_trash_restore'])->name('category_trash_restore');
+Route::get('/trash/category/permanent/delete/{id}',[CategoryController::class, 'category_trash_delete'])->name('category_trash_delete');
+Route::get('/trash/empty-trash',[CategoryController::class, 'empty_category_trash'])->name('empty_category_trash');
+Route::get('/trash/resotre-trash',[CategoryController::class, 'restore_category_trash'])->name('restore_category_trash');
+Route::get('/trash/resotre-pluck',[CategoryController::class, 'restore_category_pulck'])->name('restore_category_pulck');
 //Category Trash Routes
 
 // Products Trash Routes
-Route::get('trash/product',[ProductsController::class, 'product_trash'])->name('product_trash');
-Route::get('trash/product/{id}',[ProductsController::class, 'product_trash_details'])->name('product_trash_details');
-Route::get('trash/product/restore/{id}',[ProductsController::class, 'product_trash_restore'])->name('product_trash_restore');
-Route::get('trash/product/permanent/delete/{id}',[ProductsController::class, 'product_trash_delete'])->name('product_trash_delete');
-Route::get('trash-product/empty-trash',[ProductsController::class, 'empty_product_trash'])->name('empty_product_trash');
-Route::get('trash-product/resotre-trash',[ProductsController::class, 'restore_product_trash'])->name('restore_product_trash');
-// Route::get('trash-product/resotre-pluck',[ProfileController::class, 'restore_category_pulck'])->name('restore_product_pulck');
+Route::get('/trash/product',[ProductsController::class, 'product_trash'])->name('product_trash');
+Route::get('/trash/product/{id}',[ProductsController::class, 'product_trash_details'])->name('product_trash_details');
+Route::get('/trash/product/restore/{id}',[ProductsController::class, 'product_trash_restore'])->name('product_trash_restore');
+Route::get('/trash/product/permanent/delete/{id}',[ProductsController::class, 'product_trash_delete'])->name('product_trash_delete');
+Route::get('/trash-product/empty-trash',[ProductsController::class, 'empty_product_trash'])->name('empty_product_trash');
+Route::get('/trash-product/resotre-trash',[ProductsController::class, 'restore_product_trash'])->name('restore_product_trash');
+// Route::get('/trash-product/resotre-pluck',[ProfileController::class, 'restore_category_pulck'])->name('restore_product_pulck');
 //Products Trash Routes
 
 
 //Products Routes
-Route::resource('products', ProductsController::class);
+Route::resource('/products', ProductsController::class);
 //Products Routes
 
 // Github Signin Routes
@@ -163,65 +167,70 @@ Route::get('/google/callback', [SocialiteController::class, 'google_callback'])-
 
 
 // Contact Us Email Routes
-Route::get('contact/emails', [ContactController::class, 'contact_us_emails'])->name('contact_us_emails');
-Route::get('emails/{id}', [ContactController::class, 'emails'])->name('emails');
+Route::get('/contact/emails', [ContactController::class, 'contact_us_emails'])->name('contact_us_emails');
+Route::get('/emails/{id}', [ContactController::class, 'emails'])->name('emails');
 Route::post('contact/email/delete/{id}', [ContactController::class, 'contact_delete'])->name('contact_delete');
 // Contact Us Email Routes
 
 // Contact Trash Routes
-Route::get('contact/emails/trash', [ContactController::class, 'trash_emails'])->name('trash_emails');
-Route::get('contact/emails/restore/{id}', [ContactController::class, 'restore_emails'])->name('restore_emails');
-Route::get('contact/emails/delete/{id}', [ContactController::class, 'delete_emails'])->name('delete_emails');
-Route::get('contact/emails/details/{id}', [ContactController::class, 'trash_email_details'])->name('trash_email_details');
-Route::get('contact/emails/restore-all', [ContactController::class, 'restoreAll_emails'])->name('restoreAll_emails');
-Route::get('contact/emails/delete-all', [ContactController::class, 'deleteAll_emails'])->name('deleteAll_emails');
+Route::get('/contact/emails/trash', [ContactController::class, 'trash_emails'])->name('trash_emails');
+Route::get('/contact/emails/restore/{id}', [ContactController::class, 'restore_emails'])->name('restore_emails');
+Route::get('/contact/emails/delete/{id}', [ContactController::class, 'delete_emails'])->name('delete_emails');
+Route::get('/contact/emails/details/{id}', [ContactController::class, 'trash_email_details'])->name('trash_email_details');
+Route::get('/contact/emails/restore-all', [ContactController::class, 'restoreAll_emails'])->name('restoreAll_emails');
+Route::get('/contact/emails/delete-all', [ContactController::class, 'deleteAll_emails'])->name('deleteAll_emails');
 // Contact Trash Routes
 
 
 // Email Subscriber Routes
-Route::post('subscribe/emails', [FrontendController::class, 'subscribe_email'])->name('subscribe_email');
+Route::post('/subscribe/emails', [FrontendController::class, 'subscribe_email'])->name('subscribe_email');
 // Email Subscriber Routes
 
 
 // product Page Routes
-Route::get('product/{id}/{name}', [ProductsController::class, 'productDetails'])->name('productDetails');
+Route::get('/product/{id}/{name}', [ProductsController::class, 'productDetails'])->name('productDetails');
 // product Page Routes
 
 // Variation Routes
-Route::resource('variation', VariationController::class);
+Route::resource('/variation', VariationController::class);
 // Variation Routes
 
 // Colors Routes
-Route::resource('color', ColorController::class);
+Route::resource('/color', ColorController::class);
 // Color Routes
 
 
 // Inventories Routes
-Route::resource('inventory', InvetoryController::class);
+Route::resource('/inventory', InvetoryController::class);
 // Inventories Routes
 
 //CartRoute
-Route::post('cart', [CartController::class, 'cart'])->name('cart');
+Route::post('/cart', [CartController::class, 'cart'])->name('cart');
 //CartRoute
 
 //CartRoute
-Route::get('add_to_cart/{id}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
-Route::get('cart_products', [CartController::class, 'cart_products'])->name('cart_product');
+Route::get('/add_to_cart/{id}', [CartController::class, 'add_to_cart'])->name('add_to_cart');
+Route::get('/cart_products', [CartController::class, 'cart_products'])->name('cart_product');
 //CartRoute
 
 //CartRoute
-Route::get('add_to_wishlist/{id}', [CartController::class, 'add_to_wishlist'])->name('add_to_wishlist');
+Route::get('/add_to_wishlist/{id}', [CartController::class, 'add_to_wishlist'])->name('add_to_wishlist');
 //CartRoute
 
 //CartRoute
-Route::get('cartview', [CartController::class, 'cartview'])->name('cartview');
+Route::get('/cartview', [CartController::class, 'cartview'])->name('cartview');
 //CartRoute
 
 // WishList Route 
-Route::resource('wishlist', WishlistController::class);
+Route::resource('/wishlist', WishlistController::class);
 // WishList Route 
 
 // Checkout Route
-Route::get('check-out', [CheckoutController::class, 'check_out'])->name('check_out');
+Route::get('/check-out', [CheckoutController::class, 'check_out'])->name('check_out');
 // Checkout Route
+
+//Coupon Route
+Route::get('/coupon', [CouponController::class, 'coupon'])->name('coupon');
+Route::get('/coupon-type', [CouponController::class, 'coupon_type'])->name('coupon_type');
+//Coupon Route
 

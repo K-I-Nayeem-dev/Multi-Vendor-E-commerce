@@ -1,25 +1,14 @@
 <?php
 
 namespace App\Livewire\Checkout;
-
-use App\Models\Cart;
 use Livewire\Component;
 
 class Checkout extends Component
 {
 
     public $decode_divisions, $decode_districts;
-    public $total_price = 0;
-    public $delivery_charge = 0;
 
-    // district Function
-    public function updated()
-    {
-        dd('hello');
-    }
-
-    public function render()
-    {
+    public function mount(){
         // Divisions File
         $file_one = 'divisions.json';
         $divisions = file_get_contents($file_one);
@@ -29,11 +18,10 @@ class Checkout extends Component
         $file_two = 'districts.json';
         $districts = file_get_contents($file_two);
         $this->decode_districts = json_decode($districts);
+    }
 
-        foreach (Cart::Where('user_id', auth()->id())->get() as $cart) {
-            $this->total_price += $cart->rel_to_product->discount_price * $cart->quantity;
-        }
-
+    public function render()
+    {
         return view(
             'livewire.checkout.checkout',
             [
