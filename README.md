@@ -25,7 +25,7 @@ Basic shopping cart functionality: Users can add products to their cart and proc
 
 ## Installation
 
-Clone the repository: git clone https://github.com/your-repository.git
+Clone the repository: git clone https://github.com/K-I-Nayeem-dev/Multi-Vendor-E-commerce.git
 <br>
 Navigate to the project directory: cd your-project-directory
 <br>
