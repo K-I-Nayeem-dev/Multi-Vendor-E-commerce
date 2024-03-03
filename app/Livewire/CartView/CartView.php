@@ -82,19 +82,18 @@ class CartView extends Component
         if(!$this->type){
             $this->coupon_error = 'Invalid Coupon Code';
         }
-        else{
-            if($this->coupon == $this->type->coupon_name){
-                session()->put('coupon', [
-                    'name'=> $this->coupon,
-                    'message' => 'Coupon Added Succssfully',
-                    'discount' => $this->type->coupon_value
-                ]);
-                $this->reset();
-            }else{
-                $this->coupon_error = 'Invalid Coupon Code';
-            }
+        
+        // Coupon Add to Cart list 
+        if($this->coupon == $this->type->coupon_name){
+            session()->put('coupon', [
+                'name'=> $this->coupon,
+                'message' => 'Coupon Added Succssfully',
+                'discount' => $this->type->coupon_value
+            ]);
+            $this->reset();
+        }else{
+            $this->coupon_error = 'Invalid Coupon Code';
         }
-
     }
 
     //coupon Remove

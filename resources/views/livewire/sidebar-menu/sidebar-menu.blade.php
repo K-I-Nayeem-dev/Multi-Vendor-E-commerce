@@ -12,40 +12,39 @@
                                     </div>
                                     <div class="item_content">
                                         <h4 class="item_title">{{ $cart->rel_to_product->name }}</h4>
-                                        <span class="item_price">{{ $cart->rel_to_product->discount_price }} x {{ $cart->quantity }}</span>
-                                    </div>
-                                    <div class="item_content">
-                                        <span class="item_price">Variation:{{ $cart->size }}</span>
+                                        <span class="item_price">{{ $cart->rel_to_product->discount_price }} x {{ $cart->quantity }} =  {{ $cart->rel_to_product->discount_price * $cart->quantity }}</span>
                                     </div>
                                     <button type="button" class="remove_btn" wire:click="removeItem({{ $cart->id }})"><i class="fal fa-trash-alt"></i></button>
                                 </li>
-                                @php $total += $cart->rel_to_product->discount_price *  $cart->quantity; @endphp
+                                @php
+                                    $total += $cart->rel_to_product->discount_price *  $cart->quantity;
+                                    $vat = $total * (5 / 100);
+                                    $sub_total = $total - $vat;
+                                @endphp
                             @endforeach
                         </ul>
-        
-                        <ul class="total_price ul_li_block mb_30 clearfix">
-                            <li>
-                                <span>Subtotal:</span>
-                                <span>${{ $total}}</span>
-                            </li>
-                            <li>
-                                <span>Vat 5%:</span>
-                                <span>${{ $total / ((100+5)*100) }}</span>
-                            </li>
-                            <li>
-                                <span>Discount 20%:</span>
-                                <span>- $18.9</span>
-                            </li>
-                            <li>
-                                <span>Total:</span>
-                                <span>$75.6</span>
-                            </li>
-                        </ul>
-        
-                        <ul class="btns_group ul_li_block clearfix">
-                            <li><a class="btn btn_primary" href="{{ route('cartview') }}">View Cart</a></li>
-                            <li><a class="btn btn_secondary" href="checkout.html">Checkout</a></li>
-                        </ul>
+                        
+                        @auth
+                            <ul class="total_price ul_li_block mb_30 clearfix">
+                                <li>
+                                    <span>Subtotal:</span>
+                                    <span>${{ $total}}</span>
+                                </li>
+                                <li>
+                                    <span>Vat 5%:</span>
+                                    <span>${{ $vat }}</span>
+                                </li>
+                                <li>
+                                    <span>Total:</span>
+                                    <span>${{ $sub_total }}</span>
+                                </li>
+                            </ul>
+            
+                            <ul class="btns_group ul_li_block clearfix">
+                                <li><a class="btn btn_primary" href="{{ route('cartview') }}">View Cart</a></li>
+                                <li><a class="btn btn_secondary" href="checkout.html">Checkout</a></li>
+                            </ul>
+                        @endauth
                     </div>
         
                     <div class="cart_overlay"></div>

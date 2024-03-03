@@ -96,7 +96,7 @@
                                             <select name="size" wire:model.live='select_size' wire:change='selected'>
                                                 <option data-display="- Please select Size -">Choose A Option</option>
                                                 @forelse ($inventory_variation as $inven)
-                                                    <option value="{{ $inven->size_variation }}">{{ $inven->size_variation }}</option>
+                                                    <option value="{{ $inven->variationSize->size }}">{{ $inven->variationSize->size }}</option>
                                                 @empty
                                                     <option>No Variation Found</option>
                                                 @endforelse ()

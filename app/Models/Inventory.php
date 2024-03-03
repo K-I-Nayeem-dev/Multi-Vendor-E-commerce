@@ -10,9 +10,9 @@ class Inventory extends Model
     use HasFactory;
 
     // this is HasOne Relation
-    // public function color_full(){
-    //     return $this->hasOne(Color::class, 'id', 'color');
-    // }
+    public function variationSize(){
+        return $this->hasOne(Variation::class, 'id', 'size_variation');
+    }
 
     // this is Belongs To Relation
     public function color_full(){

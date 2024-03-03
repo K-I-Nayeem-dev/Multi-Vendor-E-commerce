@@ -15,14 +15,14 @@
 
     <!-- cart_section - start
     ================================================== -->
-    /**
+    {{--
      * Cart view component
      * 
      * Displays the cart contents, coupon form, shipping calculator, 
      * and cart totals. Allows modifying cart quantities.
      * 
      * Uses Livewire for reactivity.
-     */
+    --}}
     <section class="cart_section section_space">
         <div class="container">
 
@@ -79,6 +79,8 @@
                                         class="price_text">{{ $cart->rel_to_product->discount_price * $cart->quantity }}</span>
                                     @php
                                         $total_price += $cart->rel_to_product->discount_price * $cart->quantity;
+                                        $vat = $total_price * (5 / 100);
+                                        // $sub_total = $total_price - $vat;
                                     @endphp
                                 </td>
                                 <td class="text-center"><button wire:click="itemRemove({{ $cart->id }})"
@@ -131,7 +133,8 @@
             </div>
 
             <div class="row">
-                <div class="col col-lg-6">
+
+                {{-- <div class="col col-lg-6">
                     <div class="calculate_shipping">
                         <h3 class="wrap_title">Calculate Shipping <span class="icon"><i
                                     class="far fa-arrow-up"></i></span></h3>
@@ -146,9 +149,9 @@
                             <br>
                         </form>
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="col-lg-6">
+                <div class="col-lg-6 offset-6">
                     <div class="cart_total_table">
                         <h3 class="wrap_title">Cart Totals</h3>
                         <ul class="ul_li_block">
@@ -163,12 +166,16 @@
                                 </li>
                             @endif
                             <li>
+                                <span>Vat 5%</span>
+                                <span>-${{ $vat }}</span>
+                            </li>
+                            <li>
                                 <span>Delivery Charge</span>
                                 <span>${{ $delivery_charge }}</span>
                             </li>
                             <li>
                                 <span>Order Total</span>
-                                <span>${{ !session()->has('coupon') ? $delivery_charge + $total_price : $delivery_charge + $total_price - session()->get('coupon')['discount']}}</span>
+                                <span>${{ !session()->has('coupon') ? $delivery_charge + ($total_price - $vat) : $delivery_charge + ($total_price - $vat) - session()->get('coupon')['discount']}}</span>
                             </li>
                         </ul>
                     </div>
