@@ -1,3 +1,4 @@
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -74,3 +75,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 This project was built using Laravel and Livewire. Special thanks to the Laravel and Livewire communities for their contributions and support.
 
 Feel free to customize and extend this project to meet your specific requirements! If you have any questions or issues, please don't hesitate to reach out. Happy coding! 🚀
+
+## Contact
+For any inquiries or issues, please contact Kamrul Islam Nayeem at kamrulnayeem019@gmail.com.
