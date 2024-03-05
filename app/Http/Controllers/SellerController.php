@@ -20,7 +20,7 @@ class SellerController extends Controller
             'email' => 'required',
             'password' => 'required',
             'password_confirmation' => 'required',
-            'g-recaptcha-response' => 'required|captcha'
+            // 'g-recaptcha-response' => 'required|captcha'
         ]);
 
         User::insert([

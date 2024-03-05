@@ -13,7 +13,6 @@ class CartView extends Component
 {
 
     public $total_price = 0;
-    public $delivery_charge = 0;
     public $coupon_error, $type;
     #[Validate('required')]
     public $coupon;
@@ -82,18 +81,20 @@ class CartView extends Component
         if(!$this->type){
             $this->coupon_error = 'Invalid Coupon Code';
         }
-        
-        // Coupon Add to Cart list 
-        if($this->coupon == $this->type->coupon_name){
-            session()->put('coupon', [
-                'name'=> $this->coupon,
-                'message' => 'Coupon Added Succssfully',
-                'discount' => $this->type->coupon_value
-            ]);
-            $this->reset();
-        }else{
-            $this->coupon_error = 'Invalid Coupon Code';
+        else{
+             // Coupon Add to Cart list 
+            if($this->coupon == $this->type->coupon_name){
+                session()->put('coupon', [
+                    'name'=> $this->coupon,
+                    'message' => 'Coupon Added Succssfully',
+                    'discount' => $this->type->coupon_value
+                ]);
+                $this->reset();
+            }else{
+                $this->coupon_error = 'Invalid Coupon Code';
+            }
         }
+        
     }
 
     //coupon Remove

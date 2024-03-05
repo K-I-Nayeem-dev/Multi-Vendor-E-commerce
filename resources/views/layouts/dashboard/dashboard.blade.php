@@ -826,16 +826,15 @@
 							<li><a href="{{ route('variation.create') }}">Add Variations</a></li>
                         </ul>
                     </li>
-				<li><a class="has-arrow ai-icon" href="{{ route('coupon_type') }}" aria-expanded="false">
-							<i class="flaticon-381-layer-1"></i>
-							<span class="nav-text">Coupon Type</span>
-						</a>
-                </li>
-				<li><a class="has-arrow ai-icon" href="{{ route('coupon') }}" aria-expanded="false">
+					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Coupon</span>
 						</a>
-                </li>
+						<ul aria-expanded="false">
+							<li><a href="{{ route('coupon_type') }}"  >Coupon Type</a></li>
+							<li><a href="{{ route('coupon') }}" >Add Coupon</a></li>
+						</ul>
+					</li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Contact Us Emails</span>

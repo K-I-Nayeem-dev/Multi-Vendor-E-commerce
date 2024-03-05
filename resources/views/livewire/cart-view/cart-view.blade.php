@@ -24,8 +24,8 @@
      * Uses Livewire for reactivity.
     --}}
     <section class="cart_section section_space">
-        <div class="container">
-
+        @auth
+        <div class="container">                
             <div class="cart_table">
                 <table class="table">
                     <thead>
@@ -40,57 +40,59 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($carts as $cart)
-                            <tr>
-                                <td>
-                                    <div class="cart_product">
-                                        <img src="{{ asset('uploads/thumbnail_photos') }}/{{ $cart->rel_to_product->thumbnail }}"
-                                            alt="{{ $cart->rel_to_product->thumbnail }}">
-                                        <h3><a
-                                                href="{{ route('productDetails', [$cart->product_id, $cart->rel_to_product->name]) }}">{{ $cart->rel_to_product->name }}</a>
-                                        </h3>
-                                    </div>
-                                </td>
-                                @if ($cart->color != 'null')
-                                    <td class="text-center"><span class="price_text text-white py-2 px-4 rounded"
-                                            style="background-color: {{ $cart->rel_to_color->color }};">{{ $color_name->name($cart->rel_to_color->color)['name'] }}</span>
+                        @if ($carts->count() < 0)
+                            @forelse ($carts as $cart)
+                                <tr>
+                                    <td>
+                                        <div class="cart_product">
+                                            <img src="{{ asset('uploads/thumbnail_photos') }}/{{ $cart->rel_to_product->thumbnail }}"
+                                                alt="{{ $cart->rel_to_product->thumbnail }}">
+                                            <h3><a
+                                                    href="{{ route('productDetails', [$cart->product_id, $cart->rel_to_product->name]) }}">{{ $cart->rel_to_product->name }}</a>
+                                            </h3>
+                                        </div>
                                     </td>
-                                @else
+                                    @if ($cart->color != 'null')
+                                        <td class="text-center" style="font-size: 12px"><span class="price_text text-white py-2 px-4 rounded"
+                                                style="background-color: {{ $cart->rel_to_color->color }};">{{ $color_name->name($cart->rel_to_color->color)['name'] }}</span>
+                                        </td>
+                                    @else
+                                        <td class="text-center">
+                                            No Color Found
+                                        </td>
+                                    @endif
+                                    <td class="text-center"><span class="price_text">{{ $cart->size }}</span></td>
+                                    <td class="text-center"><span
+                                            class="price_text">{{ $cart->rel_to_product->discount_price }}</span></td>
                                     <td class="text-center">
-                                        No Color Found
+                                        <button class="p-2 rounded bg-dark text-white" wire:loading.attr="disabled"
+                                            wire:click='decrement({{ $cart->id }})'>
+                                            <i class="fal fa-minus"></i>
+                                        </button>
+                                        <input style="width: 40px; text-align: center;" type="text"
+                                            value="{{ $cart->quantity }}" />
+                                        <button class="p-2 rounded bg-dark text-white d-inline-block"
+                                            wire:loading.attr="disabled" wire:click='increment({{ $cart->id }})'>
+                                            <i class="fal fa-plus"></i>
+                                        </button>
                                     </td>
-                                @endif
-                                <td class="text-center"><span class="price_text">{{ $cart->size }}</span></td>
-                                <td class="text-center"><span
-                                        class="price_text">{{ $cart->rel_to_product->discount_price }}</span></td>
-                                <td class="text-center">
-                                    <button class="p-2 rounded bg-dark text-white" wire:loading.attr="disabled"
-                                        wire:click='decrement({{ $cart->id }})'>
-                                        <i class="fal fa-minus"></i>
-                                    </button>
-                                    <input style="width: 40px; text-align: center;" type="text"
-                                        value="{{ $cart->quantity }}" />
-                                    <button class="p-2 rounded bg-dark text-white d-inline-block"
-                                        wire:loading.attr="disabled" wire:click='increment({{ $cart->id }})'>
-                                        <i class="fal fa-plus"></i>
-                                    </button>
-                                </td>
-                                <td class="text-center"><span
-                                        class="price_text">{{ $cart->rel_to_product->discount_price * $cart->quantity }}</span>
-                                    @php
-                                        $total_price += $cart->rel_to_product->discount_price * $cart->quantity;
-                                        $vat = $total_price * (5 / 100);
-                                        // $sub_total = $total_price - $vat;
-                                    @endphp
-                                </td>
-                                <td class="text-center"><button wire:click="itemRemove({{ $cart->id }})"
-                                        type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button></td>
-                            </tr>
-                        @empty
-                            <tr class="text-center">
-                                <td>No Product added to cart</td>
-                            </tr>
-                        @endforelse
+                                    <td class="text-center"><span
+                                            class="price_text">{{ $cart->rel_to_product->discount_price * $cart->quantity }}</span>
+                                        @php
+                                            $total_price += $cart->rel_to_product->discount_price * $cart->quantity;
+                                            $vat = $total_price * (5 / 100);
+                                            // $sub_total = $total_price - $vat;
+                                        @endphp
+                                    </td>
+                                    <td class="text-center"><button wire:click="itemRemove({{ $cart->id }})"
+                                            type="button" class="remove_btn"><i class="fal fa-trash-alt"></i></button></td>
+                                </tr>
+                            @empty
+                                <tr class="text-center">
+                                    <td>No Product added to cart</td>
+                                </tr>
+                            @endforelse
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -151,37 +153,40 @@
                     </div>
                 </div> --}}
 
-                <div class="col-lg-6 offset-6">
-                    <div class="cart_total_table">
-                        <h3 class="wrap_title">Cart Totals</h3>
-                        <ul class="ul_li_block">
-                            <li>
-                                <span>Cart Subtotal</span>
-                                <span>${{ $total_price }}</span>
-                            </li>
-                            @if (session()->has('coupon'))
+                @if ($carts->count() < 0)
+                    <div class="col-lg-6 offset-6">
+                        <div class="cart_total_table">
+                            <h3 class="wrap_title">Cart Totals</h3>
+                            <ul class="ul_li_block">
                                 <li>
-                                    <span>Coupon : {{ session()->get('coupon')['name'] }} </span> 
-                                    <span>-${{ session()->get('coupon')['discount']}}</span>
+                                    <span>Cart Subtotal</span>
+                                    <span>${{ $total_price }}</span>
                                 </li>
-                            @endif
-                            <li>
-                                <span>Vat 5%</span>
-                                <span>-${{ $vat }}</span>
-                            </li>
-                            <li>
-                                <span>Delivery Charge</span>
-                                <span>${{ $delivery_charge }}</span>
-                            </li>
-                            <li>
-                                <span>Order Total</span>
-                                <span>${{ !session()->has('coupon') ? $delivery_charge + ($total_price - $vat) : $delivery_charge + ($total_price - $vat) - session()->get('coupon')['discount']}}</span>
-                            </li>
-                        </ul>
+                                @if (session()->has('coupon'))
+                                    <li>
+                                        <span>Coupon : {{ session()->get('coupon')['name'] }} </span> 
+                                        <span>-${{ session()->get('coupon')['discount']}}</span>
+                                    </li>
+                                @endif
+                                <li>
+                                    <span>Vat 5%</span>
+                                    <span>+${{ $vat }}</span>
+                                </li>
+                                <li>
+                                    <span>Order Total</span>
+                                    <span>${{ !session()->has('coupon') ? $total_price + $vat : $total_price + $vat - session()->get('coupon')['discount']}}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
+        @elseguest
+        <div class="text-center">
+            <h2>Login To Check Cart Product</h2>
+        </div>
+        @endauth
     </section>
     <!-- cart_section - end
     ================================================== -->
