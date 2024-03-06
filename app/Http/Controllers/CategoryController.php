@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Carbon;
-
-use Intervention\Image\ImageManagerStatic as Image;
-
-use Illuminate\Support\Facades\Auth;
-
-use Illuminate\Support\Str;
-
 use App\Models\Category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class CategoryController extends Controller
 {
@@ -22,8 +16,8 @@ class CategoryController extends Controller
     public function index()
     {
         return view('layouts.dashboard.category.index', [
-            'category'=>Category::where('user_id', auth()->id())
-                                ->get(),
+            'category' => Category::where('user_id', auth()->id())
+                ->get(),
         ]);
     }
 
@@ -41,40 +35,38 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'category_name'=>'required',
-            'category_image'=>'required',
+            'category_name' => 'required',
+            'category_image' => 'required',
         ]);
 
+        $new_name = $request->category_name.time().'.'.$request->file('category_image')->getClientOriginalExtension();
+        $img = Image::make($request->file('category_image'))->resize(300, 300);
+        $img->save(base_path('public\uploads\category_photos/'.$new_name), 80);
 
-            $new_name = $request->category_name.time() . "." . $request->file('category_image')->getClientOriginalExtension();
-            $img =Image::make($request->file('category_image'))->resize(300, 300);
-            $img->save(base_path('public\uploads\category_photos/' . $new_name), 80);
-
-            Category::insert([
-                'category_name'=> $request->category_name,
-                'category_slug'=> Str::slug($request->category_slug),
-                'category_description'=> $request->category_description,
-                'category_image'=> $new_name,
-                'user_id' => auth()->id(),
-                'created_at' => Carbon::now(),
-            ]);
+        Category::insert([
+            'category_name' => $request->category_name,
+            'category_slug' => Str::slug($request->category_slug),
+            'category_description' => $request->category_description,
+            'category_image' => $new_name,
+            'user_id' => auth()->id(),
+            'created_at' => Carbon::now(),
+        ]);
 
         return redirect('category')->with('category_add', 'Category Added Successfully');
 
         // return $request->file('category_image');
         // return $request->file('category_image')->getClientOriginalExtension();
 
-        
     }
-
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
-    {  
+    {
         $user = Category::find($id);
-        return view('layouts.dashboard.category.show',compact('user'));
+
+        return view('layouts.dashboard.category.show', compact('user'));
     }
 
     /**
@@ -83,7 +75,8 @@ class CategoryController extends Controller
     public function edit(string $id)
     {
         $user = Category::find($id);
-        return view('layouts.dashboard.category.edit',compact('user'));
+
+        return view('layouts.dashboard.category.edit', compact('user'));
     }
 
     /**
@@ -92,37 +85,37 @@ class CategoryController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'category_name'=>'required',
+            'category_name' => 'required',
         ]);
 
-        if($request->hasFile('category_image')){
+        if ($request->hasFile('category_image')) {
 
-            unlink(base_path('public/uploads/category_photos/' . Category::find($id)->Category_Image ));
+            unlink(base_path('public/uploads/category_photos/'.Category::find($id)->Category_Image));
 
-            $new_name = $request->category_name.time() . "." . $request->file('category_image')->getClientOriginalExtension();
-            $img =Image::make($request->file('category_image'))->resize(300, 300);
-            $img->save(base_path('public\uploads\category_photos/' . $new_name), 80);
+            $new_name = $request->category_name.time().'.'.$request->file('category_image')->getClientOriginalExtension();
+            $img = Image::make($request->file('category_image'))->resize(300, 300);
+            $img->save(base_path('public\uploads\category_photos/'.$new_name), 80);
 
             Category::find($id)->update([
-                'category_name'=> $request->category_name,
-                'category_slug'=> Str::slug($request->category_slug),
-                'category_description'=> $request->category_description,
-                'category_image'=> $new_name,
+                'category_name' => $request->category_name,
+                'category_slug' => Str::slug($request->category_slug),
+                'category_description' => $request->category_description,
+                'category_image' => $new_name,
                 'updated_at' => Carbon::now(),
             ]);
-            
-        }else{
+
+        } else {
 
             Category::find($id)->update([
-                'category_name'=> $request->category_name,
-                'category_slug'=> Str::slug($request->category_slug),
-                'category_description'=> $request->category_description,
+                'category_name' => $request->category_name,
+                'category_slug' => Str::slug($request->category_slug),
+                'category_description' => $request->category_description,
                 'updated_at' => Carbon::now(),
             ]);
 
         }
 
-        return redirect('category')->with('category_update', 'ID '. $id. ' Category Update Successfully');
+        return redirect('category')->with('category_update', 'ID '.$id.' Category Update Successfully');
 
     }
 
@@ -132,22 +125,24 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         Category::findOrFail($id)->delete();
-        return back()->with('cate_deleted', "ID " . $id . " Category Deleted");
+
+        return back()->with('cate_deleted', 'ID '.$id.' Category Deleted');
     }
 
     // Category Trash Route index
     public function category_trash()
     {
         return view('layouts.dashboard.trash.category_trash_index', [
-            'category'=>Category::onlyTrashed()->get(),
-            'delete'=>Category::onlyTrashed()->pluck('deleted_at'),
+            'category' => Category::onlyTrashed()->get(),
+            'delete' => Category::onlyTrashed()->pluck('deleted_at'),
         ]);
     }
-    
+
     // Category Trash Route show
     public function category_trash_details(string $id)
     {
         $user = Category::withTrashed()->find($id);
+
         return view('layouts.dashboard.trash.category_trash_show', compact('user'));
     }
 
@@ -156,8 +151,9 @@ class CategoryController extends Controller
     {
         Category::withTrashed()->find($id)->restore();
         Category::withTrashed()->find($id)->update([
-            'deleted_at'=>null,
+            'deleted_at' => null,
         ]);
+
         return redirect('trash/category');
     }
 
@@ -165,6 +161,7 @@ class CategoryController extends Controller
     public function category_trash_delete(string $id)
     {
         Category::withTrashed()->find($id)->forceDelete();
+
         return redirect('category');
 
     }
@@ -173,6 +170,7 @@ class CategoryController extends Controller
     public function empty_category_trash()
     {
         Category::onlyTrashed()->forceDelete();
+
         return redirect('category');
     }
 
@@ -180,6 +178,7 @@ class CategoryController extends Controller
     public function restore_category_trash()
     {
         Category::onlyTrashed()->restore();
+
         return redirect('category');
     }
 
@@ -187,7 +186,7 @@ class CategoryController extends Controller
     public function restore_category_pulck()
     {
         $user = Category::withTrashed()->pluck('deleted_at');
+
         return $user;
     }
-
 }

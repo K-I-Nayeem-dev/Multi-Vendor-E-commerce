@@ -63,14 +63,15 @@
                 <th>Created At</th>
                 <th>Actions</th>
             </tr>
-            @foreach ($coupons as $coupon)
+            @forelse ($coupons as $coupon)
                 <tr>
                     <td>{{ $coupon->id }}</td>
                     <td>{{ $coupon->coupon_name }}</td>
                     <td>{{ $coupon->relToType->type }}</td>
                     <td>{{ $coupon->coupon_value != '' ? $coupon->coupon_value : 'Null' }}</td>
                     <td>{{ $coupon->coupon_date }}</td>
-                    <td> {{ date('d-m-y', strtotime($coupon->created_at)) }}</td>
+                    <td> {{ $coupon->created_at->diffForHumans() }}</td>
+                    {{-- <td> {{ date('d-m-y', strtotime($coupon->created_at)) }}</td> --}}
                     <td class="text-center d-flex">
                         <!-- Button trigger modal -->
                         <button type="button" data-toggle="modal" data-target="#exampleModal"
@@ -80,7 +81,11 @@
                                 class="fa fa-trash"></i></button>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center"><p>No Coupon added</p></td>
+                </tr>
+            @endforelse
         </table>
         {{ $coupons->links('pagination::bootstrap-4') }}
     </div>{{-- Coupon Output Start --}}

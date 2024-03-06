@@ -107,44 +107,90 @@
                                     <h3 id="order_review_heading">Your order</h3>
                                     <div id="order_review" class="woocommerce-checkout-review-order">
                                         <table class="shop_table woocommerce-checkout-review-order-table">
+                                            @php
+                                                $total_price = 0;
+                                                foreach ($carts as $cart) {
+                                                    # code...
+                                                    $total_price += $cart->rel_to_product->discount_price * $cart->quantity;
+                                                    if($carts->count() > 0){
+                                                        $vat = $total_price * (5 / 100);
+                                                    }
+                                                }
+                                            @endphp  
+
                                             <tr class="cart-subtotal">
                                                 <th>Subtotal</th>
                                                 <td><span class="woocommerce-Price-amount amount"><span
-                                                            {{-- class="woocommerce-Price-currencySymbol">&#2547;</span>{{ $total_price }}</span> --}}
+                                                    class="woocommerce-Price-currencySymbol">&#2547;</span>{{ $total_price }}</span>
                                                 </td>
                                             </tr>
-                                            <tr class="cart-subtotal">
-                                                <th>Discount</th>
-                                                <td><span class="woocommerce-Price-amount amount"><span
-                                                            class="woocommerce-Price-currencySymbol">&pound;</span>10</span>
-                                                </td>
-                                            </tr>
-                                            <tr class="shipping">
-                                                <th>Delivery Charge</th>
-                                                <td data-title="Shipping">
-                                                    <span class="woocommerce-Price-currencySymbol">&pound;</span>10</span>
-                                                    <input type="hidden" name="shipping_method[0]" data-index="0"
-                                                        id="shipping_method_0" value="free_shipping:1"
-                                                        class="shipping_method" />
-                                                </td>
-                                            </tr>
+                                            @if($carts->count() > 0)
+                                                <tr class="cart-subtotal">
+                                                    <th>Vat %</th>
+                                                    <td><span class="woocommerce-Price-amount amount"><span
+                                                                class="woocommerce-Price-currencySymbol">&#2547;</span>{{ $vat }}</span>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                            
+                                            @if ($deliveryCharge != 0)
+                                                <tr class="shipping">
+                                                    <th>Delivery Charge</th>
+                                                    <td data-title="Shipping">
+                                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span></span>
+                                                        <input type="hidden" name="shipping_method[0]" data-index="0"
+                                                            id="shipping_method_0" value="{{ $deliveryCharge }}"
+                                                            class="shipping_method" />
+                                                    </td>
+                                                </tr>
+                                            @endif
+
+                                            @if (session()->has('coupon'))
+                                                <tr class="cart-subtotal">
+                                                    <th>Coupon : ( {{ session()->get('coupon')['name'] }} ) </th>
+                                                    <td><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&#2547;</span>-${{ session()->get('coupon')['discount']}}</span>
+                                                    </td>
+                                                </tr>
+                                            @endif
+
                                             <tr class="order-total">
                                                 <th>Total</th>
                                                 <td><strong><span class="woocommerce-Price-amount amount"><span
-                                                                class="woocommerce-Price-currencySymbol">&pound;</span>165.00</span></strong>
+                                                                class="woocommerce-Price-currencySymbol">&#2547;</span>{{ session('subTotal') }}</span></strong>
                                                 </td>
                                             </tr>
                                         </table>
+                                        
+                                        {{-- Delivery Charge  --}}
+                                        <div class="mb-3">
+                                            <h5>Delivery Charge</h5>
+                                            <input id="ID" type="radio" wire:model.live="deliveryCharge" name="DC" value="80">
+                                            <label for="ID" >Inside Dhaka</label>
+                                            <br>
+                                            <input id="OOD" type="radio" wire:model.live="deliveryCharge" name="DC" value="120">
+                                            <label for="OOD" >Outside Of Dhaka</label>
+                                        </div>
+
                                         <div id="payment" class="woocommerce-checkout-payment py-1 mt-1">
                                             <ul class="wc_payment_methods payment_methods methods">
                                                 <li class="wc_payment_method payment_method_cheque mb-1">
                                                     <input id="payment_method_cheque" type="radio" class="input-radio"
-                                                        name="payment_method" value="Cash On Delivery" checked='checked'
+                                                        name="payment_method" value="0" checked='checked'
                                                         data-order_button_text="" />
                                                     <!--grop add span for radio button style-->
                                                     <span class='grop-woo-radio-style'></span>
                                                     <!--custom change-->
                                                     <label for="payment_method_cheque">Cash On Delivery</label>
+                                                </li>
+                                                <li class="wc_payment_method payment_method_cheque mb-1">
+                                                    <input id="payment_method_ssl" type="radio" class="input-radio"
+                                                        name="payment_method" value="1" checked='checked'
+                                                        data-order_button_text="" />
+                                                    <!--grop add span for radio button style-->
+                                                    <span class='grop-woo-radio-style'></span>
+                                                    <!--custom change-->
+                                                    <label for="payment_method_ssl">SSL Commerce</label>
                                                 </li>
                                             </ul>
                                             <div class="form-row place-order">

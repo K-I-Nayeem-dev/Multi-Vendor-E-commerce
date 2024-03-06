@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Wishlist extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     // Relation to Product

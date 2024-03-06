@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use Intervention\Image\ImageManagerStatic as Image;
 
 class SellerController extends Controller
 {
-    public function seller_registration(Request $request){
-
+    public function seller_registration(Request $request)
+    {
 
         $request->validate([
             'name' => 'required',
@@ -29,23 +26,23 @@ class SellerController extends Controller
             'password' => bcrypt($request->password),
             'phone_number' => $request->phone_number,
             'role' => 'seller',
-            'created_at'=> Carbon::now(),
+            'created_at' => Carbon::now(),
         ]);
 
-        if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
-            if(Auth::user()->role == 'seller'){
+            if (Auth::user()->role == 'seller') {
                 return redirect('/');
             }
             // else if(Auth::user()->role == 'seller'){
             //     return view('layouts.frontend.sellerDashboard');
             // }
-            else{
+            else {
                 return view('layouts.dashboard.index');
             }
         }
 
-        return back()->with('sellerRegSuccessful', 'Seller Registration Successfully Done' );
+        return back()->with('sellerRegSuccessful', 'Seller Registration Successfully Done');
 
     }
 
@@ -64,11 +61,10 @@ class SellerController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'phone_number' => $request->phone_number,
-                'updated_at'=> Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]
         );
 
-        return back()->with('profile_update', Auth::user()->role . ' Account Has been Updated');
+        return back()->with('profile_update', Auth::user()->role.' Account Has been Updated');
     }
-
 }

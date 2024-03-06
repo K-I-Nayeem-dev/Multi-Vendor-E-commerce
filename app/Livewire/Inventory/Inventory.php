@@ -2,25 +2,37 @@
 
 namespace App\Livewire\Inventory;
 
-use Livewire\Component;
 use App\Models\Color;
 use App\Models\Inventory as ModelsInventory;
 use App\Models\Products;
 use App\Models\Variation;
-use ourcodeworld\NameThatColor\ColorInterpreter;
 use Carbon\Carbon;
+use Livewire\Component;
+use ourcodeworld\NameThatColor\ColorInterpreter;
 
 class Inventory extends Component
 {
-
     // define properties
-    public $id, $quantity, $size, $color, $product, $variation, $price;
+    public $id;
 
-    public function mount(){
+    public $quantity;
+
+    public $size;
+
+    public $color;
+
+    public $product;
+
+    public $variation;
+
+    public $price;
+
+    public function mount()
+    {
         $this->product = Products::find($this->id);
         $this->variation = Variation::where('category_id', $this->product->category_id)
-                                    ->where('user_id', auth()->id())
-                                    ->get();
+            ->where('user_id', auth()->id())
+            ->get();
     }
 
     // public function mounted($id){
@@ -34,11 +46,12 @@ class Inventory extends Component
         $colors = Color::where('user_id', auth()->id())->get();
         $color_name = new ColorInterpreter();
         $inventory = ModelsInventory::where('product_id', $this->product->id)
-                                    ->where('user_id', auth()->id())
-                                    ->paginate(6);
-        return view('livewire.inventory.inventory', compact('inventory','colors', 'color_name'));
+            ->where('user_id', auth()->id())
+            ->paginate(6);
+
+        return view('livewire.inventory.inventory', compact('inventory', 'colors', 'color_name'));
     }
-    
+
     // public function rules(){
     //     return[
     //         'color' => 'required|unique:colors,color',
@@ -60,8 +73,8 @@ class Inventory extends Component
         ]);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         ModelsInventory::find($id)->delete();
     }
-
 }

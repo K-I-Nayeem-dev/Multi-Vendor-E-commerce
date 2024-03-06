@@ -30,12 +30,12 @@ class WishlistController extends Controller
     public function store(Request $request)
     {
         Wishlist::create($request->except('_token') + [
-            'size'=>'null',
-            'color'=>'null',
-            'created_at' => Carbon::now()
+            'size' => 'null',
+            'color' => 'null',
+            'created_at' => Carbon::now(),
         ]);
 
-        return back()->with('wishlist','Product Successfully Added Wishlist');
+        return back()->with('wishlist', 'Product Successfully Added Wishlist');
 
     }
 

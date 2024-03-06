@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Mail\ContactMessage;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Products;
 use App\Models\SubscribeEmails;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class FrontendController extends Controller
 {
@@ -18,10 +18,10 @@ class FrontendController extends Controller
     {
         return view('layouts.frontend.index',
             [
-                'category'=>Category::Select('Category_Name', 'Category_Image')
-                                    ->distinct()
-                                    ->get(),
-                'products'=>Products::latest()->get(),
+                'category' => Category::Select('Category_Name', 'Category_Image')
+                    ->distinct()
+                    ->get(),
+                'products' => Products::latest()->get(),
             ]
         );
     }
@@ -40,7 +40,7 @@ class FrontendController extends Controller
     {
         return view('layouts.frontend.contact');
     }
-    
+
     public function account_registration()
     {
         return view('layouts.frontend.account_registration');
@@ -51,48 +51,51 @@ class FrontendController extends Controller
         return view('layouts.frontend.account_login');
     }
 
-    public function accounts(Request $request){
+    public function accounts(Request $request)
+    {
         // echo $request->email . "<br>";
         // echo $request->password;
-        if(Auth::attempt(['email'=>$request->email, 'password'=> $request->password])){
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
-            if(Auth::user()->role == 'seller'){
+            if (Auth::user()->role == 'seller') {
                 return redirect('/seller/dashboard');
             }
             // else if(Auth::user()->role == 'seller'){
             //     return view('layouts.frontend.sellerDashboard');
             // }
-            else{
+            else {
                 return view('layouts.dashboard.index');
             }
-        }
-        else{
+        } else {
             return back()->with('login_err', 'These credentials do not match our records. ');
         }
     }
 
-    public function seller_dashboard(){
+    public function seller_dashboard()
+    {
         return view('layouts.frontend.sellerDashboard');
     }
 
-    public function customer_dashboard(){
+    public function customer_dashboard()
+    {
         return view('layouts.frontend.customerDashboard');
     }
 
-    public function contact_message(Request $request){
+    public function contact_message(Request $request)
+    {
 
         $request->validate([
-            "name"=> 'required',
-            "email"=> 'required',
-            "subject"=> 'required',
-            "message"=> 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'subject' => 'required',
+            'message' => 'required',
         ]);
 
         Contact::insert([
-            'contact_name'=> $request->name,
-            'contact_email'=> $request->email,
-            'contact_subject'=> $request->subject,
-            'contact_message'=> $request->message,
+            'contact_name' => $request->name,
+            'contact_email' => $request->email,
+            'contact_subject' => $request->subject,
+            'contact_message' => $request->message,
             'created_at' => Carbon::now(),
         ]);
 
@@ -103,14 +106,13 @@ class FrontendController extends Controller
     }
 
     // Email Subscriber insert
-    public function subscribe_email(Request $request){
+    public function subscribe_email(Request $request)
+    {
         SubscribeEmails::insert([
-            'emails'=> $request->email,
-            'created_at'=> Carbon::now()
+            'emails' => $request->email,
+            'created_at' => Carbon::now(),
         ]);
+
         return back();
     }
-
-
-
 }

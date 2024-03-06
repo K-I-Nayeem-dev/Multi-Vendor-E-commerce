@@ -6,23 +6,33 @@ use App\Models\Coupon as ModelsCoupon;
 use App\Models\CouponType;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Component;
-use Livewire\Attributes\Validate;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class Coupon extends Component
 {
     // coupon add property
-    #[Validate('required')] 
-    public $coupon_name,  $coupon_date, $coupon_value;
-    
+    #[Validate('required')]
+    public $coupon_name;
+
+    public $coupon_date;
+
+    public $coupon_value;
+
     // coupon add property
-    public $id, $coupon_type;
+    public $id;
+
+    public $coupon_type;
 
     // coupon edit property
-    public $name,$type,$value,$date;
+    public $name;
 
+    public $type;
 
+    public $value;
+
+    public $date;
 
     // created coupon data in database
     public function couponAdd()
@@ -39,13 +49,15 @@ class Coupon extends Component
         $this->reset();
     }
 
-    // delete coupon 
-    public function coupon_delete($id){
+    // delete coupon
+    public function coupon_delete($id)
+    {
         ModelsCoupon::find($id)->delete();
     }
 
     // edit coupon
-    public function coupon_edit($id){
+    public function coupon_edit($id)
+    {
         $this->id = $id;
         $coupon = ModelsCoupon::find($id);
         $this->name = $coupon->coupon_name;
@@ -56,12 +68,13 @@ class Coupon extends Component
     }
 
     //Update Coupon
-    public function couponUpdate($id){
+    public function couponUpdate($id)
+    {
         ModelsCoupon::find($id)->update([
-            'coupon_name'=> $this->name,
-            'coupon_type'=> $this->type,
-            'coupon_value'=> $this->value,
-            'coupon_date'=> $this->date,
+            'coupon_name' => $this->name,
+            'coupon_type' => $this->type,
+            'coupon_value' => $this->value,
+            'coupon_date' => $this->date,
         ]);
     }
 
@@ -70,7 +83,7 @@ class Coupon extends Component
         return view(
             'livewire.coupon.coupon',
             [
-                'coupon_types'=> CouponType::Where('user_id', auth()->id())->latest()->distinct()->get(),
+                'coupon_types' => CouponType::Where('user_id', auth()->id())->latest()->distinct()->get(),
                 'coupons' => ModelsCoupon::Where('user_id', auth()->id())->latest()->paginate(5),
             ]
         );

@@ -30,7 +30,7 @@ class ProductsController extends Controller
     public function create()
     {
         return view('layouts.dashboard.products.create', [
-            'categories' => Category::get(['id', 'category_name'])
+            'categories' => Category::get(['id', 'category_name']),
         ]);
     }
 
@@ -43,41 +43,39 @@ class ProductsController extends Controller
         $request->validate([
             '*' => 'required',
         ]);
-        
+
         $product = Products::create($request->except('_token', 'product_galleries') + [
             'user_id' => auth()->id(),
-            'created_at'=> Carbon::now()
+            'created_at' => Carbon::now(),
         ]);
 
         // Multiple Product Upload in Database
 
-        foreach ($request->product_galleries as  $product_gallery) {
-            $rand_id = rand(100000,999999);
-            $new_name = $rand_id . time() . "." . $product_gallery->getClientOriginalExtension();
+        foreach ($request->product_galleries as $product_gallery) {
+            $rand_id = rand(100000, 999999);
+            $new_name = $rand_id.time().'.'.$product_gallery->getClientOriginalExtension();
             $img = Image::make($product_gallery)->resize(460, 460);
-            $img->save(base_path('public\uploads\product_gallery/' . $new_name), 80);
+            $img->save(base_path('public\uploads\product_gallery/'.$new_name), 80);
 
             ProductGallery::create([
-                'user_id'=> auth()->id(),
-                'product_id'=> $product->id,
+                'user_id' => auth()->id(),
+                'product_id' => $product->id,
                 'multiImg' => $new_name,
-                'created_at'=> Carbon::now(),
+                'created_at' => Carbon::now(),
             ]);
-        };
-
-
+        }
 
         // product Id Thumbnail upload
 
         if ($request->hasFile('thumbnail')) {
-            $new_name = $product->name . time() . "." . $request->file('thumbnail')->getClientOriginalExtension();
+            $new_name = $product->name.time().'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $img = Image::make($request->file('thumbnail'))->resize(460, 460);
-            $img->save(base_path('public\uploads\thumbnail_photos/' . $new_name), 80);
+            $img->save(base_path('public\uploads\thumbnail_photos/'.$new_name), 80);
 
             Products::find($product->id)->update([
-                'user_id'=> auth()->id(),
+                'user_id' => auth()->id(),
                 'thumbnail' => $new_name,
-                'updated_at' => null
+                'updated_at' => null,
             ]);
         }
 
@@ -90,6 +88,7 @@ class ProductsController extends Controller
     public function show(string $products)
     {
         $user = Products::find($products);
+
         return view('layouts.dashboard.products.show', compact('user'));
     }
 
@@ -103,7 +102,7 @@ class ProductsController extends Controller
             'user' => Products::find($products),
             'categories' => Category::get(['id', 'category_name']),
             'sizes' => Variation::all(),
-            'colors' => Color::all()
+            'colors' => Color::all(),
         ]);
     }
 
@@ -119,19 +118,19 @@ class ProductsController extends Controller
 
         if ($request->hasFile('thumbnail')) {
 
-            unlink(base_path('public/uploads/thumbnail_photos/' . Products::find($id)->thumbnail));
+            unlink(base_path('public/uploads/thumbnail_photos/'.Products::find($id)->thumbnail));
 
-            $new_name = $request->name . time() . "." . $request->file('thumbnail')->getClientOriginalExtension();
+            $new_name = $request->name.time().'.'.$request->file('thumbnail')->getClientOriginalExtension();
             $img = Image::make($request->file('thumbnail'))->resize(300, 300);
-            $img->save(base_path('public\uploads\thumbnail_photos/' . $new_name), 80);
+            $img->save(base_path('public\uploads\thumbnail_photos/'.$new_name), 80);
 
             Products::find($id)->update([
                 'thumbnail' => $new_name,
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ]);
         } else {
             Products::find($id)->update($request->except('_token') + [
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now(),
             ]);
         }
 
@@ -144,10 +143,10 @@ class ProductsController extends Controller
     public function destroy(string $products)
     {
         Products::findOrFail($products)->delete();
-        // unlink(base_path('public/uploads/thumbnail_photos/'.Products::find($products)->thumbnail));
-        return back()->with('cate_deleted', "ID " . $products . " Category Deleted");
-    }
 
+        // unlink(base_path('public/uploads/thumbnail_photos/'.Products::find($products)->thumbnail));
+        return back()->with('cate_deleted', 'ID '.$products.' Category Deleted');
+    }
 
     // Products Trash Route index
     public function product_trash()
@@ -162,6 +161,7 @@ class ProductsController extends Controller
     public function product_trash_details(string $id)
     {
         $user = Products::withTrashed()->find($id);
+
         return view('layouts.dashboard.trash.product_trash_show', compact('user'));
     }
 
@@ -172,6 +172,7 @@ class ProductsController extends Controller
         Products::withTrashed()->find($id)->update([
             'deleted_at' => null,
         ]);
+
         return redirect('trash/product');
     }
 
@@ -179,6 +180,7 @@ class ProductsController extends Controller
     public function product_trash_delete(string $id)
     {
         Products::withTrashed()->find($id)->forceDelete();
+
         return redirect('trash/product');
     }
 
@@ -186,6 +188,7 @@ class ProductsController extends Controller
     public function empty_product_trash()
     {
         Products::onlyTrashed()->forceDelete();
+
         return redirect('products');
     }
 
@@ -193,6 +196,7 @@ class ProductsController extends Controller
     public function restore_product_trash()
     {
         Products::onlyTrashed()->restore();
+
         return redirect('products');
     }
 
@@ -221,9 +225,8 @@ class ProductsController extends Controller
         //     echo "</pre>";
         // }
 
-
         // ForLoop Color For Selected Size/Variation
-        // for ($i=0; $i < count($inventory_variation) ; $i++) { 
+        // for ($i=0; $i < count($inventory_variation) ; $i++) {
         //         // echo "<pre>";
         //         $size = $inventory_variation[$i]->size_variation;
         //         // echo "</pre>";

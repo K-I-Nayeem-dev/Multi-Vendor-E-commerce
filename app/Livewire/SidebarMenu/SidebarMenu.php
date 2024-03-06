@@ -7,10 +7,10 @@ use Livewire\Component;
 
 class SidebarMenu extends Component
 {
-
     public $total = 0;
 
-    public function removeItem($id){
+    public function removeItem($id)
+    {
         Cart::find($id)->delete();
     }
 

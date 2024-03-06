@@ -40,7 +40,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($carts->count() < 0)
+                        {{-- @if ($carts->count() < 0) --}}
                             @forelse ($carts as $cart)
                                 <tr>
                                     <td>
@@ -80,8 +80,16 @@
                                             class="price_text">{{ $cart->rel_to_product->discount_price * $cart->quantity }}</span>
                                         @php
                                             $total_price += $cart->rel_to_product->discount_price * $cart->quantity;
-                                            $vat = $total_price * (5 / 100);
-                                            // $sub_total = $total_price - $vat;
+                                            if($carts->count() > 0){
+                                                $vat = $total_price * (5 / 100);
+                                            }
+                                            $sub_total = !session()->has('coupon') ? $total_price + $vat : $total_price + $vat - session()->get('coupon')['discount'];
+
+                                            // Passing SubTotal to Checkout
+                                            session([
+                                                'subTotal' => $sub_total,
+                                            ])
+
                                         @endphp
                                     </td>
                                     <td class="text-center"><button wire:click="itemRemove({{ $cart->id }})"
@@ -92,47 +100,48 @@
                                     <td>No Product added to cart</td>
                                 </tr>
                             @endforelse
-                        @endif
+                        {{-- @endif --}}
                     </tbody>
                 </table>
             </div>
 
-            <div class="cart_btns_wrap">
-                <div class="row">
-                    <div class="col col-lg-6">
-                        @if (session()->has('coupon'))
-                            <span class="text-success mt-2 fs-6">{{ session()->get('coupon')['message'] }}</span><button wire:click='coupon_remove' class="text-danger fs-6 btn-sm">Remove</button>
-                            <p class="text-danger mt-2">{{ $coupon_error = '' }}</p>
-                        @else
-                            <form wire:submit="coupons">
-                                <div class="coupon_form form_item mb-0">
-
-                                    <input type="text" wire:model="coupon" placeholder="Coupon Code...">
-                                    <button type="submit" class="btn btn_dark">Apply Coupon</button>
-                                    <div class="info_icon">
-                                        <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
-                                            title="Your Info Here"></i>
-                                    </div>
-                                </div>
-                                @error('coupon')
-                                    <p class="text-danger mt-2">{{ $message }}</p>
+                <div class="cart_btns_wrap">
+                    <div class="row">
+                        @if ($coupons > 0)
+                            <div class="col col-lg-6">
+                                @if (session()->has('coupon'))
+                                    <span class="text-success mt-2 fs-6">{{ session()->get('coupon')['message'] }}</span><button wire:click='coupon_remove' class="text-danger fs-6 btn-sm">Remove</button>
                                     <p class="text-danger mt-2">{{ $coupon_error = '' }}</p>
-                                @enderror
-                                @if ($coupon_error == 'Invalid Coupon Code')
-                                    <p class="text-danger mt-2">{{ $coupon_error }}</p>
-                                @endif
-                            </form>
-                        @endif
-                    </div>
+                                @else
+                                    <form wire:submit="coupons">
+                                        <div class="coupon_form form_item mb-0">
 
-                    <div class="col col-lg-6">
-                        <ul class="btns_group ul_li_right">
-                            {{-- <li><a class="btn border_black" href="#!">Update Cart</a></li> --}}
-                            <li><a class="btn btn_dark" href="{{ route('check_out') }}">Proceed To Checkout</a></li>
-                        </ul>
+                                            <input type="text" wire:model="coupon" placeholder="Coupon Code...">
+                                            <button type="submit" class="btn btn_dark">Apply Coupon</button>
+                                            <div class="info_icon">
+                                                <i class="fas fa-info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Your Info Here"></i>
+                                            </div>
+                                        </div>
+                                        @error('coupon')
+                                            <p class="text-danger mt-2">{{ $message }}</p>
+                                            <p class="text-danger mt-2">{{ $coupon_error = '' }}</p>
+                                        @enderror
+                                        @if ($coupon_error == 'Invalid Coupon Code')
+                                            <p class="text-danger mt-2">{{ $coupon_error }}</p>
+                                        @endif
+                                    </form>
+                                @endif
+                            </div>
+                        @endif
+                        <div class="{{ $coupons > 0 ? 'col-lg-6' : 'offset-6 col-lg-6' }}">
+                            <ul class="btns_group ul_li_right">
+                                {{-- <li><a class="btn border_black" href="#!">Update Cart</a></li> --}}
+                                <li><a class="btn btn_dark" href="{{ route('check_out') }}">Proceed To Checkout</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div class="row">
 
@@ -153,7 +162,7 @@
                     </div>
                 </div> --}}
 
-                @if ($carts->count() < 0)
+                {{-- @if ($carts->count() < 0) --}}
                     <div class="col-lg-6 offset-6">
                         <div class="cart_total_table">
                             <h3 class="wrap_title">Cart Totals</h3>
@@ -169,17 +178,19 @@
                                     </li>
                                 @endif
                                 <li>
-                                    <span>Vat 5%</span>
-                                    <span>+${{ $vat }}</span>
+                                    @if($carts->count() > 0)
+                                        <span>Vat 5%</span>
+                                        <span>+${{ $vat }}</span>
                                 </li>
                                 <li>
-                                    <span>Order Total</span>
-                                    <span>${{ !session()->has('coupon') ? $total_price + $vat : $total_price + $vat - session()->get('coupon')['discount']}}</span>
+                                        <span>Order Total</span>
+                                        <span>${{ $sub_total }}</span>
+                                    @endif
                                 </li>
                             </ul>
                         </div>
                     </div>
-                @endif
+                {{-- @endif --}}
             </div>
         </div>
         @elseguest

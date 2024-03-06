@@ -6,7 +6,6 @@ use Livewire\Component;
 
 class Wishlist extends Component
 {
-
     public $total = 0;
 
     public function render()

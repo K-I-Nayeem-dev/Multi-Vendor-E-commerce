@@ -9,8 +9,19 @@ use ourcodeworld\NameThatColor\ColorInterpreter;
 
 class Index extends Component
 {
+    public $id;
 
-    public $id, $user_id, $vendor_id, $product_id, $s_color, $s_size, $quantity;
+    public $user_id;
+
+    public $vendor_id;
+
+    public $product_id;
+
+    public $s_color;
+
+    public $s_size;
+
+    public $quantity;
 
     public function cart_delete($id)
     {
@@ -29,7 +40,7 @@ class Index extends Component
         $this->quantity = $cart->quantity;
     }
 
-    // Edit Cart 
+    // Edit Cart
     public function edit_submit($id)
     {
         Cart::find($id)->update([
@@ -38,7 +49,6 @@ class Index extends Component
             'color' => $this->s_color,
         ]);
     }
-
 
     public function render()
     {

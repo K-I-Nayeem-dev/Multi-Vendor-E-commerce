@@ -1,14 +1,20 @@
 <?php
 
 namespace App\Livewire\Checkout;
+
+use App\Models\Cart;
 use Livewire\Component;
 
 class Checkout extends Component
 {
+    public $decode_divisions;
 
-    public $decode_divisions, $decode_districts;
+    public $decode_districts;
 
-    public function mount(){
+    public $deliveryCharge = 0;
+
+    public function mount()
+    {
         // Divisions File
         $file_one = 'divisions.json';
         $divisions = file_get_contents($file_one);
@@ -27,6 +33,7 @@ class Checkout extends Component
             [
                 'divisions' => $this->decode_divisions,
                 'districts' => $this->decode_districts,
+                'carts' => Cart::Where('user_id', auth()->id())->get(),
             ]
         );
     }

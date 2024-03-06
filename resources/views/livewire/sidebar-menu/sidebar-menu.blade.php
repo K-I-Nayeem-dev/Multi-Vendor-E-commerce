@@ -3,9 +3,9 @@
                 <div class="sidebar-menu-wrapper">
                     <div class="cart_sidebar">
                         <button type="button" class="close_btn"><i class="fal fa-times"></i></button>
-                        @if (App\Models\Cart::Where('user_id', auth()->id())->count() < 0)
+                        {{-- @if (App\Models\Cart::Where('user_id', auth()->id())->count() < 0) --}}
                             <ul class="cart_items_list ul_li_block mb_30 clearfix">
-                                @foreach (App\Models\Cart::Where('user_id', auth()->id())->get() as $cart)
+                                @forelse (App\Models\Cart::Where('user_id', auth()->id())->get() as $cart)
                                     <li>
                                         <div class="item_image">
                                             <img src="{{ asset('uploads/thumbnail_photos') }}/{{ $cart->rel_to_product->thumbnail }}"
@@ -22,7 +22,9 @@
                                         $vat = $total * (5 / 100);
                                         $sub_total = $total - $vat;
                                     @endphp
-                                @endforeach
+                                @empty
+                                    <div class="text-center"><h5>No Product Added</h5></div>
+                                @endforelse
                             </ul>
                             
                             @auth
@@ -32,12 +34,14 @@
                                         <span>${{ $total}}</span>
                                     </li>
                                     <li>
-                                        <span>Vat 5%:</span>
-                                        <span>${{ $vat }}</span>
+                                        @if (App\Models\Cart::Where('user_id', auth()->id())->count() > 0)
+                                            <span>Vat 5%:</span>
+                                            <span>${{ $vat }}</span>
                                     </li>
                                     <li>
-                                        <span>Total:</span>
-                                        <span>${{ $sub_total }}</span>
+                                            <span>Total:</span>
+                                            <span>${{ $sub_total }}</span>
+                                        @endif
                                     </li>
                                 </ul>
                 
@@ -46,7 +50,7 @@
                                     <li><a class="btn btn_secondary" href="checkout.html">Checkout</a></li>
                                 </ul>
                             @endauth
-                        @endif
+                        {{-- @endif --}}
                     </div>
         
                     <div class="cart_overlay"></div>

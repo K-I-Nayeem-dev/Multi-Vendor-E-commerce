@@ -11,8 +11,8 @@ class Coupon extends Model
 
     use HasFactory;
 
-    public function relToType(){
+    public function relToType()
+    {
         return $this->belongsTo(CouponType::class, 'coupon_type');
     }
-
 }

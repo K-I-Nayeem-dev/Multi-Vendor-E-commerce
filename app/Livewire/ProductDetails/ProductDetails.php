@@ -10,7 +10,21 @@ use ourcodeworld\NameThatColor\ColorInterpreter;
 
 class ProductDetails extends Component
 {
-    public $id, $products, $inventory_variation, $inventory_color, $releted_product, $size, $select_size, $select_color;
+    public $id;
+
+    public $products;
+
+    public $inventory_variation;
+
+    public $inventory_color;
+
+    public $releted_product;
+
+    public $size;
+
+    public $select_size;
+
+    public $select_color;
 
     // protected $quaryString = ['select_size','select_color'];
 
@@ -27,8 +41,9 @@ class ProductDetails extends Component
         // }
     }
 
-    public function updatedSeleted(){
-        dd("hello");
+    public function updatedSeleted()
+    {
+        dd('hello');
     }
 
     public function render()
@@ -40,7 +55,7 @@ class ProductDetails extends Component
             ->distinct()
             ->get();
 
-        foreach ($this->inventory_variation as  $inventory_variation) {
+        foreach ($this->inventory_variation as $inventory_variation) {
             $this->size = $inventory_variation->size_size_variation;
         }
 
@@ -50,6 +65,7 @@ class ProductDetails extends Component
             ->orderBy('color', 'ASC')
             ->distinct()
             ->get();
+
         return view('livewire.product-details.product-details',
             [
                 'color_name' => new ColorInterpreter(),

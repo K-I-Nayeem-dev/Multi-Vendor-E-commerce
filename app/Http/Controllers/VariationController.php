@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Variation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,16 +30,17 @@ class VariationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'size'=>'required|alpha'
-        ],[
-            'size.required'=>'Variation filed canot be null',
-            'size.alpha'=>'Variation field only accept Aphabet'
+            'size' => 'required|alpha',
+        ], [
+            'size.required' => 'Variation filed canot be null',
+            'size.alpha' => 'Variation field only accept Aphabet',
         ]);
 
         Variation::create($request->except('_token') + [
-            'created_at'=> Carbon::now(),
-            'updated_at'=> null,
+            'created_at' => Carbon::now(),
+            'updated_at' => null,
         ]);
+
         return back()->with('variantion_store', 'Variation Store Successfully');
         // return explode(',' , json_encode($request->variations));
     }

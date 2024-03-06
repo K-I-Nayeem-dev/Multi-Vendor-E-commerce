@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Color extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    public function getCreatedAtAttribute($value){
-        return date("d-M-y", strtotime($value));
+    public function getCreatedAtAttribute($value)
+    {
+        return date('d-M-y', strtotime($value));
     }
 }

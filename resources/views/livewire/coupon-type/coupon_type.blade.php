@@ -31,7 +31,7 @@
                 <th>Created At</th>
                 <th>Actions</th>
             </tr>
-            @foreach ($coupon_types as $coupon)
+            @forelse ($coupon_types as $coupon)
                 <tr>
                     <td>{{ $coupon->id }}</td>
                     <td>{{ Str::upper($coupon->type) }}</td>
@@ -45,7 +45,9 @@
                                 class="fa fa-trash"></i></button>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr><td colspan="4" class="text-center"><p>No Type Found</p></td></tr>
+            @endforelse
         </table>
         {{ $coupon_types->links('pagination::bootstrap-4') }}
     </div>{{-- Coupon Output Start --}}

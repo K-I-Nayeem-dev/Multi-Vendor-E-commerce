@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -17,6 +16,7 @@ class ContactMessage extends Mailable
      * Create a new message instance.
      */
     public $info;
+
     public function __construct($infos)
     {
         $this->info = $infos;
@@ -39,11 +39,11 @@ class ContactMessage extends Mailable
     {
         return new Content(
             view: 'layouts.frontend.mail.contact_email',
-            with:[
+            with: [
                 'name' => $this->info['name'],
                 'email' => $this->info['email'],
                 'messaage' => $this->info['message'],
-                'subject' => $this->info['subject']
+                'subject' => $this->info['subject'],
             ]
         );
     }
@@ -57,7 +57,4 @@ class ContactMessage extends Mailable
     {
         return [];
     }
-
-
-
 }

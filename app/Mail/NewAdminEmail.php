@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -16,7 +15,11 @@ class NewAdminEmail extends Mailable
     /**
      * Create a new message instance.
      */
-    public $creator_name, $email, $password;
+    public $creator_name;
+
+    public $email;
+
+    public $password;
 
     public function __construct($creator_name, $email, $password)
     {
@@ -42,10 +45,10 @@ class NewAdminEmail extends Mailable
     {
         return new Content(
             view: 'layouts.frontend.mail.admin_invation',
-            with:[
-                "creator_name"=> $this->creator_name,
-                "email"=> $this->email,
-                "password"=> $this->password
+            with: [
+                'creator_name' => $this->creator_name,
+                'email' => $this->email,
+                'password' => $this->password,
             ]
         );
     }

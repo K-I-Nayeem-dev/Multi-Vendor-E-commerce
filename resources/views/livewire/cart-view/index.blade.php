@@ -22,7 +22,8 @@
                             <td class="text-white" style="background-color: {{ $cart->rel_to_color->color }}">{{ $color_name->name($cart->rel_to_color->color)['name'] }}</td>
                             <td>{{ $cart->size }}</td>
                             <td>{{ $cart->quantity }}</td>
-                            <td> {{ date('d-m-y', strtotime($cart->created_at)) }}</td>
+                            <td> {{ $cart->created_at->diffForHumans() }}</td>
+                            {{-- <td> {{ date('d-m-y', strtotime($cart->created_at)) }}</td> --}}
                             <td class="text-center">
                                 <!-- Button trigger modal -->
                                 <button type="button" data-toggle="modal" data-target="#staticBackdrop"

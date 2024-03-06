@@ -12,7 +12,7 @@ class InvetoryController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -28,7 +28,7 @@ class InvetoryController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**
@@ -37,7 +37,8 @@ class InvetoryController extends Controller
     public function show(string $id)
     {
         $product = Products::find($id);
-        return view('layouts.dashboard.inventories.show' , ['product' => $product]);
+
+        return view('layouts.dashboard.inventories.show', ['product' => $product]);
     }
 
     /**

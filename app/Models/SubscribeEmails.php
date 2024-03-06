@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SubscribeEmails extends Model
 {
     use HasFactory;
-    
+
     protected $guarded = [];
 }

@@ -2,24 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Intervention\Image\ImageManagerStatic as Image;
-
-use Illuminate\Support\Facades\Auth;
-
 use App\Models\User;
-
-use Illuminate\Support\Facades\Hash;
-
 use App\Models\Verification;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ProfileController extends Controller
 {
-
-
     //phone Status Check
 
     public function profile()
@@ -28,22 +20,19 @@ class ProfileController extends Controller
 
             if (Verification::where('user_id', auth()->user()->id)->first()->status) {
                 $verification_status = true;
-            }
-            else{
+            } else {
                 $verification_status = false;
             }
 
             // return Verification::where('user_id', auth()->user()->id)->first()->status;
 
-        }
-        else{
+        } else {
             $verification_status = false;
         }
 
         return view('layouts.dashboard.profile.profile', compact('verification_status'));
 
     }
-
 
     // Profile Photo Change
 
@@ -53,18 +42,17 @@ class ProfileController extends Controller
             'profile_photo' => 'required|image',
         ]);
 
-        $new_name = Auth::user()->id . "." . $request->file('profile_photo')->getClientOriginalExtension();
-        $img =Image::make($request->file('profile_photo'))->resize(300, 300);
-        $img->save(base_path('public\uploads\profile_photo/' . $new_name), 80);
+        $new_name = Auth::user()->id.'.'.$request->file('profile_photo')->getClientOriginalExtension();
+        $img = Image::make($request->file('profile_photo'))->resize(300, 300);
+        $img->save(base_path('public\uploads\profile_photo/'.$new_name), 80);
         User::find(auth()->id())->update(
             [
-                'profile_photo'=> $new_name,
+                'profile_photo' => $new_name,
             ]);
 
-            return back()->with('profile_photo_uploads', 'Profile Photo Upload Successfully');
+        return back()->with('profile_photo_uploads', 'Profile Photo Upload Successfully');
 
     }
-
 
     // Cover Photo Change
 
@@ -74,16 +62,15 @@ class ProfileController extends Controller
             'cover_photo' => 'required|image',
         ]);
 
-        $new_name = Auth::user()->id . "." . $request->file('cover_photo')->getClientOriginalExtension();
-        $img =Image::make($request->file('cover_photo'))->resize(1600, 300);
-        $img->save(base_path('public\uploads\cover_photo/' . $new_name), 80);
+        $new_name = Auth::user()->id.'.'.$request->file('cover_photo')->getClientOriginalExtension();
+        $img = Image::make($request->file('cover_photo'))->resize(1600, 300);
+        $img->save(base_path('public\uploads\cover_photo/'.$new_name), 80);
         User::find(auth()->id())->update(
             [
-                'cover_photo'=> $new_name,
+                'cover_photo' => $new_name,
             ]);
 
-            return back()->with('cover_photo_uploads', 'Cover Photo Upload Successfully');
-
+        return back()->with('cover_photo_uploads', 'Cover Photo Upload Successfully');
 
     }
 
@@ -94,16 +81,16 @@ class ProfileController extends Controller
         $request->validate([
             'current_password' => 'required',
         ]);
-        
-        if(Hash::check($request->current_password, Auth::user()->password)){
+
+        if (Hash::check($request->current_password, Auth::user()->password)) {
             User::find(auth()->id())->update(
                 [
                     'password_check_status' => true,
                 ]
             );
+
             return back();
-        }
-        else{
+        } else {
             return back()->with('password_err', 'Pass do not match our records.');
         }
 
@@ -115,11 +102,10 @@ class ProfileController extends Controller
     {
         $request->validate([
             'password' => 'required|confirmed|min:8|',
-            'password_confirmation' => 'required|same:password'
+            'password_confirmation' => 'required|same:password',
         ]);
-        
 
-        if($request->password == $request->password_confirmation){
+        if ($request->password == $request->password_confirmation) {
             User::find(auth()->id())->update(
                 [
                     'password' => bcrypt($request->password),
@@ -138,11 +124,10 @@ class ProfileController extends Controller
     public function phone_number_add(Request $request)
     {
 
-        
         $request->validate([
             'phone_number' => 'required',
         ]);
-        
+
         User::find(auth()->id())->update(
             [
                 'phone_number' => $request->phone_number,
@@ -190,18 +175,17 @@ class ProfileController extends Controller
         return back()->with('OTP_send', ' OTP Send!');
     }
 
-
-    public function verify_otp_confirm(Request $request){
-
+    public function verify_otp_confirm(Request $request)
+    {
 
         $request->validate([
-            'code'=> 'required',
+            'code' => 'required',
         ]);
 
-        if($request->code == Verification::where('user_id', auth()->user()->id)->first()->code){
+        if ($request->code == Verification::where('user_id', auth()->user()->id)->first()->code) {
 
             Verification::where('user_id', auth()->user()->id)->update([
-                    'status'=>true,
+                'status' => true,
             ]);
 
             User::find(auth()->id())->update(
@@ -212,27 +196,25 @@ class ProfileController extends Controller
 
             return back()->with('OTP_success', 'Phone Number Verified');
 
-        }
-        else{
+        } else {
             return back()->with('OTP_Fail', 'Worng OTP');
         }
     }
 
-    public function update_number_add(){
-        
+    public function update_number_add()
+    {
+
         Verification::where('user_id', auth()->user()->id)->delete();
 
         User::find(auth()->id())->update(
             [
                 'otp_send_status' => false,
-                'phone_number'=> null,
-                'phone_number_update'=> true,
+                'phone_number' => null,
+                'phone_number_update' => true,
             ]
         );
 
         return back()->with('phone_number', 'Update your Phone number');
 
     }
-
-
 }
