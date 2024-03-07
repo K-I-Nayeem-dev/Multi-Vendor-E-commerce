@@ -33,12 +33,6 @@ class ProductDetails extends Component
         $this->products = Products::find($id);
 
         $this->releted_product = Products::where('category_id', $this->products->category_id)->where('id', '!=', $id)->get();
-
-        // for ($i = 0; $i < count($this->inventory_variation); $i++) {
-        //     // echo "<pre>";
-        //     $this->size = $this->inventory_variation[$i]->size_variation;
-        //     // echo "</pre>";
-        // }
     }
 
     public function updatedSeleted()

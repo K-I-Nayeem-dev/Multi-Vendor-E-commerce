@@ -104,6 +104,8 @@ Route::group(['middleware' => 'web'], function () {
     // Checkout Route
     Route::group(['controller' => CheckoutController::class], function () {
         Route::get('/check-out', 'check_out')->name('check_out');
+        Route::get('/order/information', 'orderInformation')->name('orderInformation');
+        Route::post('/order', 'orderStore')->name('order');
     });
     // Checkout Route
 

@@ -23,9 +23,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="col col-xs-12">
+                            @if(session('orderCreated'))
+                                <div class="text-center alert alert-success mx-2">
+                                    <h6>{{ session('orderCreated') }}</h6>
+                                </div>
+                            @endif
                             <div class="woocommerce bg-light p-3">
-                                <form name="checkout" method="post" class="checkout woocommerce-checkout"
-                                    action="http://localhost/wp/?page_id=6" enctype="multipart/form-data">
+                                <form action="{{ route('order') }}" method="post" class="checkout woocommerce-checkout">
+                                    @csrf
                                     <div class="col2-set" id="customer_details">
                                         <div class="coll-1">
                                             <div class="woocommerce-billing-fields">
@@ -34,74 +39,95 @@
                                                     id="billing_first_name_field">
                                                     <label for="billing_first_name" class="">First Name <abbr
                                                             class="required" title="required">*</abbr></label>
-                                                    <input type="text" class="input-text " name="billing_first_name"
+                                                    <input type="text" class="input-text " name="name"
                                                         id="billing_first_name" placeholder="" autocomplete="given-name"
-                                                        value="{{ auth()->user()->name }}" />
+                                                        value="{{ old('name') }}" />
+                                                    @error('name')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
                                                 </p>
                                                 <p class="form-row form-row form-row-last validate-required validate-email"
                                                     id="billing_email_field">
                                                     <label for="billing_email" class="">Email Address <abbr
                                                             class="required" title="required">*</abbr></label>
-                                                    <input type="email" class="input-text " name="billing_email"
+                                                    <input type="email" class="input-text " name="email"
                                                         id="billing_email" placeholder="" autocomplete="email"
-                                                        value="{{ auth::user()->email }}" />
+                                                        value="{{ old('email') }}" />
+                                                    @error('email')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
                                                 </p>
                                                 <div class="clear"></div>
                                                 <p class="form-row form-row form-row-first" id="billing_company_field">
                                                     <label for="billing_company" class="">Company Name
                                                         (optional)</label>
-                                                    <input type="text" class="input-text " name="billing_company"
+                                                    <input type="text" class="input-text " name="company"
                                                         id="billing_company" placeholder="" autocomplete="organization"
-                                                        value="" />
+                                                        value="{{ old('company') }}" />
                                                 </p>
 
                                                 <p class="form-row form-row form-row-last validate-required validate-phone"
                                                     id="billing_phone_field">
                                                     <label for="billing_phone" class="">Phone <abbr class="required"
                                                             title="required">*</abbr></label>
-                                                    <input type="tel" class="input-text " name="billing_phone"
+                                                    <input type="tel" class="input-text " name="phone"
                                                         id="billing_phone" placeholder="" autocomplete="tel"
-                                                        value="{{ auth()->user()->phone_number }}" />
+                                                        value="{{ old('phone') }}" />
+                                                    @error('phone')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
                                                 </p>
                                                 <div class="clear"></div>
                                                 <p class="form-row form-row form-row-first address-field update_totals_on_change validate-required"
                                                     id="billing_country_field">
                                                     <label for="billing_country" class="">Division<abbr
                                                             class="required" title="required">*</abbr></label>
-                                                    <select wire:model='division'>
+                                                    <select name="division">
                                                         <option value="">Select a country&hellip;</option>
                                                         @foreach ($divisions as $division)
                                                             <option value="{{ $division->id }}">{{ $division->bn_name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    @error('division')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
                                                 </p>
                                                 <p class="form-row form-row form-row-last address-field update_totals_on_change validate-required"
                                                     id="billing_country_field">
                                                     <label for="billing_country" class="">Districts<abbr
                                                             class="required" title="required">*</abbr></label>
-                                                    <select>
+                                                    <select name="district">
                                                         <option value="">Select a City&hellip;</option>
                                                         @foreach ($districts as $district)
                                                             <option value="{{ $district->id }}">{{ $district->bn_name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    @error('district')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
                                                 </p>
                                                 <p class="form-row form-row form-row-wide address-field validate-required"
                                                     id="billing_address_1_field">
                                                     <label for="billing_address_1" class="">Address <abbr
                                                             class="required" title="required">*</abbr></label>
-                                                    <input type="text" class="input-text " name="billing_address_1"
+                                                    <input type="text" class="input-text " name="address"
                                                         id="billing_address_1" placeholder="Street address"
-                                                        autocomplete="address-line1" value="" />
+                                                        autocomplete="address-line1" value="{{ old('address') }}" />
+                                                    @error('address')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
                                                 </p>
                                             </div>
                                             <p class="form-row form-row notes" id="order_comments_field">
                                                 <label for="order_comments" class="">Order Notes</label>
-                                                <textarea name="order_comments" class="input-text " id="order_comments"
-                                                    placeholder="Notes about your order, e.g. special notes for delivery." rows="2" cols="5"></textarea>
+                                                <textarea name="notes" class="input-text " id="order_comments"
+                                                    placeholder="Notes about your order, e.g. special notes for delivery." rows="2" cols="5" value="{{ old('notes') }}"></textarea>
                                             </p>
+                                            @error('notes')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
                                         </div>
                                     </div>
                                     <h3 id="order_review_heading">Your order</h3>
@@ -111,20 +137,21 @@
                                                 $total_price = 0;
                                                 foreach ($carts as $cart) {
                                                     # code...
-                                                    $total_price += $cart->rel_to_product->discount_price * $cart->quantity;
-                                                    if($carts->count() > 0){
+                                                    $total_price +=
+                                                        $cart->rel_to_product->discount_price * $cart->quantity;
+                                                    if ($carts->count() > 0) {
                                                         $vat = $total_price * (5 / 100);
                                                     }
                                                 }
-                                            @endphp  
+                                            @endphp
 
                                             <tr class="cart-subtotal">
                                                 <th>Subtotal</th>
                                                 <td><span class="woocommerce-Price-amount amount"><span
-                                                    class="woocommerce-Price-currencySymbol">&#2547;</span>{{ $total_price }}</span>
+                                                            class="woocommerce-Price-currencySymbol">&#2547;</span>{{ $total_price }}</span>
                                                 </td>
                                             </tr>
-                                            @if($carts->count() > 0)
+                                            @if ($carts->count() > 0)
                                                 <tr class="cart-subtotal">
                                                     <th>Vat %</th>
                                                     <td><span class="woocommerce-Price-amount amount"><span
@@ -132,12 +159,13 @@
                                                     </td>
                                                 </tr>
                                             @endif
-                                            
+
                                             @if ($deliveryCharge != 0)
                                                 <tr class="shipping">
                                                     <th>Delivery Charge</th>
                                                     <td data-title="Shipping">
-                                                        <span class="woocommerce-Price-currencySymbol">&#2547;</span></span>
+                                                        <span
+                                                            class="woocommerce-Price-currencySymbol">&#2547;</span></span>
                                                         <input type="hidden" name="shipping_method[0]" data-index="0"
                                                             id="shipping_method_0" value="{{ $deliveryCharge }}"
                                                             class="shipping_method" />
@@ -149,7 +177,7 @@
                                                 <tr class="cart-subtotal">
                                                     <th>Coupon : ( {{ session()->get('coupon')['name'] }} ) </th>
                                                     <td><span class="woocommerce-Price-amount amount"><span
-                                                        class="woocommerce-Price-currencySymbol">&#2547;</span>-${{ session()->get('coupon')['discount']}}</span>
+                                                                class="woocommerce-Price-currencySymbol">&#2547;</span>-${{ session()->get('coupon')['discount'] }}</span>
                                                     </td>
                                                 </tr>
                                             @endif
@@ -161,16 +189,30 @@
                                                 </td>
                                             </tr>
                                         </table>
-                                        
+
                                         {{-- Delivery Charge  --}}
                                         <div class="mb-3">
                                             <h5>Delivery Charge</h5>
-                                            <input id="ID" type="radio" wire:model.live="deliveryCharge" name="DC" value="80">
-                                            <label for="ID" >Inside Dhaka</label>
+                                            <input id="ID" type="radio" name="deliveryCharge" value="1">
+                                            <label for="ID">Inside Dhaka</label>
                                             <br>
-                                            <input id="OOD" type="radio" wire:model.live="deliveryCharge" name="DC" value="120">
-                                            <label for="OOD" >Outside Of Dhaka</label>
+                                            <input id="OOD" type="radio" name="deliveryCharge" value="2">
+                                            <label for="OOD">Outside Of Dhaka</label>
                                         </div>
+
+                                        {{-- vat,Total & other Amount hidded infromation for data insert --}}
+
+                                        @if ($carts->count() > 0)
+                                            <input type="text" name="vat" value="{{ $vat }}" hidden>
+                                        @endif
+
+                                        @if (session()->has('coupon'))
+                                            <input hidden name="coupon" value="{{ session()->get('coupon')['name'] }}">
+                                        @endif
+
+                                        <input hidden name="totalAmount" value="{{ session('subTotal') }}">
+                                        <input hidden name="userId" value="{{ Auth::id() }}">
+
 
                                         <div id="payment" class="woocommerce-checkout-payment py-1 mt-1">
                                             <ul class="wc_payment_methods payment_methods methods">
@@ -203,12 +245,8 @@
                                                     <input type="submit" class="button alt"
                                                         name="woocommerce_checkout_update_totals" value="Update totals" />
                                                 </noscript>
-                                                <input type="submit" class="button alt"
-                                                    name="woocommerce_checkout_place_order" id="place_order"
+                                                <input type="submit" class="button alt" id="place_order"
                                                     value="Place order" data-value="Place order" />
-                                                <input type="hidden" id="_wpnonce5" name="_wpnonce"
-                                                    value="783c1934b0" />
-                                                <input type="hidden" name="_wp_http_referer" value="/wp/?page_id=6" />
                                             </div>
                                         </div>
                                     </div>
@@ -217,8 +255,10 @@
                         </div>
                     </div>
                 </div>
-            @elseguest
-                <div class="text-center"><h2>Login to visit Checkout page</h2></div>
+                @elseguest
+                <div class="text-center">
+                    <h2>Login to visit Checkout page</h2>
+                </div>
             @endauth
         </section>
         <!-- checkout-section - end
