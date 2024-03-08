@@ -10,4 +10,13 @@ class Order extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    /**
+     * Get the coupon that belongs to the order.
+     */
+    public function relToCoupon()
+    {
+        return $this->hasOne(Coupon::class, 'id', 'coupon');
+    }
+
 }

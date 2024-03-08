@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
+use App\Livewire\Coupon\Coupon;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -19,7 +20,11 @@ class CheckoutController extends Controller
     public function check_out()
     {
         $carts = Cart::Where('user_id', auth()->id())->get();
-
+        
+        if(session()->has('coupon')){
+            $coupon = Coupon::Where('coupon_name', session()->get('coupon')['name'])->get();
+            return $coupon;
+        }
         if ($carts->count() > 0) {
             return view('layouts.frontend.checkout.checkout');
         }
@@ -80,17 +85,11 @@ class CheckoutController extends Controller
          * pass it to the thankyou view along with the related order items.
          */
         $order = Order::Where('userId', auth()->id())->latest()->first();
-        $orderiii = Order::Where('userId', auth()->id())->get();
-        $orders = OrderItem::Where('orderId', $orderiii->orderId)->get();
-        return $orders;
-        foreach ($orders as $orderss) {
-            return $orderss->id;
-        }
         return view(
             'layouts.frontend.thankyou.thankyou',
             [
                 'order' => $order,
-                // 'orderItems' => ,
+                'orderItems' => OrderItem::Where('orderId', $order->orderId)->get(),
             ]
         );
     }

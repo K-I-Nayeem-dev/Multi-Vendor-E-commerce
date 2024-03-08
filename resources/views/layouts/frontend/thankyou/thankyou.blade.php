@@ -24,6 +24,12 @@
                                 <p>Price</p>
                             </div>
                             <div class="card shadow-0 border mb-4">
+                                
+                                {{-- Initialize the total variable to 0.
+                                This will be used to calculate the order total. --}}
+                                @php
+                                    $total = 0;
+                                @endphp
                                 @foreach ($orderItems as $item)
                                     <div class="card-body">
                                         <div class="row">
@@ -66,11 +72,12 @@
                                         </div> --}}
                                     </div>
 
+                                    {{-- Adds the discounted price multiplied by the quantity to the total variable.
+                                    The total variable tracks the order total. --}}
+                                    
                                     @php
-                                        $total = 0;
-                                        $total += $item->relToProduct->discount_price * $item->quantity ;
+                                        $total += $item->relToProduct->discount_price * $item->quantity;
                                     @endphp
-
 
                                 @endforeach
                             </div>
@@ -80,10 +87,12 @@
                                 <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span>&#2547;{{ $total }}</p>
                             </div>
 
-                            {{-- <div class="d-flex justify-content-end pt-2"> --}}
-                                {{-- <p class="text-muted mb-0">Invoice Number : 788152</p> --}}
-                                {{-- <p class="text-muted mb-0"><span class="fw-bold me-4">Discount</span> </p> --}}
-                            {{-- </div> --}}
+                            @if($order->coupon)    
+                                <div class="d-flex justify-content-between pt-2">
+                                    <p class="text-muted mb-0">Coupon</p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">{{ $order->relToCoupon->coupon_name }}</span>-&#2547;{{ $order->relToCoupon->coupon_value }} </p>
+                                </div>
+                            @endif
 
                             <div class="d-flex justify-content-between">
                                 <p class="text-muted mb-0">Invoice Date : {{ date('d-m-Y', strtotime($order->created_at)) }}</p>

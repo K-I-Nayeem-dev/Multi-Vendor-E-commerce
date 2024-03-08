@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('notes')->nullable();
             $table->integer('vat')->nullable();
-            $table->string('coupon')->nullable();
+            $table->integer('coupon')->nullable();
             $table->integer('totalAmount');
             $table->integer('deliveryCharge');
             $table->string('payment_method');
