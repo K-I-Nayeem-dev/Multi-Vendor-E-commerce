@@ -826,6 +826,11 @@
 							<li><a href="{{ route('variation.create') }}">Add Variations</a></li>
                         </ul>
                     </li>
+					<li><a href="{{ route('orders') }}" aria-expanded="false">
+							<i class="flaticon-381-layer-1"></i>
+							<span class="nav-text">Orders</span>
+						</a>
+					</li>
 					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Coupon</span>

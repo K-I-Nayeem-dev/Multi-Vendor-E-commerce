@@ -29,7 +29,7 @@
                                 </div>
                             @endif
                             <div class="woocommerce bg-light p-3">
-                                <form action="{{ route('order') }}" method="post" class="checkout woocommerce-checkout">
+                                <form action="{{ route('order.store') }}" method="post" class="checkout woocommerce-checkout">
                                     @csrf
                                     <div class="col2-set" id="customer_details">
                                         <div class="coll-1">
@@ -193,10 +193,10 @@
                                         {{-- Delivery Charge  --}}
                                         <div class="mb-3">
                                             <h5>Delivery Charge</h5>
-                                            <input id="ID" type="radio" name="deliveryCharge" value="1">
+                                            <input id="ID" type="radio" name="deliveryCharge" value="0">
                                             <label for="ID">Inside Dhaka</label>
                                             <br>
-                                            <input id="OOD" type="radio" name="deliveryCharge" value="2">
+                                            <input id="OOD" type="radio" name="deliveryCharge" value="1">
                                             <label for="OOD">Outside Of Dhaka</label>
                                         </div>
 
@@ -207,7 +207,7 @@
                                         @endif
 
                                         @if (session()->has('coupon'))
-                                            <input hidden name="coupon" value="{{ session()->get('coupon')['name'] }}">
+                                            <input hidden name="coupon" value="{{ $coupon[0]->id }}">
                                         @endif
 
                                         <input hidden name="totalAmount" value="{{ session('subTotal') }}">

@@ -28,6 +28,8 @@ return new class extends Migration
             $table->integer('totalAmount');
             $table->integer('deliveryCharge');
             $table->string('payment_method');
+            $table->integer('visited')->default(0);
+            $table->string('status')->default(0);
             $table->timestamps();
         });
     }

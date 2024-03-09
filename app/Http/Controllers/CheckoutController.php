@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OrderRequest;
-use App\Livewire\Coupon\Coupon;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Coupon;
 
 class CheckoutController extends Controller
 {
@@ -19,12 +19,15 @@ class CheckoutController extends Controller
      */
     public function check_out()
     {
+        /**
+         * Get the current user's cart items.
+         * Check if the cart has items. 
+         * If there are items, get any applied coupon and render the checkout view.
+         * Pass the coupon to the view.
+         * If the cart is empty, redirect to the cart view.
+         */
         $carts = Cart::Where('user_id', auth()->id())->get();
-        
-        if(session()->has('coupon')){
-            $coupon = Coupon::Where('coupon_name', session()->get('coupon')['name'])->get();
-            return $coupon;
-        }
+
         if ($carts->count() > 0) {
             return view('layouts.frontend.checkout.checkout');
         }
@@ -80,17 +83,32 @@ class CheckoutController extends Controller
 
     public function orderInformation()
     {
+        
         /**
-         * Get the latest order for the authenticated user and 
-         * pass it to the thankyou view along with the related order items.
+         * Get the latest order for the authenticated user 
+         * and pass it to the thankyou view along with the related order items.
+         * 
+         * Check if the order has already been visited to prevent 
+         * going to the thankyou page multiple times.
+         * If visited, redirect to homepage, otherwise 
+         * render the thankyou view.
          */
         $order = Order::Where('userId', auth()->id())->latest()->first();
-        return view(
-            'layouts.frontend.thankyou.thankyou',
-            [
-                'order' => $order,
-                'orderItems' => OrderItem::Where('orderId', $order->orderId)->get(),
-            ]
-        );
+
+        $visited = $order->visited;
+
+        if ($visited == 0) {
+
+            $visited = $order->increment('visited');
+
+            return view(
+                'layouts.frontend.thankyou.thankyou',
+                [
+                    'order' => $order,
+                    'orderItems' => OrderItem::Where('orderId', $order->orderId)->get(),
+                ]
+            );
+        }
+        return redirect('/');
     }
 }

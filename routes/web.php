@@ -10,6 +10,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvetoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SellerController;
@@ -105,7 +106,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['controller' => CheckoutController::class], function () {
         Route::get('/check-out', 'check_out')->name('check_out');
         Route::get('/order/information', 'orderInformation')->name('orderInformation');
-        Route::post('/order', 'orderStore')->name('order');
+        Route::post('/order', 'orderStore')->name('order.store');
     });
     // Checkout Route
 
@@ -208,6 +209,14 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/', 'coupon')->name('coupon');
         Route::get('/type', 'coupon_type')->name('coupon_type');
     });
+
+    Route::group(['controller' => OrderController::class], function(){
+        // order route
+        Route::get('/orders', 'orders')->name('orders');
+        Route::post('/order/status/{id}', 'order_status')->name('order.status');
+        Route::get('/order/details/{id}', 'order_details')->name('order.details');
+    });
+
 
     // Fail Route Return back to Home page
     Route::fallback(function () {

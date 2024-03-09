@@ -3,6 +3,7 @@
 namespace App\Livewire\Checkout;
 
 use App\Models\Cart;
+use App\Models\Coupon;
 use Livewire\Component;
 
 class Checkout extends Component
@@ -28,12 +29,17 @@ class Checkout extends Component
 
     public function render()
     {
+        $coupon = '';
+        if(session()->has('coupon')){
+            $coupon = Coupon::Where('coupon_name', session()->get('coupon')['name'])->get();
+        }
         return view(
             'livewire.checkout.checkout',
             [
                 'divisions' => $this->decode_divisions,
                 'districts' => $this->decode_districts,
                 'carts' => Cart::Where('user_id', auth()->id())->get(),
+                'coupon' => $coupon,
             ]
         );
     }

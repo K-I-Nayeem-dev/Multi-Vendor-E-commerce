@@ -19,4 +19,8 @@ class Order extends Model
         return $this->hasOne(Coupon::class, 'id', 'coupon');
     }
 
+    public function relToUsers(){
+        return $this->hasOne(User::class, 'id', 'userId');
+    }
+
 }
