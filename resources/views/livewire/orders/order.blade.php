@@ -184,17 +184,33 @@
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Item Edit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
-                ...
+                    <form  method="post">
+                        <label>Color</label>
+                        <select class="form-control mb-2">
+                            <option value="">Select Color</option>
+                            @foreach ($colors as $color)
+                                <option value="{{ $color->id }}">{{ $color->color_name }}</option>
+                            @endforeach
+                        </select>
+                        <label>Variation</label>
+                        <select class="form-control mb-2">
+                            <option value="">Select Variation</option>
+                            @foreach ($sizes as $size)
+                                <option value="{{ $size->id }}">{{ $size->size }}</option>
+                            @endforeach
+                        </select>
+
+                    </form>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm">Update</button>
                 </div>
             </div>
             </div>

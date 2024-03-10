@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Variation;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -19,6 +20,13 @@ class OrderController extends Controller
 
     public function order_details($id)
     {
+
+        $orderID = Order::Where('userId', auth()->id())->get();
+        $orderItem = OrderItem::Where('orderId' , $orderID[0]->orderId)->get();
+        // return $orderItem;
+        return $orderItem;
+        $sizes = Variation::Select('category_id')->get();
+        
         $order = Order::find($id);
         return view('layouts.dashboard.orders.show', compact('order'));
     }
