@@ -20,15 +20,8 @@ class OrderController extends Controller
 
     public function order_details($id)
     {
-
-        $orderID = Order::Where('userId', auth()->id())->get();
-        $orderItem = OrderItem::Where('orderId' , $orderID[0]->orderId)->get();
-        // return $orderItem;
-        return $orderItem;
-        $sizes = Variation::Select('category_id')->get();
-        
         $order = Order::find($id);
-        return view('layouts.dashboard.orders.show', compact('order'));
+        return view('layouts.dashboard.orders.show',compact('order'));
     }
 
     public function order_status(Request  $request, $id)

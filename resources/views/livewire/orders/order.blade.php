@@ -73,12 +73,8 @@
                             <td>{{ $order->vat }}</td>
                         </tr>
                         <tr>
-                            {{-- <th>Coupon</th>
-                            @if ($order->relToCoupon->coupon_name == null)
-                                <td>Null</td>
-                            @else
-                                <td>{{ $order->relToCoupon->coupon_name }}</td>
-                            @endif --}}
+                            <th>Coupon</th>
+                            <td>{{ !$order->coupon ? 'Null' : $order->relToCoupon->coupon_name  }}</td>
                         </tr>
                         <tr>
                             <th>Total Amount</th>
@@ -201,9 +197,9 @@
                         <label>Variation</label>
                         <select class="form-control mb-2">
                             <option value="">Select Variation</option>
-                            @foreach ($sizes as $size)
+                            {{-- @foreach ($sizes as $size)
                                 <option value="{{ $size->id }}">{{ $size->size }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
 
                     </form>

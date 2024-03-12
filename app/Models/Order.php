@@ -23,4 +23,8 @@ class Order extends Model
         return $this->hasOne(User::class, 'id', 'userId');
     }
 
+    public function relToUser(){
+        return $this->hasOne(User::class, 'id', 'userId');
+    }
+
 }
