@@ -17,6 +17,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\VariationController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -216,6 +217,16 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/order/status/{id}', 'order_status')->name('order.status');
         Route::get('/order/details/{id}', 'order_details')->name('order.details');
     });
+
+    // SSLCOMMERZ Start
+    Route::get('/pay', [SslCommerzPaymentController::class, 'index']);
+    Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
+
+    Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+    Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+    Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
+
+    Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 
 
     // Fail Route Return back to Home page

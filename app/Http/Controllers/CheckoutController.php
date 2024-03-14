@@ -49,35 +49,40 @@ class CheckoutController extends Controller
         $orderId = uniqid();
         $carts = Cart::Where('user_id', auth()->id())->get();
 
-        if ($carts->count() > 0) {
-            // order insert in database
-            Order::create($request->except('_token') + [
-                'orderId' => $orderId,
-                'updated_at' => null,
-            ]);
-
-            // orders items insert in database
-            foreach ($carts as $cart) {
-                OrderItem::insert([
+        if($request->payment_method == 0){
+            if ($carts->count() > 0) {
+                // order insert in database
+                Order::create($request->except('_token') + [
                     'orderId' => $orderId,
-                    'userId' => auth()->id(),
-                    'vendorId' => $cart->vendor_id,
-                    'productId' => $cart->product_id,
-                    'colorId' => $cart->color,
-                    'sizeid' => $cart->size,
-                    'quantity' => $cart->quantity,
-                    'created_at' => now(),
+                    'updated_at' => null,
                 ]);
+    
+                // orders items insert in database
+                foreach ($carts as $cart) {
+                    OrderItem::insert([
+                        'orderId' => $orderId,
+                        'userId' => auth()->id(),
+                        'vendorId' => $cart->vendor_id,
+                        'productId' => $cart->product_id,
+                        'colorId' => $cart->color,
+                        'sizeid' => $cart->size,
+                        'quantity' => $cart->quantity,
+                        'created_at' => now(),
+                    ]);
+                }
+    
+                // coupon Delete if order placed
+                session()->forget('coupon');
+                session()->forget('sub');
+    
+                // delete cart products after order place
+                Cart::where('user_id', auth()->id())->delete();
+    
+                return redirect()->route('orderInformation');
             }
-
-            // coupon Delete if order placed
-            session()->forget('coupon');
-            session()->forget('sub');
-
-            // delete cart products after order place
-            Cart::where('user_id', auth()->id())->delete();
-
-            return redirect()->route('orderInformation');
+        }
+        else{
+            return redirect('/pay');
         }
     }
 

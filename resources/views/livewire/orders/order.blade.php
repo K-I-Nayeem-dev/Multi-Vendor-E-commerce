@@ -1,4 +1,100 @@
 <div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Order Items</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-dark table-bordered" style="font-size: 14px;">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Image</th>
+                            <th>Color</th>
+                            <th>Size</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Created At</th>
+                            <th>Action</th>
+                        </tr>
+                        @foreach ($order_items as $item)
+                            <tr>
+                                <td>{{ $item->id }}</td>
+                                <td>{{ $item->relToProduct->name }}</td>
+                                <td><img width="150" height="100"
+                                        src="{{ asset('uploads/thumbnail_photos/') }}/{{ $item->relToProduct->thumbnail }}"
+                                        alt=""></td>
+                                <td>
+                                    {{ $item->relToColor->color_name }}</td>
+                                <td>{{ $item->relToSize->size }}</td>
+                                <td>{{ $item->relToProduct->discount_price }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>{{ $item->relToProduct->discount_price * $item->quantity }}</td>
+                                <td>{{ $item->created_at->diffForHumans() }}</td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal">
+                                            <i class="fa fa-edit" aria-hidden="true"></i>
+                                        </button>
+                                        <button type="submit" wire:click='removeProduct({{ $item->id }})' class="btn btn-sm btn-danger"><i class="fa fa-trash" style="font-size: 18px" aria-hidden="true"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Item Edit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form  method="post">
+                        <label>Color</label>
+                        <select wire:model='color' class="form-control mb-2">
+                            <option value="">Select Color</option>
+                            @foreach ($colors as $color)
+                                <option {{ $order_items[0]->colorId == $color->id ? 'Selected' : '' }} value="{{ $color->id }}">{{ $color->color_name }}</option>
+                            @endforeach
+                        </select>
+                        <label>Variation</label>
+                        <select wire:model='size' class="form-control mb-2">
+                            <option value="">Select Variation</option>
+                            @foreach ($sizes as $size)
+                                @php
+                                    // $count = 0;
+                                    // $count++
+                                @endphp
+                                <option {{ $order_items[0]->sizeid == $size->id ? 'Selected' : '' }}  value="{{ $size->id }}">{{ $size->size }}</option>
+                            @endforeach
+                        </select>
+                        
+                        <label for="">Quantity</label>
+                        @foreach ($order_items as $item)
+                            <input class="form-control" wire:model='quantity' type="text" value="{{ $item->quantity }}">
+                        @endforeach
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary btn-sm">Update</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
     <div class="row d-flex justify-content-center">
         <div class="col-lg-8">
             <div class="card" style="background-color: black;">
@@ -122,93 +218,6 @@
                         </tr>
                     </table>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4>Order Items</h4>
-                </div>
-                <div class="card-body">
-                    <table class="table table-dark table-bordered" style="font-size: 14px;">
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Color</th>
-                            <th>Size</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Created At</th>
-                            <th>Action</th>
-                        </tr>
-                        @foreach ($order_items as $item)
-                            <tr>
-                                <td>{{ $item->id }}</td>
-                                <td>{{ $item->relToProduct->name }}</td>
-                                <td><img width="150" height="100"
-                                        src="{{ asset('uploads/thumbnail_photos/') }}/{{ $item->relToProduct->thumbnail }}"
-                                        alt=""></td>
-                                <td>
-                                    {{ $item->relToColor->color_name }}</td>
-                                <td>{{ $item->relToSize->size }}</td>
-                                <td>{{ $item->relToProduct->discount_price }}</td>
-                                <td>{{ $item->quantity }}</td>
-                                <td>{{ $item->relToProduct->discount_price * $item->quantity }}</td>
-                                <td>{{ $item->created_at->diffForHumans() }}</td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#exampleModal">
-                                            <i class="fa fa-edit" aria-hidden="true"></i>
-                                        </button>
-                                        <button type="submit" wire:click='removeProduct({{ $item->id }})' class="btn btn-sm btn-danger"><i class="fa fa-trash" style="font-size: 18px" aria-hidden="true"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Item Edit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <form  method="post">
-                        <label>Color</label>
-                        <select class="form-control mb-2">
-                            <option value="">Select Color</option>
-                            @foreach ($colors as $color)
-                                <option value="{{ $color->id }}">{{ $color->color_name }}</option>
-                            @endforeach
-                        </select>
-                        <label>Variation</label>
-                        <select class="form-control mb-2">
-                            <option value="">Select Variation</option>
-                            {{-- @foreach ($sizes as $size)
-                                <option value="{{ $size->id }}">{{ $size->size }}</option>
-                            @endforeach --}}
-                        </select>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary btn-sm">Update</button>
-                </div>
-            </div>
             </div>
         </div>
     </div>
