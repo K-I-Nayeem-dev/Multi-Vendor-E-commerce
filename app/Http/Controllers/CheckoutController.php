@@ -106,6 +106,13 @@ class CheckoutController extends Controller
 
             $visited = $order->increment('visited');
 
+            /**
+             * Render the thankyou view, passing the latest order for the 
+             * authenticated user and its related order items.
+             *
+             * Check if the order has already been visited to prevent
+             * going to the thankyou page multiple times.
+             */
             return view(
                 'layouts.frontend.thankyou.thankyou',
                 [
